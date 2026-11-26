@@ -1,5 +1,7 @@
 # Publication de la démonstration GitHub Pages
 
+État vérifié le 26 novembre 2026 : démonstration publiée sur https://propheticpowerfulman.github.io/SIGCP/, HTTP 200 et bundle corrigé vérifiés. Le dépôt est public avec l’accord du propriétaire et la source Pages est GitHub Actions.
+
 ## Activation initiale
 
 1. Ouvrir https://github.com/PropheticPowerfulMan/SIGCP/settings/pages avec un compte administrateur du dépôt.

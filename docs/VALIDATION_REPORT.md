@@ -14,7 +14,9 @@ Parcours vérifiés : navigation/rechargement, recherche/état vide, pagination,
 
 ## Résultat de publication
 
-Job deploy 140087596541 : failure à configure-pages@v5, Get Pages site failed / Not Found. L’étape deploy-pages n’a pas été exécutée. L’écran du propriétaire confirme que l’offre exige une mise à niveau ou un dépôt public.
+Le job deploy 140107074425 est terminé avec success après activation effective de Pages et passage public autorisé du dépôt. URL : https://propheticpowerfulman.github.io/SIGCP/
+
+Réponse HTTP 200 et correspondance des ressources compilées index-8ktd3b7o.js / index-DAab89lC.css vérifiées. Le premier échec configure-pages / Not Found est résolu.
 
 ## Portée
 

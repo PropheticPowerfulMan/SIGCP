@@ -249,10 +249,11 @@ def generate(args):
         ['Extension provinciale et diplomatique', 'Contraintes locales, connectivité, classification et support validés.'],
         ['Réseau national NSEN', 'Interopérabilité, supervision et gouvernance nationales approuvées.'],
     ], [CW * .34, CW * .66], y, size=8.6)
-    y = section(c, 'GitHub Pages - prérequis de publication', y)
-    y = paragraph(c, '1. Ouvrir le dépôt SIGCP, puis <b>Settings &gt; Pages</b>.<br/>2. Choisir <b>GitHub Actions</b> comme source et vérifier que l’offre autorise Pages pour ce dépôt privé.<br/>3. Exécuter le workflow de validation/déploiement et lire son résultat.<br/>4. Vérifier l’URL après réussite : <b>https://propheticpowerfulman.github.io/SIGCP/</b>.', M, y,
+    y = section(c, 'GitHub Pages - publication vérifiée' if args.pages_status.startswith('Publié') else 'GitHub Pages - prérequis de publication', y)
+    y = paragraph(c, '1. Ouvrir le dépôt SIGCP, puis <b>Settings &gt; Pages</b>.<br/>2. Vérifier la source <b>GitHub Actions</b> et la visibilité du dépôt approuvée par le propriétaire.<br/>3. Exécuter le workflow de validation/déploiement et lire son résultat.<br/>4. Vérifier l’URL après réussite : <b>https://propheticpowerfulman.github.io/SIGCP/</b>.', M, y,
                   size=9.6, leading=16) - 15
-    y = note(c, 'Le déploiement CI a échoué à l’étape configure-pages : site Pages introuvable (NotFound). Activez d’abord Pages pour ce dépôt, puis relancez le workflow. Aucun changement de visibilité ne doit être déduit de cette procédure.', y)
+    publication_note = ('Publication réussie et vérifiée : réponse HTTP 200, JavaScript index-8ktd3b7o.js et CSS index-DAab89lC.css attendus présents. Les jobs build et deploy du run CI ont réussi. La démonstration reste limitée aux données fictives.' if args.pages_status.startswith('Publié') else 'Le déploiement CI a échoué à l’étape configure-pages : site Pages introuvable (NotFound). Activez d’abord Pages pour ce dépôt, puis relancez le workflow. Aucun changement de visibilité ne doit être déduit de cette procédure.')
+    y = note(c, publication_note, y)
     y = section(c, 'Décisions indispensables du concepteur et de l’institution', y)
     y = paragraph(c, 'Emblème officiel et droit d’usage ; organigramme, numérotation et classifications ; matrice des habilitations ; autorités de validation et signature ; hébergement souverain et IAM/PKI ; conservation et reprise ; mandat de découverte du système historique.', M, y,
                   size=9.6, leading=15, color=MUTED) - 14

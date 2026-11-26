@@ -57,7 +57,7 @@ Les statuts d’échange désignent des **simulations locales**, pas de véritab
 
 Le workflow [pages.yml](.github/workflows/pages.yml) contrôle les dépendances, exécute les tests de domaine et de navigateur, compile, puis publie sur GitHub Pages. La source Pages doit être **GitHub Actions**. Voir [la procédure de déploiement](docs/DEPLOYMENT.md).
 
-URL cible : https://propheticpowerfulman.github.io/SIGCP/ — l’accessibilité effective est consignée dans PROJECT_STATUS.md.
+Démonstration publiée : https://propheticpowerfulman.github.io/SIGCP/ — réponse HTTP 200 et bundle corrigé vérifiés.
 
 Les corrections sont testées et publiées sur cette démonstration avant revue et migration à l’infrastructure institutionnelle. La visibilité du dépôt n’est pas modifiée automatiquement.
 

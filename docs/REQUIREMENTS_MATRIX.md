@@ -55,8 +55,8 @@ Le statut d’une section agrège plusieurs exigences : « Partiel » ne signifi
 | 20 — Notifications | Affectations, validations, échéances, retards et événements de sécurité | Partiel | Messages internes et lecture des priorités du registre local. Aucune notification planifiée ou email externe, aucun contenu classifié transmis. |
 | 21 — Web et PWA | Responsive, installation contrôlée, ressources statiques seules en cache | Partiel / À valider | Interface web responsive ; version installable PWA non commencée. Pas de manifeste/service worker revendiqué. Politique d’installation, de cache et d’accès hors ligne à approuver avant implémentation. |
 | 22 — IA optionnelle | Module désactivé, supervision humaine, modèles approuvés et protection contre les instructions malveillantes | Non commencé | Aucune fonction IA, aucun appel à un modèle et aucun envoi de document à un service IA. Les décisions officielles ne sont pas automatisées. |
-| 23 — Infrastructure | Environnements séparés, réseau, TLS, logs, sauvegardes, PRA/PCA et publication autorisée | Partiel | Démonstration statique et workflow GitHub Pages préparés pour données synthétiques. Le statut réel de publication doit être vérifié indépendamment. Environnements backend séparés, Docker non-root, segmentation, supervision, sauvegardes, restauration et haute disponibilité non commencés. |
-| 24 — DevSecOps | Compilation, tests, analyses, SBOM, artefacts intègres et publication contrôlée | Partiel | Pipeline npm : installation reproductible, tests unitaires, typage/compilation et artefact Pages. Les tests navigateur doivent être exécutés et leurs résultats conservés. Couverture SAST/DAST, secrets, conteneurs, SBOM, protection de branche et actions épinglées par SHA vérifié à compléter. |
+| 23 — Infrastructure | Environnements séparés, réseau, TLS, logs, sauvegardes, PRA/PCA et publication autorisée | Partiel | Démonstration statique publiée sur https://propheticpowerfulman.github.io/SIGCP/ : HTTP 200 et bundle corrigé vérifiés. Environnements backend séparés, Docker non-root, segmentation, supervision, sauvegardes, restauration et haute disponibilité non commencés. |
+| 24 — DevSecOps | Compilation, tests, analyses, SBOM, artefacts intègres et publication contrôlée | Partiel | Pipeline npm : installation reproductible, tests unitaires, typage/compilation et artefact Pages. 24 tests métier et 10 parcours Playwright réussis dans le run 45871315126 ; preuves conservées dans docs/VALIDATION_REPORT.md. Couverture SAST/DAST, secrets, conteneurs, SBOM, protection de branche et actions épinglées par SHA vérifié à compléter. |
 
 ## Structure et livraison — sections 25 à 30
 
@@ -92,7 +92,7 @@ Le statut d’une section agrège plusieurs exigences : « Partiel » ne signifi
 | Bibliothèque de composants accessibles | Composants locaux et `<dialog>` natif ; audit d’accessibilité complet à effectuer. |
 | Tailwind CSS, TanStack Query, TanStack Table, React Hook Form, Zod | Non intégrés à cette livraison ; CSS et logique de formulaire/tableau locaux. La conformité à ces choix obligatoires du master reste ouverte. TanStack Query devra être évalué au raccordement API. |
 | Recharts ou Apache ECharts | Non intégrés ; graphiques locaux basés sur les statistiques calculées. |
-| Playwright | Configuration et scénarios E2E présents ; le résultat d’une exécution doit être documenté séparément. |
+| Playwright | 10 parcours E2E exécutés avec succès dans GitHub Actions ; rapport de validation disponible. |
 | Java 25/Spring Boot, Spring Security/JPA, Hibernate, Bean Validation, Flyway, Maven Wrapper, OpenAPI, JUnit/Testcontainers | Aucun backend livré. Versions exactes, maintenance et compatibilité à vérifier au démarrage du chantier serveur. |
 | PostgreSQL, stockage S3, OIDC/Keycloak, antivirus, gestion des clés, Docker, NGINX, observabilité | Non déployés. Redis/Valkey, OpenSearch et Kubernetes restent des choix conditionnels à justifier, conformément au master. |
 
@@ -108,8 +108,8 @@ Les chemins ci-dessous sont relatifs à la racine du dépôt.
 | Tableau de bord et analyses | `src/Insights.tsx` | Indicateurs et graphiques calculés, sans volumes institutionnels réels. |
 | Échanges locaux | `src/exchange.ts`, `src/Network.tsx`, `tests/exchange.test.mjs` | Simulation, contrôles de cohérence et idempotence locale. |
 | Navigation, stockage et éléments communs | `src/main.tsx`, `src/ui.tsx`, `src/style.css` | Composants frontend ; les données locales sont modifiables par l’utilisateur. |
-| Parcours navigateur | `tests/e2e.spec.ts`, `playwright.config.ts` | Scénarios exécutables ; résultats, traces et captures réelles à consulter après exécution. |
-| Construction et publication | `package.json`, `package-lock.json`, `.github/workflows/pages.yml` | Commandes de validation et workflow ; leur présence seule ne prouve pas le déploiement réussi. |
+| Parcours navigateur | `tests/e2e.spec.ts`, `playwright.config.ts` | 10 parcours réussis en CI ; capture desktop réelle incluse dans le dossier PDF. |
+| Construction et publication | `package.json`, `package-lock.json`, `.github/workflows/pages.yml` | Validation et déploiement réussis ; réponse HTTP 200 et ressources exactes vérifiées. |
 | Suivi | `PROJECT_STATUS.md`, `docs/TECHNICAL_PLAN.md` | État, limitations et décisions ; à mettre à jour avec les résultats réellement obtenus. |
 
 Les tests du domaine local ont été exécutés lors de son implémentation (16 tests réussis). Aucun résultat de test serveur, de scan de cybersécurité, d’audit indépendant ou de performance représentative n’est déduit de ce résultat. Les résultats consolidés les plus récents appartiennent au rapport de livraison.
@@ -140,7 +140,7 @@ Un rapport de sécurité ne pourra revendiquer que des analyses réellement exé
 | Priorité | Travail | Critère de sortie |
 | --- | --- | --- |
 | P0 | Faire valider les parcours, règles de numérotation, classifications, responsabilités et charte | Décisions métier documentées et versions approuvées, sans déduire l’organigramme réel des exemples. |
-| P0 | Terminer la recette de la démonstration et sa publication Pages | Tests unitaires, typage, compilation et E2E exécutés ; captures réelles ; URL déployée vérifiée ; limites visibles. |
+| P0 — réalisé | Recette de la démonstration et publication Pages | Tests unitaires, typage, compilation et E2E exécutés ; captures réelles ; URL déployée vérifiée ; limites visibles. |
 | P1 | Initialiser le backend Java 25/Spring Boot et PostgreSQL/Flyway | Démarrage local reproductible, migrations vérifiées et contrats OpenAPI ; tests JUnit/Testcontainers. |
 | P1 | Implémenter BFF OIDC, MFA institutionnelle et RBAC/ABAC | Identité et contexte institutionnel établis côté serveur ; tests négatifs d’accès et révocation réussis. |
 | P1 | Refaire numérotation, workflow et audit dans des transactions serveur | Concurrence, idempotence, outbox et séparation des tâches testées ; journal d’audit protégé. |

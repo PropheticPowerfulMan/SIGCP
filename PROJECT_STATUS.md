@@ -24,13 +24,13 @@ Révision applicative validée : 5528c99621b8bbc0f43cc063e0db855e94f65cbc.
 
 La validation des pull requests a aussi réussi dans le run 45874350254 ; PR 1 fusionnée. Le workflow publie uniquement depuis main.
 
-## Publication bloquée par le compte GitHub
+## Publication vérifiée
 
-Le job build est entièrement réussi. Le job deploy échoue à actions/configure-pages : Get Pages site failed / Not Found. L’écran Settings > Pages fourni par le propriétaire affiche : Upgrade or make this repository public to enable Pages. Le dépôt est privé et l’offre actuelle ne permet pas Pages dans cette configuration.
+Démonstration : https://propheticpowerfulman.github.io/SIGCP/
 
-Adresse cible : https://propheticpowerfulman.github.io/SIGCP/ — répond encore 404, aucune publication réussie revendiquée.
+Déploiement réussi dans le run 45871315126, job deploy 140107074425. HTTP 200 vérifié avec les ressources exactes index-8ktd3b7o.js et index-DAab89lC.css. Le propriétaire a autorisé et effectué le passage du dépôt en public ; la source GitHub Actions a été enregistrée. Les corrections sur main sont testées avant publication.
 
-Décision du propriétaire nécessaire : conserver le dépôt privé avec une offre compatible, ou autoriser son passage en public. Aucun abonnement ni changement de visibilité n’a été effectué.
+Le premier échec Not Found provenait de Pages non activé ; ce blocage est résolu.
 
 ## Limites de production
 
