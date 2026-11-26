@@ -1,0 +1,17 @@
+/* Native scrolling remains available on both axes, including forced-colour modes. */
+:root{color-scheme:light;--scroll-track:#e9eef5;--scroll-thumb:#90743e;--scroll-thumb-hover:#70582d}
+[data-theme=dark]{color-scheme:dark;--scroll-track:#10263e;--scroll-thumb:#b89552;--scroll-thumb-hover:#d2b06c}
+.sidebar{--scroll-track:#0f263f;--scroll-thumb:#b89552;--scroll-thumb-hover:#d2b06c}
+@media(forced-colors:none){
+  *{scrollbar-width:auto;scrollbar-color:var(--scroll-thumb) var(--scroll-track)}
+  .sidebar{scrollbar-width:auto;scrollbar-color:var(--scroll-thumb) var(--scroll-track)}
+  @supports not (scrollbar-color:auto){
+    *{scrollbar-width:auto}
+    ::-webkit-scrollbar{width:12px;height:12px}
+    ::-webkit-scrollbar-track,::-webkit-scrollbar-corner{background:var(--scroll-track)}
+    ::-webkit-scrollbar-thumb{background:var(--scroll-thumb);border:3px solid var(--scroll-track);border-radius:12px;min-height:36px;min-width:36px}
+    ::-webkit-scrollbar-thumb:hover{background:var(--scroll-thumb-hover)}
+    ::-webkit-scrollbar-thumb:active{background:var(--scroll-thumb-hover)}
+  }
+}
+@media(forced-colors:active){*{scrollbar-color:auto!important;scrollbar-width:auto!important}}

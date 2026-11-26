@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { filterMail, getStats, type Mail, type MailFilters } from './domain.ts';
 import { formatDate, Priority, Status } from './ui';
+import { MailCards } from './Register';
 
 type Navigate = (page: string, filters?: MailFilters) => void;
 type DashboardProps = { items: Mail[]; onNavigate: Navigate; onOpen: (mail: Mail) => void };
@@ -66,7 +67,7 @@ export function Dashboard({ items, onNavigate, onOpen }: DashboardProps) {
     <section className="hero" aria-labelledby="pilot-hero-title">
       <div className="hero-copy">
         <span className="hero-eyebrow">L’INFORMATION AU SERVICE DE L’ACTION PUBLIQUE</span>
-        <h2 id="pilot-hero-title">Une information maîtrisée.<br /><em>Une action mieux coordonnée.</em></h2>
+        <h2 id="pilot-hero-title"><span className="hero-title-wide">Une information maîtrisée.<br /><em>Une action mieux coordonnée.</em></span><span className="hero-title-mobile">Chaque courrier.<br /><em>Chaque étape maîtrisée.</em></span></h2>
         <p>Du premier enregistrement à l’archivage, chaque courrier trouve sa place. Chaque décision conserve son histoire.</p>
         <button className="hero-button" onClick={() => onNavigate('workflow')}>Explorer le registre <ChevronRight size={16} aria-hidden="true" /></button>
       </div>
@@ -103,7 +104,7 @@ export function Dashboard({ items, onNavigate, onOpen }: DashboardProps) {
         <td>{mail.sender}<small>{mail.service}</small></td>
         <td><Priority value={mail.priority} /></td><td><Status value={mail.status} /></td><td className="date-cell">{formatDate(mail.date)}</td>
         <td><button className="row-action" aria-label={`Consulter ${mail.ref}`} onClick={() => onOpen(mail)}><ChevronRight size={17} aria-hidden="true" /></button></td>
-      </tr>)}</tbody></table></div><div className="table-footer"><span>{recent.length} sur {stats.total} correspondances</span><span>Registre de démonstration</span></div></> : <div className="empty-state"><Inbox size={31} aria-hidden="true" /><h3>Votre registre est prêt</h3><p>Enregistrez un premier courrier fictif pour suivre son évolution.</p></div>}
+      </tr>)}</tbody></table></div><MailCards rows={recent} onOpen={onOpen} dateKind="received"/><div className="table-footer"><span>{recent.length} sur {stats.total} correspondances</span><span>Registre de démonstration</span></div></> : <div className="empty-state"><Inbox size={31} aria-hidden="true" /><h3>Votre registre est prêt</h3><p>Enregistrez un premier courrier fictif pour suivre son évolution.</p></div>}
     </section>
   </>;
 }

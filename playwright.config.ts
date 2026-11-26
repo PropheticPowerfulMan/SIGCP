@@ -2,7 +2,7 @@ import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests',
-  testMatch: ['e2e.spec.ts', 'pwa-login.spec.ts'],
+  testMatch: ['e2e.spec.ts', 'pwa-login.spec.ts', 'responsive.spec.ts'],
   fullyParallel: false,
   workers: 1,
   timeout: 90_000,

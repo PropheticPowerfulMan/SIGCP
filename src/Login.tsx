@@ -73,12 +73,35 @@ export function Login({ onEnter, onInstall }: LoginProps) {
       <header className="login-header">
         <div className="login-brand">
           <img src={emblem} alt="Emblème fourni de la Présidence de la République démocratique du Congo" width="60" height="60" />
-          <span><strong>IMPERIUM<span> RDC</span></strong><small>SYSTÈME INTÉGRÉ DE GESTION DES COURRIERS PRÉSIDENTIELS</small></span>
+          <span><strong>IMPERIUM<span> RDC</span></strong><small className="login-brand-description">SYSTÈME INTÉGRÉ DE GESTION DES COURRIERS PRÉSIDENTIELS</small><span className="login-brand-context">Présidence de la République<small>Secrétariat Général · DANTIC</small></span></span>
         </div>
         <div className="login-header-context"><span className="login-pilot-dot" /><span>ESPACE DE DÉMONSTRATION</span></div>
       </header>
 
       <main className="login-main">
+        <section className="login-access" id="login-access" tabIndex={-1} aria-labelledby="login-title">
+          <div className="login-access-inner">
+            <span className="login-access-label"><span /> ACCÈS AU PILOTE</span>
+            <h1 id="login-title">Bienvenue dans{' '}<br />votre espace.</h1>
+            <p className="login-intro">Découvrez une nouvelle manière de suivre et de coordonner les correspondances institutionnelles.</p>
+
+            <form className="login-form" onSubmit={enter}>
+              <label htmlFor={selectId}>Profil de démonstration</label>
+              <div className="login-select-wrap"><UsersRound size={20} aria-hidden="true" /><select id={selectId} value={profileName} onChange={(event) => { setProfileName(event.target.value); setError(''); }} aria-describedby={descriptionId}>{profiles.map((item) => <option key={item.name} value={item.name}>{item.name}</option>)}</select></div>
+              <div className="login-profile-preview" id={descriptionId}><span className="login-profile-avatar">{profile.initials}</span><div><strong>{profile.name}</strong><p>{profile.description}</p></div><span className="login-profile-check"><Check size={14} /></span></div>
+              {error && <p className="login-error" role="alert">{error}</p>}
+              <button className="login-enter" type="submit"><LogIn size={19} />Ouvrir la démonstration</button>
+              <p className="login-no-credentials"><LockKeyhole size={14} />Aucun identifiant ni mot de passe réel requis</p>
+            </form>
+
+            {onInstall && <button className="login-install" type="button" onClick={onInstall}><span className="login-install-icon"><Download size={20} /></span><span><strong>Installer l’application</strong><small>Retrouver IMPERIUM RDC depuis votre appareil</small></span><span className="login-install-tag">PWA</span></button>}
+
+            <div className="login-institutional"><span className="login-institutional-icon"><ShieldCheck size={20} /></span><div><h2>Connexion institutionnelle</h2><p>L’identité OIDC, le MFA et les habilitations serveur sont prévus pour l’infrastructure cible.</p><button type="button" onClick={() => setIdentityInfo(true)}>Comprendre cet accès <CircleHelp size={14} /></button></div></div>
+
+            <div className="login-demo-notice"><FileText size={18} /><p><strong>Des données fictives, un parcours concret.</strong> Ce pilote est une proposition technique non homologuée. Les profils servent à présenter les usages et ne constituent pas des habilitations de sécurité.</p></div>
+          </div>
+        </section>
+
         <section className="login-vision" aria-labelledby="login-vision-title">
           <div className="login-vision-grid" aria-hidden="true" />
           <div className="login-vision-content">
@@ -108,29 +131,6 @@ export function Login({ onEnter, onInstall }: LoginProps) {
             </div>
           </div>
           <div className="login-vision-footer"><span className="login-vision-rule" /><span>SOUVERAINETÉ · CONTINUITÉ · TRAÇABILITÉ</span></div>
-        </section>
-
-        <section className="login-access" id="login-access" tabIndex={-1} aria-labelledby="login-title">
-          <div className="login-access-inner">
-            <span className="login-access-label"><span /> ACCÈS AU PILOTE</span>
-            <h1 id="login-title">Bienvenue dans{' '}<br />votre espace.</h1>
-            <p className="login-intro">Découvrez une nouvelle manière de suivre et de coordonner les correspondances institutionnelles.</p>
-
-            <form className="login-form" onSubmit={enter}>
-              <label htmlFor={selectId}>Profil de démonstration</label>
-              <div className="login-select-wrap"><UsersRound size={20} aria-hidden="true" /><select id={selectId} value={profileName} onChange={(event) => { setProfileName(event.target.value); setError(''); }} aria-describedby={descriptionId}>{profiles.map((item) => <option key={item.name} value={item.name}>{item.name}</option>)}</select></div>
-              <div className="login-profile-preview" id={descriptionId}><span className="login-profile-avatar">{profile.initials}</span><div><strong>{profile.name}</strong><p>{profile.description}</p></div><span className="login-profile-check"><Check size={14} /></span></div>
-              {error && <p className="login-error" role="alert">{error}</p>}
-              <button className="login-enter" type="submit"><LogIn size={19} />Ouvrir la démonstration</button>
-              <p className="login-no-credentials"><LockKeyhole size={14} />Aucun identifiant ni mot de passe réel requis</p>
-            </form>
-
-            {onInstall && <button className="login-install" type="button" onClick={onInstall}><span className="login-install-icon"><Download size={20} /></span><span><strong>Installer l’application</strong><small>Retrouver IMPERIUM RDC depuis votre appareil</small></span><span className="login-install-tag">PWA</span></button>}
-
-            <div className="login-institutional"><span className="login-institutional-icon"><ShieldCheck size={20} /></span><div><h2>Connexion institutionnelle</h2><p>L’identité OIDC, le MFA et les habilitations serveur sont prévus pour l’infrastructure cible.</p><button type="button" onClick={() => setIdentityInfo(true)}>Comprendre cet accès <CircleHelp size={14} /></button></div></div>
-
-            <div className="login-demo-notice"><FileText size={18} /><p><strong>Des données fictives, un parcours concret.</strong> Ce pilote est une proposition technique non homologuée. Les profils servent à présenter les usages et ne constituent pas des habilitations de sécurité.</p></div>
-          </div>
         </section>
       </main>
 

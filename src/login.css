@@ -40,10 +40,6 @@
 .login-identity-intro>svg{color:#a18a51}.login-identity-intro h3{font-size:20px;line-height:1.5;letter-spacing:-.4px;margin:14px 0 10px;color:var(--ink,#20344b)}.login-identity-intro p{font-size:14px;line-height:1.9;color:var(--muted,#607187)}.login-identity-list{list-style:none;padding:0;margin:20px 0}.login-identity-list li{display:flex;align-items:flex-start;gap:13px;padding:17px 0;border-bottom:1px solid var(--line,#e5eaf1)}.login-identity-list li>svg{color:#9d8650;flex-shrink:0;margin-top:1px}.login-identity-list strong{font-size:14px;font-weight:600;line-height:1.6}.login-identity-list p{font-size:13px;color:var(--muted,#607187);line-height:1.8;margin-top:6px}.login-info-close{border:1px solid var(--line,#e5eaf1);padding:12px 15px;background:var(--soft,#f7f9fc);color:var(--ink,#20344b);font-size:14px;margin-top:4px}
 [data-theme=dark] .login-header-context{background:#322f23;color:#dec889;border-color:#6c5c34}[data-theme=dark] .login-brand strong>span,[data-theme=dark] .login-access-label,[data-theme=dark] .login-institutional button{color:#d2b878}[data-theme=dark] .login-install-tag{background:#3b3422;color:#ddc284;border-color:#6c5c34}[data-theme=dark] .login-demo-notice{background:#332f24;color:#c6b98f;border-color:#52482c}[data-theme=dark] .login-demo-notice strong{color:#dec889}[data-theme=dark] .login-profile-avatar{background:#51462c;color:#e1cd95}[data-theme=dark] .login-select-wrap{box-shadow:none}[data-theme=dark] .login-enter{border-color:#647d94}
 @media(min-width:1550px){.login-header{min-height:118px;padding-inline:65px}.login-page .login-main{padding-inline:35px;min-height:750px}.login-vision-content{padding:43px 57px 0}.login-editorial{margin-top:43px}.login-editorial h2{font-size:38px}.login-editorial>p{font-size:16px}.login-workflow-visual{height:250px;max-width:500px;margin-top:12px}.login-paper{width:173px;height:184px;right:100px;top:20px}.login-paper-back{right:80px;top:34px}.login-trace-card{left:20px;bottom:35px}.login-capabilities{padding-block:24px}.login-vision-footer{padding-inline:57px}.login-access{padding-inline:55px}.login-access-inner{max-width:465px}.login-intro{font-size:16px}.login-form{margin-top:31px}.login-select-wrap select{min-height:56px}.login-profile-preview p,.login-institutional p{font-size:13px}.login-enter{min-height:55px}.login-install strong{font-size:14px}.login-install small{font-size:12px}.login-page .login-footer{padding-inline:65px}}
-@media(max-width:1150px){.login-header{padding-inline:35px;min-height:98px}.login-brand strong{font-size:19px}.login-brand small{font-size:7px;letter-spacing:.8px}.login-header-context{font-size:8px}.login-page .login-main{padding-inline:22px;grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-height:695px}.login-vision-content{padding:32px 30px 0}.login-editorial{margin-top:32px}.login-overline{font-size:7px;letter-spacing:1px}.login-editorial h2{font-size:27px;letter-spacing:-.7px}.login-editorial>p{font-size:13px}.login-workflow-visual{height:205px}.login-paper{right:45px}.login-paper-back{right:30px}.login-trace-card{left:-5px;padding:11px;gap:8px}.login-trace-card small{font-size:7px}.login-capabilities{gap:9px}.login-capabilities>div{gap:7px;align-items:flex-start}.login-capabilities>div>span{font-size:11px}.login-capabilities small{font-size:7px}.login-vision-footer{padding-inline:30px;font-size:6px;letter-spacing:1.2px}.login-access{padding:29px 30px}.login-access h1{font-size:32px}.login-intro{font-size:13px}.login-form{margin-top:23px}.login-page .login-footer{padding-inline:35px;font-size:9px}}
-@media(max-width:900px){.login-header-context{display:none}.login-brand>img{width:53px;height:53px}.login-page .login-main{padding-inline:20px;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr)}.login-vision-content{padding-inline:25px}.login-editorial h2{font-size:25px}.login-editorial>p{font-size:12px}.login-institution>span{font-size:7px;letter-spacing:1.2px}.login-institution strong{font-size:12px}.login-institution small{font-size:10px}.login-paper{right:35px;width:139px;height:162px;padding:14px}.login-paper-back{right:20px}.login-trace-card{left:-10px;gap:6px}.login-trace-icon{width:28px;height:28px}.login-trace-card strong{font-size:10px}.login-trace-check{display:none}.login-capabilities{grid-template-columns:1fr;gap:13px;padding-top:18px}.login-capabilities>div{align-items:center}.login-capabilities>div>span{font-size:12px;display:flex;align-items:center;gap:9px}.login-capabilities small{font-size:9px;margin:0}.login-capabilities small:before{content:'·';margin-right:7px}.login-access{padding-inline:25px}.login-access h1{font-size:29px}.login-profile-preview{padding:12px 10px;gap:9px}.login-profile-preview p{font-size:11px}.login-no-credentials{font-size:9px}.login-install{padding:12px;gap:9px}.login-install small{font-size:9px}.login-institutional h2{font-size:12px}.login-institutional p{font-size:11px}.login-demo-notice{font-size:9px;padding:12px}.login-vision-footer{padding-inline:25px;line-height:1.8}}
-@media(max-width:700px){.login-header{padding:17px 22px;min-height:92px}.login-brand{gap:12px}.login-brand>img{width:51px;height:51px}.login-brand strong{font-size:18px}.login-brand small{font-size:6px;letter-spacing:.65px;max-width:260px}.login-page .login-main{grid-template-columns:1fr;padding:0;min-height:0}.login-vision{margin:0 18px;border-radius:11px;min-height:0}.login-vision-content{padding:23px 25px 20px}.login-institution{display:none}.login-editorial{margin-top:0;max-width:600px}.login-overline{font-size:7px;letter-spacing:1.1px;line-height:1.9;margin-bottom:14px}.login-editorial h2{font-size:clamp(23px,5.7vw,31px);line-height:1.5;letter-spacing:-.7px}.login-editorial>p{font-size:12px;line-height:1.85;margin-top:12px;max-width:440px}.login-workflow-visual,.login-capabilities,.login-vision-footer{display:none}.login-vision:after{width:250px;height:250px;right:-145px;top:25px}.login-access{padding:32px 28px 15px;align-items:flex-start}.login-access-inner{max-width:470px}.login-access-label{font-size:8px;letter-spacing:1.4px;margin-bottom:13px}.login-access h1{font-size:30px;line-height:1.3;letter-spacing:-1px}.login-access h1 br{display:none}.login-intro{font-size:14px;line-height:1.85;margin-top:13px}.login-form{margin-top:25px}.login-form>label{font-size:14px}.login-select-wrap select{font-size:14px;min-height:52px}.login-profile-preview{padding:13px;gap:10px;min-height:80px}.login-profile-preview strong{font-size:12px}.login-profile-preview p{font-size:12px}.login-profile-avatar{width:31px;height:31px}.login-enter{margin-top:18px;min-height:51px;font-size:14px}.login-no-credentials{font-size:10px}.login-install{margin-top:20px;padding:14px;gap:11px}.login-install strong{font-size:13px}.login-install small{font-size:10px}.login-institutional{margin-top:24px;padding-top:21px}.login-institutional h2{font-size:14px}.login-institutional p{font-size:12px}.login-institutional button{font-size:12px}.login-demo-notice{font-size:11px;line-height:1.85;padding:14px;margin-top:21px}.login-page .login-footer{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:23px 28px 25px;font-size:10px}.login-identity-intro h3{font-size:19px}.login-identity-intro p{font-size:14px}}
-@media(max-width:360px){.login-header{padding-inline:17px}.login-brand>img{width:45px;height:45px}.login-brand strong{font-size:16px}.login-brand small{font-size:5px}.login-vision{margin-inline:13px}.login-vision-content{padding:22px}.login-editorial h2{font-size:23px}.login-overline{font-size:6px}.login-access{padding-inline:22px}.login-access h1{font-size:27px}.login-page .login-footer{padding-inline:22px}.login-no-credentials{font-size:9px}.login-install small{font-size:9px}}
 @media(prefers-reduced-motion:reduce){.login-page *{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 /* Keep operational copy readable across compact layouts. */
 .login-editorial>p,.login-intro{font-size:16px}
@@ -51,4 +47,153 @@
 .login-profile-preview strong,.login-profile-preview p,.login-install strong,.login-institutional h2,.login-institutional p,.login-institutional button{font-size:14px}
 .login-no-credentials,.login-install small,.login-demo-notice,.login-page .login-footer{font-size:12px}
 .login-access:focus{outline:none}
-@media(max-width:700px){.login-editorial>p{font-size:14px}.login-intro{font-size:16px}.login-profile-preview p{font-size:14px}.login-access{padding-top:29px}.login-demo-notice{font-size:12px}.login-form>label{font-size:14px}}
+
+/* Match the reading order to the entry flow; desktop keeps its editorial column. */
+.login-page .login-main{grid-template-areas:"vision access"}
+.login-access{grid-area:access}
+.login-vision{grid-area:vision}
+.login-brand-context{display:none}
+.login-brand .login-brand-description{font-size:10px;letter-spacing:.75px;line-height:1.7}
+.login-select-wrap select{min-height:54px}
+.login-enter{min-height:54px}
+.login-install{min-height:64px}
+.login-institutional button,.login-info-close{min-height:48px}
+.login-institutional button{justify-content:flex-start;padding-block:9px}
+.login-page button:focus-visible{outline:2px solid #b79a56;outline-offset:3px}
+
+@media(min-width:961px) and (max-width:1150px){
+  .login-header{padding-inline:28px;min-height:100px}
+  .login-brand strong{font-size:20px}
+  .login-brand .login-brand-description{font-size:9px;letter-spacing:.4px}
+  .login-header-context{font-size:10px;letter-spacing:.6px}
+  .login-page .login-main{padding-inline:22px;grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-height:690px}
+  .login-vision-content{padding:32px 28px 0}
+  .login-institution>span{font-size:10px;letter-spacing:1.1px}
+  .login-institution strong{font-size:15px}
+  .login-institution small{font-size:12px}
+  .login-editorial{margin-top:32px}
+  .login-overline{font-size:10px;letter-spacing:1px}
+  .login-editorial h2{font-size:27px;letter-spacing:-.7px}
+  .login-editorial>p{font-size:15px;line-height:1.8}
+  .login-workflow-visual{height:205px}
+  .login-paper{right:45px}
+  .login-paper-back{right:30px}
+  .login-trace-card{left:-4px;padding:11px;gap:8px}
+  .login-trace-card small{font-size:9px}
+  .login-capabilities{gap:10px}
+  .login-capabilities>div{gap:7px;align-items:flex-start}
+  .login-capabilities>div>span{font-size:13px}
+  .login-capabilities small{font-size:11px;line-height:1.65}
+  .login-vision-footer{padding-inline:28px;font-size:9px;letter-spacing:1px;line-height:1.8}
+  .login-access{padding:32px 30px}
+  .login-access h1{font-size:32px}
+  .login-intro{font-size:16px}
+  .login-form{margin-top:24px}
+  .login-page .login-footer{padding-inline:28px;font-size:12px}
+}
+
+@media(max-width:960px),(max-width:1100px) and (orientation:portrait){
+  .login-header{max-width:760px;min-height:100px;padding:18px 32px;gap:18px}
+  .login-brand{gap:14px}
+  .login-brand>img{width:56px;height:56px}
+  .login-brand strong{font-size:22px;line-height:1.35;letter-spacing:.4px}
+  .login-brand .login-brand-description,.login-header-context{display:none}
+  .login-brand-context{display:block;font-size:13px;line-height:1.6;color:var(--muted,#607187);margin-top:4px}
+  .login-brand .login-brand-context small{font-size:12px;line-height:1.6;letter-spacing:.1px;margin-top:1px}
+  .login-page .login-main{max-width:760px;grid-template-columns:minmax(0,1fr);grid-template-areas:"access" "vision";padding:0 0 10px;min-height:0;gap:12px}
+  .login-access{padding:30px 32px 32px;align-items:flex-start}
+  .login-access-inner{max-width:520px}
+  .login-access-label{font-size:11px;letter-spacing:1.4px;line-height:1.6;margin-bottom:14px}
+  .login-access h1{font-size:36px;line-height:1.3;letter-spacing:-1px}
+  .login-access h1 br{display:none}
+  .login-intro{font-size:16px;line-height:1.75;max-width:520px;margin-top:14px}
+  .login-form{margin-top:26px}
+  .login-form>label{font-size:16px;line-height:1.5}
+  .login-select-wrap select{font-size:16px;min-height:54px}
+  .login-profile-preview{padding:15px 14px;gap:12px;min-height:88px}
+  .login-profile-preview strong,.login-profile-preview p{font-size:14px;line-height:1.65}
+  .login-profile-avatar{width:33px;height:33px;font-size:11px}
+  .login-enter{font-size:16px;min-height:54px;margin-top:19px}
+  .login-no-credentials{font-size:12px;line-height:1.7;align-items:flex-start;text-align:center;margin-top:12px}
+  .login-no-credentials>svg{flex-shrink:0;margin-top:3px}
+  .login-install{padding:15px;gap:12px;margin-top:22px;min-height:76px}
+  .login-install strong{font-size:15px}
+  .login-install small{font-size:13px;line-height:1.65}
+  .login-install-tag{font-size:10px;padding:5px 6px}
+  .login-institutional{margin-top:24px;padding-top:23px;gap:12px}
+  .login-institutional h2,.login-institutional p,.login-institutional button{font-size:14px}
+  .login-institutional p{line-height:1.8}
+  .login-institutional button{min-height:48px}
+  .login-demo-notice{font-size:13px;line-height:1.8;padding:15px;margin-top:20px}
+  .login-vision{width:calc(100% - 64px);max-width:600px;min-height:0;margin:0 auto;border-radius:13px}
+  .login-vision-content{padding:28px 30px 25px}
+  .login-institution,.login-workflow-visual,.login-vision-footer{display:none}
+  .login-editorial{margin-top:0;max-width:none}
+  .login-overline{font-size:10px;letter-spacing:1px;line-height:1.8;margin-bottom:13px}
+  .login-editorial h2{font-size:28px;line-height:1.45;letter-spacing:-.7px}
+  .login-editorial>p{font-size:15px;line-height:1.8;max-width:none;margin-top:14px}
+  .login-capabilities{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:23px;padding:20px 0 0}
+  .login-capabilities>div{align-items:center;gap:9px}
+  .login-capabilities>div>span{font-size:14px;line-height:1.5}
+  .login-capabilities small{display:none}
+  .login-vision:after{width:290px;height:290px;right:-160px;top:20px}
+  .login-page .login-footer{max-width:760px;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:26px 32px 30px;font-size:12px}
+}
+
+@media(max-width:600px){
+  .login-header{min-height:94px;padding:16px 24px}
+  .login-brand{gap:12px}
+  .login-brand>img{width:52px;height:52px}
+  .login-brand strong{font-size:20px}
+  .login-brand-context{font-size:12px;line-height:1.55}
+  .login-brand .login-brand-context small{font-size:12px;line-height:1.55}
+  .login-access{padding:24px 24px 28px;scroll-margin-top:15px}
+  .login-access-label{font-size:11px;margin-bottom:12px}
+  .login-access h1{font-size:30px;line-height:1.3;letter-spacing:-.8px}
+  .login-intro{font-size:16px;line-height:1.75;margin-top:13px}
+  .login-form{margin-top:24px}
+  .login-form>label{font-size:14px}
+  .login-select-wrap{padding-left:13px}
+  .login-select-wrap select{min-height:54px;padding-left:10px;padding-right:25px}
+  .login-profile-preview{padding:14px 12px;gap:10px}
+  .login-profile-preview strong,.login-profile-preview p{font-size:14px}
+  .login-enter{min-height:54px;margin-top:18px}
+  .login-no-credentials{font-size:12px;gap:5px}
+  .login-install{padding:14px 12px;gap:10px;min-height:76px}
+  .login-install strong{font-size:14px}
+  .login-install small{font-size:12px}
+  .login-install-icon{width:34px;height:34px}
+  .login-install-tag{font-size:10px;padding:4px}
+  .login-institutional{gap:11px}
+  .login-institutional p{font-size:14px}
+  .login-demo-notice{font-size:13px;padding:14px}
+  .login-vision{width:calc(100% - 48px);border-radius:12px}
+  .login-vision-content{padding:24px 22px}
+  .login-overline{font-size:10px;letter-spacing:.6px}
+  .login-editorial h2{font-size:24px;line-height:1.45;letter-spacing:-.6px}
+  .login-editorial>p{font-size:14px;line-height:1.8}
+  .login-capabilities{gap:10px;margin-top:20px;padding-top:18px}
+  .login-capabilities>div{gap:7px}
+  .login-capabilities>div>svg{width:17px;height:17px}
+  .login-capabilities>div>span{font-size:13px}
+  .login-page .login-footer{align-items:flex-start;text-align:left;padding:25px 24px 30px;font-size:12px}
+  .login-identity-intro h3{font-size:20px}
+  .login-identity-intro p,.login-identity-list p{font-size:14px;line-height:1.8}
+  .login-info-close{width:100%;min-height:48px;text-align:center}
+}
+
+@media(max-width:360px){
+  .login-header{padding-inline:20px}
+  .login-brand>img{width:46px;height:46px}
+  .login-brand strong{font-size:19px}
+  .login-brand-context,.login-brand .login-brand-context small{font-size:11px}
+  .login-access{padding-inline:20px}
+  .login-access h1{font-size:28px}
+  .login-vision{width:calc(100% - 40px)}
+  .login-vision-content{padding:22px 19px}
+  .login-capabilities{gap:8px}
+  .login-capabilities>div{gap:5px}
+  .login-capabilities>div>span{font-size:12px}
+  .login-capabilities>div>svg{width:16px;height:16px}
+  .login-page .login-footer{padding-inline:20px}
+}
