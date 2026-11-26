@@ -18,12 +18,13 @@ async function comfortableTouch(target: Locator) {
   expect(rect!.width, 'La cible doit mesurer au moins 44px de large.').toBeGreaterThanOrEqual(43.5);
   expect(rect!.height, 'La cible doit mesurer au moins 44px de haut.').toBeGreaterThanOrEqual(43.5);
 }
-async function viewportCapture(page: Page, name: string) {
+async function viewportCapture(page: Page, name: string, folder = 'docs/screenshots') {
   if (process.env.SIGCP_CAPTURE_SCREENSHOTS !== '1') return;
-  await mkdir('docs/screenshots', { recursive: true });
+  await mkdir(folder, { recursive: true });
   await page.evaluate(() => document.fonts.ready);
+  await expect.poll(() => page.evaluate(() => Array.from(document.images).filter(image => image.getClientRects().length > 0).every(image => image.complete && image.naturalWidth > 0))).toBe(true);
   await page.evaluate(() => window.scrollTo({ top: 0, left: 0, behavior: 'instant' }));
-  await page.screenshot({ path: `docs/screenshots/${name}.png`, fullPage: false, animations: 'disabled' });
+  await page.screenshot({ path: `${folder}/${name}.png`, fullPage: false, animations: 'disabled' });
 }
 async function visibleRegisterCards(page: Page) {
   const register = page.locator('section.register');
@@ -71,12 +72,21 @@ test('téléphone 390 : cartes lisibles, fiche, navigation basse et menu utilisa
   await sidebar.getByRole('button', { name: 'Fermer le menu', exact: true }).tap();
   await expect(sidebar).toBeHidden();
   await noHorizontalOverflow(page);
+  if (process.env.SIGCP_CAPTURE_SCREENSHOTS === '1') {
+    await page.getByRole('button', { name: 'Activer le mode sombre', exact: true }).tap();
+    await quick.getByRole('button', { name: 'Aller à Courriers', exact: true }).tap();
+    await viewportCapture(page, 'registre-mobile-dark', '.local/responsive-review-final');
+    await page.evaluate(() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'instant' }));
+    await page.screenshot({ path: '.local/responsive-review-final/registre-mobile-dark-bas.png', fullPage: false, animations: 'disabled' });
+  }
 });
 
 test('tablette 820 : rail par défaut, cartes, formulaire confortable, préférence conservée et rotation 1024', async ({ page }) => {
   await page.setViewportSize({ width: 820, height: 1180 });
   await page.goto('./', { waitUntil: 'domcontentloaded' });
   expect(await page.evaluate(() => localStorage.getItem('imperium-sidebar-collapsed'))).toBeNull();
+  await page.getByRole('button', { name: 'Ouvrir la démonstration', exact: true }).waitFor();
+  await viewportCapture(page, 'login-tablet');
   await page.getByRole('button', { name: 'Ouvrir la démonstration', exact: true }).tap();
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Vue d’ensemble');
   const sidebar = page.getByRole('complementary', { name: 'Navigation principale', exact: true });
@@ -105,6 +115,10 @@ test('tablette 820 : rail par défaut, cartes, formulaire confortable, préfére
     expect(field.fontSize, `Le champ ${field.name} doit rester lisible et éviter le zoom automatique.`).toBeGreaterThanOrEqual(16);
     expect(field.height, `Le champ ${field.name} doit rester facile à toucher.`).toBeGreaterThanOrEqual(47.5);
   }
+  const save = form.getByRole('button', { name: 'Enregistrer le courrier', exact: true });
+  await save.scrollIntoViewIfNeeded();
+  await comfortableTouch(save);
+  await expect(save).toBeInViewport({ ratio: 1 });
   await comfortableTouch(form.getByRole('button', { name: 'Fermer la fenêtre', exact: true }));
   await form.getByRole('button', { name: 'Fermer la fenêtre', exact: true }).tap();
   await page.getByRole('button', { name: 'Développer le menu', exact: true }).tap();
@@ -116,4 +130,20 @@ test('tablette 820 : rail par défaut, cartes, formulaire confortable, préfére
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Courriers entrants');
   expect((await sidebar.boundingBox())!.width).toBeGreaterThan(200);
   await noHorizontalOverflow(page);
+  if (process.env.SIGCP_CAPTURE_SCREENSHOTS === '1') {
+    await sidebar.getByRole('link', { name: 'Vue d’ensemble', exact: true }).tap();
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('Vue d’ensemble');
+    await viewportCapture(page, 'dashboard-tablet-landscape');
+    await sidebar.getByRole('link', { name: 'Courriers entrants', exact: true }).tap();
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('Courriers entrants');
+    await page.getByRole('button', { name: 'Activer le mode sombre', exact: true }).tap();
+    await viewportCapture(page, 'registre-tablet-dark-landscape', '.local/responsive-review-final');
+    await page.getByRole('button', { name: 'Nouveau courrier', exact: true }).tap();
+    const darkForm = page.getByRole('dialog', { name: 'Enregistrer un courrier fictif', exact: true });
+    await expect(darkForm).toBeVisible();
+    await viewportCapture(page, 'formulaire-tablet-dark-haut', '.local/responsive-review-final');
+    await darkForm.getByRole('button', { name: 'Enregistrer le courrier', exact: true }).scrollIntoViewIfNeeded();
+    await page.screenshot({ path: '.local/responsive-review-final/formulaire-tablet-dark-bas.png', fullPage: false, animations: 'disabled' });
+    await darkForm.getByRole('button', { name: 'Fermer la fenêtre', exact: true }).tap();
+  }
 });
