@@ -215,7 +215,7 @@ def generate(args):
               'Les résultats ci-dessous concernent exclusivement le pilote local. Ils ne valent pas preuve d’homologation, de performance serveur ou de résistance à une attaque institutionnelle.')
     y = table(c, ['Vérification', 'Résultat attesté dans cette revue'], [
         ['Tests unitaires domaine', '24 réussis : 16 sur le registre et 8 sur les échanges fictifs.'],
-        ['Typage TypeScript strict', 'Réussi - commande tsc --noEmit.'],
+        ['Typage et dépendances', 'TypeScript strict réussi ; npm audit : 0 vulnérabilité signalée.'],
         ['Construction de production', 'Réussie - commande npm run build.'],
         ['Parcours navigateur Playwright', escape(args.e2e_result)],
         ['Publication GitHub Pages', escape(args.pages_status)],
@@ -231,8 +231,9 @@ def generate(args):
     for head, text in steps:
         y = paragraph(c, head, M, y, size=10.5, leading=15, color=NAVY, bold=True)
         y = paragraph(c, text, M, y - 5, size=9.5, leading=14, color=MUTED) - 15
-    y = note(c, 'Les captures ne sont incluses que si elles proviennent d’une exécution réelle de cette application. En leur absence, ce guide reste textuel ; aucune maquette n’est présentée comme une capture.', y)
-    paragraph(c, 'Sources de vérification : tests/domain.test.mjs, tests/exchange.test.mjs, tests/e2e.spec.ts et PROJECT_STATUS.md. Révision du code : ' + escape(args.revision), M, y,
+    y = paragraph(c, 'La capture de la page 6 provient d’une exécution réelle du pilote. Le scénario de capture ignoré en CI ne remplace pas cette preuve visuelle locale.', M, y, size=8.5, leading=12.5, color=MUTED) - 12
+    source = ('Source CI : <link href="' + escape(args.ci_run, quote=True) + '">GitHub Actions - exécution 45871315126</link>. ' if args.ci_run else 'Sources : tests/domain.test.mjs, tests/exchange.test.mjs et tests/e2e.spec.ts. ')
+    paragraph(c, source + 'Révision vérifiée : ' + escape(args.revision) + '. Les succès frontend ne constituent pas un audit de sécurité serveur.', M, y,
               size=8.2, leading=12, color=MUTED)
     footer(c, 4, total)
     c.showPage()
@@ -251,7 +252,7 @@ def generate(args):
     y = section(c, 'GitHub Pages - prérequis de publication', y)
     y = paragraph(c, '1. Ouvrir le dépôt SIGCP, puis <b>Settings &gt; Pages</b>.<br/>2. Choisir <b>GitHub Actions</b> comme source et vérifier que l’offre autorise Pages pour ce dépôt privé.<br/>3. Exécuter le workflow de validation/déploiement et lire son résultat.<br/>4. Vérifier l’URL après réussite : <b>https://propheticpowerfulman.github.io/SIGCP/</b>.', M, y,
                   size=9.6, leading=16) - 15
-    y = note(c, 'L’existence du workflow ne prouve pas la publication. Aucun changement de visibilité du dépôt n’est autorisé implicitement par cette procédure. L’activation administrative de Pages peut rester nécessaire.', y)
+    y = note(c, 'Le déploiement CI a échoué à l’étape configure-pages : site Pages introuvable (NotFound). Activez d’abord Pages pour ce dépôt, puis relancez le workflow. Aucun changement de visibilité ne doit être déduit de cette procédure.', y)
     y = section(c, 'Décisions indispensables du concepteur et de l’institution', y)
     y = paragraph(c, 'Emblème officiel et droit d’usage ; organigramme, numérotation et classifications ; matrice des habilitations ; autorités de validation et signature ; hébergement souverain et IAM/PKI ; conservation et reprise ; mandat de découverte du système historique.', M, y,
                   size=9.6, leading=15, color=MUTED) - 14
@@ -302,6 +303,7 @@ if __name__ == '__main__':
     parser.add_argument('--e2e-result', default='En cours au moment de la préparation du dossier ; aucun résultat final revendiqué.')
     parser.add_argument('--pages-status', default='Activation et URL déployée à vérifier ; aucun succès de publication revendiqué.')
     parser.add_argument('--revision', default='Voir le commit de livraison et PROJECT_STATUS.md.')
+    parser.add_argument('--ci-run', default='', help='Verified GitHub Actions run URL used as evidence.')
     parser.add_argument('--screenshot', action='append', default=[], help='Path of an existing, real application screenshot.')
     parser.add_argument('--render', action='store_true', help='Render every page to docs/report-preview/ with Poppler.')
     generate(parser.parse_args())

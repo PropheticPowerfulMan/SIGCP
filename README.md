@@ -82,4 +82,6 @@ La typographie est servie localement. Le monogramme du produit ne représente pa
 
 Les deux prompts initiaux sont suivis dans [la matrice des exigences](docs/REQUIREMENTS_MATRIX.md). Le backend Java 25 / Spring Boot, PostgreSQL, OIDC/MFA, RBAC/ABAC serveur, GED privée, antivirus, messagerie de test puis institutionnelle, signatures et passerelle nationale restent à réaliser et à vérifier. Les douze PDF, les tests de sécurité de l’infrastructure cible et la migration historique ne sont pas revendiqués comme livrés.
 
+Le [dossier PDF de revue du pilote](docs/IMPERIUM_RDC_Dossier_Revue_Pilote.pdf) présente la vision, les limites et une capture réelle. L’[inventaire des dépendances](docs/DEPENDENCIES.md) est extrait des manifests installés.
+
 Voir [PROJECT_STATUS.md](PROJECT_STATUS.md) et [le plan technique](docs/TECHNICAL_PLAN.md) pour les résultats réellement exécutés, limites et prochaines étapes.
