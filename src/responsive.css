@@ -1,6 +1,7 @@
 /* Layouts designed for touch and for the available workspace, not scaled desktops. */
 .mobile-workspace-nav,.mobile-correspondences,.mobile-register-tools,.hero-title-mobile{display:none}
 .hero-title-wide{display:inline}
+[data-theme=dark] .notice:not(.danger){background:var(--soft);color:var(--muted);border-color:var(--line)}
 .install-host-pending{display:none}.install-toolbar-host{display:flex;align-items:center;min-width:0}
 .toolbar-install-control{position:static;display:flex;align-items:center;gap:8px}
 .toolbar-install-control .pwa-install-button{min-height:38px;background:var(--soft);color:var(--ink);border-color:var(--line);border-radius:8px}
