@@ -2,17 +2,21 @@ name: Validate and deploy demo
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - "docs/**"
+      - "README.md"
+      - "PROJECT_STATUS.md"
+      - "scripts/generate_pilot_report.py"
   workflow_dispatch:
 permissions:
   contents: read
-  pages: write
-  id-token: write
 concurrency:
   group: github-pages
   cancel-in-progress: false
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -20,21 +24,33 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      - run: npm audit --audit-level=high
       - run: npm test
       - run: npm run build
-      - uses: actions/configure-pages@v5
-        with:
-          enablement: true
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
+      - name: Test reports
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - uses: actions/configure-pages@v5
       - name: Deploy GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
