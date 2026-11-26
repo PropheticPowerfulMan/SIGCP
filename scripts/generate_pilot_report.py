@@ -7,6 +7,7 @@ execution evidence, never inferred from the existence of test or workflow files.
 from __future__ import annotations
 
 import argparse
+from hashlib import sha256
 from html import escape
 from pathlib import Path
 import shutil
@@ -25,6 +26,8 @@ from pypdf import PdfReader
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / 'docs' / 'IMPERIUM_RDC_Dossier_Revue_Pilote.pdf'
 PREVIEW = ROOT / 'docs' / 'report-preview'
+EMBLEM = ROOT / 'public' / 'brand' / 'emblem-presidence.jpg'
+EMBLEM_SHA256 = '1d40d86235ff4169450c1beb9fd47ca4fec485f3f26fb580a1b874db6aec3261'
 W, H = 595.276, 841.89
 M, CW = 46, W - 92
 NAVY, BLUE, GOLD = map(HexColor, ['#081D35', '#173C5B', '#B69A4E'])
@@ -104,7 +107,7 @@ def footer(c, page, total):
     c.line(M, 43, W - M, 43)
     c.setFont('Body', 7.2)
     c.setFillColor(MUTED)
-    c.drawString(M, 28, 'PILOTE NON HOMOLOGUÉ  |  Données fictives  |  26 novembre 2026')
+    c.drawString(M, 28, 'PILOTE NON HOMOLOGUÉ  |  Données fictives  |  Présentation du 27 novembre 2026')
     c.drawRightString(W - M, 28, f'{page:02d} / {total:02d}')
 
 
@@ -118,14 +121,16 @@ def box(c, x, y, width, height, heading, body, fill=PALE):
 
 def generate(args):
     register_fonts()
+    if not EMBLEM.is_file() or sha256(EMBLEM.read_bytes()).hexdigest() != EMBLEM_SHA256:
+        raise RuntimeError('Le fichier original autorisé de l’emblème est absent ou son empreinte diffère.')
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     screenshots = [Path(path) for path in args.screenshot]
     for path in screenshots:
         if not path.is_file():
             raise FileNotFoundError(f'Real screenshot is missing: {path}')
-    total = 5 + len(screenshots)
+    total = 6 + len(screenshots)
     c = canvas.Canvas(str(OUTPUT), pagesize=(W, H), pageCompression=1)
-    c.setTitle('IMPERIUM RDC - Dossier de revue du pilote v0.2')
+    c.setTitle('IMPERIUM RDC - Dossier de revue du pilote v0.3')
     c.setAuthor('LOKALA LOMBOTO Jonathan - conception du projet')
     c.setSubject('Revue fonctionnelle du pilote frontend SIGCP, limites et trajectoire institutionnelle')
 
@@ -137,14 +142,13 @@ def generate(args):
     paragraph(c, 'IMPERIUM RDC', M, H - 72, 300, size=13, leading=18, color=white, bold=True)
     paragraph(c, 'SYSTÈME INTÉGRÉ DE GESTION<br/>DES COURRIERS PRÉSIDENTIELS', M, H - 104, 330,
               size=8.5, leading=13, color=HexColor('#B7C9DA'))
-    c.setStrokeColor(GOLD)
-    c.roundRect(W - M - 118, H - 126, 118, 65, 4, fill=0, stroke=1)
-    paragraph(c, 'EMPLACEMENT RÉSERVÉ<br/><br/>Emblème officiel à fournir', W - M - 108, H - 73, 98,
-              size=7.5, leading=10.5, color=HexColor('#D7C58F'))
+    # Original JPEG supplied and authorized by the concepteur; no redraw or crop.
+    c.drawImage(ImageReader(str(EMBLEM)), W - M - 112, H - 174, width=112, height=112, preserveAspectRatio=True)
+    paragraph(c, 'Emblème fourni par le concepteur', W - M - 118, H - 182, 124, size=6.5, leading=9, color=HexColor('#D7C58F'))
     paragraph(c, 'Dossier de revue<br/>du pilote', M, 650, size=37, leading=44, color=white, bold=True)
     paragraph(c, 'Du registre documentaire<br/>à une vision nationale des échanges.', M, 535,
               size=16.5, leading=24, color=HexColor('#D7C58F'))
-    paragraph(c, 'VERSION 0.2  /  26 NOVEMBRE 2026', M, 426, size=8.5, leading=12, color=white, bold=True)
+    paragraph(c, 'VERSION 0.3  /  PRÉSENTATION DU 27 NOVEMBRE 2026', M, 426, size=8.5, leading=12, color=white, bold=True)
     paragraph(c, 'Proposition technique non homologuée.<br/>Revue d’une démonstration frontend, sans serveur métier.', M, 399,
               size=9.2, leading=14, color=HexColor('#B7C9DA'))
     y = paragraph(c, 'Un pilote pour éprouver les usages avant l’infrastructure définitive.', M, 335,
@@ -152,7 +156,7 @@ def generate(args):
     y = paragraph(c, 'Ce dossier distingue les fonctions réellement disponibles dans le navigateur, les preuves de vérification et les prérequis d’une plateforme institutionnelle exploitable.',
                   M, y - 12, size=10.5, leading=16, color=MUTED)
     col = (CW - 20) / 3
-    for index, (head, body) in enumerate([('42', 'courriers synthétiques'), ('24', 'tests unitaires réussis'), ('0 donnée réelle', 'dans le périmètre autorisé')]):
+    for index, (head, body) in enumerate([('42', 'courriers synthétiques'), ('Version 0.3', 'revue de présentation'), ('0 donnée réelle', 'dans le périmètre autorisé')]):
         box(c, M + index * (col + 10), 235, col, 69, head, body)
     y = paragraph(c, '<b>Initiateur et concepteur : LOKALA LOMBOTO Jonathan.</b>', M, 135, size=10, leading=15)
     paragraph(c, 'Propriétaire intellectuel revendiqué : LOKALA LOMBOTO Jonathan, sous réserve des dispositions institutionnelles, contractuelles et légales applicables.',
@@ -162,11 +166,11 @@ def generate(args):
 
     # 2. Scope and traceability.
     y = title(c, 2, 'Vision et périmètre', 'Une démonstration utile, un périmètre précis',
-              'Les deux cahiers d’exigences visent à moderniser le courrier présidentiel puis à préparer le réseau national NSEN. La v0.2 permet la revue des usages sur des données fictives.')
+              'Les deux cahiers d’exigences visent à moderniser le courrier présidentiel puis à préparer le réseau national NSEN. La v0.3 ajoute une entrée par profils fictifs et une coque PWA, à valider sur les appareils de présentation.')
     y = table(c, ['Fonctions disponibles localement', 'Limites à conserver visibles'], [
-        ['Registres entrants/sortants, création validée, fiches et chronologie.', 'Références DEMO, stockage navigateur ; aucune numérotation administrative transactionnelle.'],
+        ['Entrée par profil fictif, registres, création validée et chronologie.', 'Références DEMO, stockage navigateur ; aucune numérotation administrative transactionnelle.'],
         ['Affectation, instruction, validation, retour motivé et archivage simulés.', 'Aucun visa, signature officielle, habilitation ou contrôle serveur.'],
-        ['Recherche multicritère, pagination, CSV et statistiques calculées.', 'Jeu limité à 42 dossiers ; pas de moteur de recherche ni de rapports serveur.'],
+        ['Recherche multicritère, pagination, CSV et statistiques calculées.', 'Jeu initial de 42 dossiers ; pas de recherche ni de rapports serveur.'],
         ['Annuaire et suivi des échanges entre institutions fictives.', 'Transmission, réception, accusé et relance simulés ; aucun courrier réel transmis.'],
         ['Fiches documentaires et texte de démonstration téléchargeable.', 'Pas de fichier original, téléversement privé, quarantaine ou analyse antivirus.'],
     ], [CW * .49, CW * .51], y)
@@ -174,7 +178,7 @@ def generate(args):
     y = table(c, ['Ensemble', 'Sections', 'État de couverture'], [
         ['Fondation, identité et architecture', '1 à 6', 'Pilote visuel partiel ; identité serveur et RBAC/ABAC absents.'],
         ['Courriers, référentiels et documents', '7 à 15', 'Parcours locaux partiels ; GED, messagerie et API à construire.'],
-        ['Sécurité, migration et exploitation', '16 à 24', 'Tests frontend ; contrôles serveur, PWA, charge et migration absents.'],
+        ['Sécurité, migration et exploitation', '16 à 24', 'PWA statique ; identité serveur, charge et migration à construire.'],
         ['Structure, documentation et livraison', '25 à 30', 'Sources et suivi disponibles ; livraison complète non atteinte.'],
         ['Vision et échanges nationaux', '31 à 40', 'Simulation ISE ; isolation, PKI, protocole et gouvernance à établir.'],
     ], [CW * .35, CW * .13, CW * .52], y, size=8.3)
@@ -188,7 +192,7 @@ def generate(args):
               'GitHub Pages héberge des fichiers statiques. Le pilote valide les parcours ; l’infrastructure cible devra apporter les services métier et les frontières de confiance.')
     y = section(c, 'Architecture actuelle - démonstration frontend', y)
     box(c, M, y, CW, 100, 'React + TypeScript strict + Vite',
-        'Composants de registre, détail, création, analyses et réseau fictif. Règles métier locales dans domain.ts et exchange.ts. Jeux de données synthétiques et préférences dans le stockage du navigateur.')
+        'Profils d’entrée fictifs, registre, analyses et échanges simulés. Coque PWA préparée en ligne ; cache statique uniquement. Règles locales dans domain.ts/exchange.ts et données synthétiques dans le navigateur.')
     y -= 116
     y = note(c, '<b>Frontière actuelle :</b> le navigateur appartient à l’utilisateur. Les identifiants, agents, statuts et contenus locaux peuvent être modifiés. Le pilote ne prouve ni l’autorisation, ni l’isolement des institutions, ni l’intégrité d’une preuve officielle.', y)
     y = section(c, 'Architecture cible - composants à implémenter', y)
@@ -214,26 +218,26 @@ def generate(args):
     y = title(c, 4, 'Preuves et recette', 'Vérifier les usages, conserver les preuves',
               'Les résultats ci-dessous concernent exclusivement le pilote local. Ils ne valent pas preuve d’homologation, de performance serveur ou de résistance à une attaque institutionnelle.')
     y = table(c, ['Vérification', 'Résultat attesté dans cette revue'], [
-        ['Tests unitaires domaine', '24 réussis : 16 sur le registre et 8 sur les échanges fictifs.'],
-        ['Typage et dépendances', 'TypeScript strict réussi ; npm audit : 0 vulnérabilité signalée.'],
-        ['Construction de production', 'Réussie - commande npm run build.'],
+        ['Tests unitaires', escape(args.unit_result)],
+        ['Typage et dépendances', escape(args.quality_result)],
+        ['Construction de production', escape(args.build_result)],
         ['Parcours navigateur Playwright', escape(args.e2e_result)],
         ['Publication GitHub Pages', escape(args.pages_status)],
         ['Sécurité et performance serveur', 'Non exécutées : aucun backend institutionnel n’est livré.'],
     ], [CW * .39, CW * .61], y)
     y = section(c, 'Guide de revue - quatre parcours concrets', y)
     steps = [
-        ('1. Explorer le registre', 'Ouvrir les courriers entrants, rechercher « numérisation », combiner service et priorité, puis changer de page. Vérifier aussi l’état sans résultat.'),
+        ('1. Ouvrir le pilote', 'Choisir un profil fictif puis « Ouvrir la démonstration ». Explorer les indicateurs et le registre ; rétracter puis rouvrir le menu.'),
         ('2. Créer un dossier fictif', 'Ouvrir « Nouveau courrier », soumettre le formulaire vide pour vérifier les erreurs, puis renseigner objet, expéditeur, service et échéance.'),
         ('3. Suivre un circuit', 'Consulter la fiche et son historique, affecter, instruire, demander une correction motivée si nécessaire, valider et archiver. Recharger la page pour contrôler la persistance locale.'),
         ('4. Examiner les échanges', 'Sélectionner un courrier sortant éligible et un partenaire fictif. Distinguer transmission technique, réception administrative et accusé. Tester la reprise d’échec et l’absence de doublon.'),
     ]
     for head, text in steps:
-        y = paragraph(c, head, M, y, size=10.5, leading=15, color=NAVY, bold=True)
-        y = paragraph(c, text, M, y - 5, size=9.5, leading=14, color=MUTED) - 15
-    y = paragraph(c, 'La capture de la page 6 provient d’une exécution réelle du pilote. Le scénario de capture ignoré en CI ne remplace pas cette preuve visuelle locale.', M, y, size=8.5, leading=12.5, color=MUTED) - 12
-    source = ('Source CI : <link href="' + escape(args.ci_run, quote=True) + '">GitHub Actions - exécution 45871315126</link>. ' if args.ci_run else 'Sources : tests/domain.test.mjs, tests/exchange.test.mjs et tests/e2e.spec.ts. ')
-    paragraph(c, source + 'Révision vérifiée : ' + escape(args.revision) + '. Les succès frontend ne constituent pas un audit de sécurité serveur.', M, y,
+        y = paragraph(c, head, M, y, size=10.1, leading=14, color=NAVY, bold=True)
+        y = paragraph(c, text, M, y - 4, size=9.1, leading=12.5, color=MUTED) - 10
+    y = paragraph(c, 'Les captures ajoutées à la fin du dossier proviennent d’exécutions réelles. Les résultats historiques de la v0.2 ne sont pas présentés comme une recette de la v0.3.', M, y, size=8.5, leading=12.5, color=MUTED) - 12
+    source = ('Source CI : <link href="' + escape(args.ci_run, quote=True) + '">GitHub Actions - exécution vérifiée</link>. ' if args.ci_run else 'Sources : tests/domain.test.mjs, tests/exchange.test.mjs et tests/e2e.spec.ts. ')
+    paragraph(c, source + 'Révision / état : ' + escape(args.revision) + '. Les succès frontend ne constituent pas un audit de sécurité serveur.', M, y,
               size=8.2, leading=12, color=MUTED)
     footer(c, 4, total)
     c.showPage()
@@ -252,17 +256,36 @@ def generate(args):
     y = section(c, 'GitHub Pages - publication vérifiée' if args.pages_status.startswith('Publié') else 'GitHub Pages - prérequis de publication', y)
     y = paragraph(c, '1. Ouvrir le dépôt SIGCP, puis <b>Settings &gt; Pages</b>.<br/>2. Vérifier la source <b>GitHub Actions</b> et la visibilité du dépôt approuvée par le propriétaire.<br/>3. Exécuter le workflow de validation/déploiement et lire son résultat.<br/>4. Vérifier l’URL après réussite : <b>https://propheticpowerfulman.github.io/SIGCP/</b>.', M, y,
                   size=9.6, leading=16) - 15
-    publication_note = ('Publication réussie et vérifiée : réponse HTTP 200, JavaScript index-8ktd3b7o.js et CSS index-DAab89lC.css attendus présents. Les jobs build et deploy du run CI ont réussi. La démonstration reste limitée aux données fictives.' if args.pages_status.startswith('Publié') else 'Le déploiement CI a échoué à l’étape configure-pages : site Pages introuvable (NotFound). Activez d’abord Pages pour ce dépôt, puis relancez le workflow. Aucun changement de visibilité ne doit être déduit de cette procédure.')
+    publication_note = ('Publication de la version indiquée vérifiée par les résultats fournis : accès HTTPS et ressources attendues. La coque PWA reste statique, sans identité institutionnelle ni données réelles.' if args.pages_status.startswith('Publié') else 'Vérifier la réussite du workflow et la version servie avant la présentation. La publication historique de la v0.2 ne constitue pas une preuve de déploiement ou de recette de la v0.3.')
     y = note(c, publication_note, y)
     y = section(c, 'Décisions indispensables du concepteur et de l’institution', y)
-    y = paragraph(c, 'Emblème officiel et droit d’usage ; organigramme, numérotation et classifications ; matrice des habilitations ; autorités de validation et signature ; hébergement souverain et IAM/PKI ; conservation et reprise ; mandat de découverte du système historique.', M, y,
+    y = paragraph(c, 'Charte institutionnelle ; organigramme, numérotation et classifications ; matrice des habilitations ; autorités de validation et signature ; hébergement souverain et IAM/PKI ; conservation et reprise ; mandat de découverte du système historique.', M, y,
                   size=9.6, leading=15, color=MUTED) - 14
     paragraph(c, '<b>Le pilote est prêt à être examiné. L’architecture de production et le réseau national restent à construire, tester et approuver.</b>', M, y,
               size=10.2, leading=15, color=NAVY)
     footer(c, 5, total)
     c.showPage()
 
-    for index, path in enumerate(screenshots, start=6):
+    # 6. Installation and the short presentation route.
+    y = title(c, 6, 'Application et présentation', 'Retrouver le pilote sur son appareil',
+              'Pour la séance du 27 novembre 2026 : préparer chaque appareil en ligne avant de montrer le mode application et le fonctionnement de la coque hors connexion.')
+    y = table(c, ['Appareil', 'Accès à l’installation'], [
+        ['Chrome / Edge sur ordinateur', 'Bouton Installer lorsque la proposition native existe ; sinon icône ou menu d’installation du navigateur.'],
+        ['Android', 'Dans Chrome, utiliser la commande Installer ou Ajouter à l’écran d’accueil ; confirmer ce qui est proposé par l’appareil.'],
+        ['iPhone / iPad', 'Dans Safari : Partager, puis Ajouter à l’écran d’accueil. L’option d’ouverture comme app peut être proposée.'],
+        ['Mac avec Safari', 'Sur macOS Sonoma ou ultérieur : Fichier, puis Ajouter au Dock. Sinon conserver l’accès web ou un navigateur compatible.'],
+    ], [CW * .34, CW * .66], y, size=9)
+    y = note(c, 'L’installation native dépend du navigateur et du système. Sans proposition disponible, le bouton ouvre un guide adapté. Une ouverture du guide ne prouve pas une installation ; un favori n’est pas une garantie de fenêtre autonome.', y)
+    y = section(c, 'Hors connexion : une coque statique, pas un serveur', y)
+    y = paragraph(c, 'Ouvrir d’abord la production en ligne et attendre sa préparation. Le précache se limite aux ressources autorisées : HTML, manifeste, bundles, polices et icônes. Les futures réponses API, jetons, documents, exports et requêtes autorisées ne doivent pas être mis en cache. Les dossiers fictifs restent locaux au navigateur, sans synchronisation institutionnelle.', M, y, size=9.7, leading=15, color=MUTED) - 17
+    y = section(c, 'Un parcours de présentation en cinq minutes', y)
+    y = paragraph(c, '<b>Entrée et profil</b> → <b>tableau de bord</b> → <b>nouveau courrier</b> → <b>traitement et validation</b> → <b>échange simulé</b> → <b>installation et essai hors connexion</b>.<br/><br/>Terminer les formulaires avant une mise à jour. Revenir en ligne après l’essai. Garder l’URL web, les captures réelles et le PDF comme solutions de secours.', M, y, size=9.7, leading=15) - 18
+    y = paragraph(c, 'Guides détaillés : docs/PRESENTATION_GUIDE.md et docs/PWA_INSTALLATION.md.', M, y, size=8.8, leading=13, color=MUTED) - 12
+    paragraph(c, 'Références navigateur : <link href="https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Installing">MDN - installation des applications web</link> ; <link href="https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Making_PWAs_installable">MDN - conditions et prise en charge</link>. Les contrôles exécutés sur le pilote sont consignés séparément.', M, y, size=8.4, leading=12.5, color=MUTED)
+    footer(c, 6, total)
+    c.showPage()
+
+    for index, path in enumerate(screenshots, start=7):
         y = title(c, index, 'Capture réelle', 'Le pilote en situation de revue',
                   'Capture de l’application exécutée avec des données synthétiques. Elle illustre le pilote frontend et ne démontre pas les protections de l’infrastructure cible.')
         reader = ImageReader(str(path))
@@ -301,8 +324,11 @@ def generate(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--unit-result', default='v0.3 : bilan consolidé à confirmer. Historique v0.2 : 24 tests métier réussis.')
+    parser.add_argument('--quality-result', default='Typage et audit de la v0.3 à confirmer par une exécution finale.')
+    parser.add_argument('--build-result', default='Construction finale de la v0.3 à confirmer.')
     parser.add_argument('--e2e-result', default='En cours au moment de la préparation du dossier ; aucun résultat final revendiqué.')
-    parser.add_argument('--pages-status', default='Activation et URL déployée à vérifier ; aucun succès de publication revendiqué.')
+    parser.add_argument('--pages-status', default='Publication de la v0.3 à vérifier ; v0.2 historiquement publiée.')
     parser.add_argument('--revision', default='Voir le commit de livraison et PROJECT_STATUS.md.')
     parser.add_argument('--ci-run', default='', help='Verified GitHub Actions run URL used as evidence.')
     parser.add_argument('--screenshot', action='append', default=[], help='Path of an existing, real application screenshot.')

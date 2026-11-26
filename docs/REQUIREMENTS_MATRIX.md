@@ -1,6 +1,6 @@
 # Matrice de traçabilité des exigences — IMPERIUM RDC / SIGCP
 
-Version du périmètre : 0.2, démonstration frontend. Date : 26 novembre 2026.
+Version du périmètre : 0.3, démonstration frontend. Date : 26 novembre 2026. Validation CI réussie : 32 tests Node, 17 parcours Chromium, audit npm sans vulnérabilité et typage/build. Version publiée sur GitHub Pages avec ressources contrôlées ; quatre captures finales produites et inspectées. Références dans le rapport de validation.
 
 Initiateur et concepteur : **LOKALA LOMBOTO Jonathan**.
 
@@ -21,18 +21,18 @@ Le statut d’une section agrège plusieurs exigences : « Partiel » ne signifi
 
 ## Fondation, identité et architecture — sections 1 à 6
 
-| Section | Exigence résumée | Statut réel v0.2 | Éléments présents et écarts |
+| Section | Exigence résumée | Statut réel v0.3 | Éléments présents et écarts |
 | --- | --- | --- | --- |
 | 1 — Mission générale | Plateforme institutionnelle, attribution, souveraineté et statut non homologué | Partiel / À valider | Identité du projet, attribution et mentions de démonstration présentes. Seul un frontend pilote est livré ; reconnaissance institutionnelle et cadre de propriété restent à valider. |
 | 2 — Contexte historique | Reconstruire les fonctions en préservant la continuité ; ne pas présumer les vulnérabilités | À valider | Aucun accès ni modification du système PHP historique. Version PHP, moteur de base, volumes, contrats et règles métier restent inconnus ; leur inventaire nécessite un mandat formalisé. |
 | 3 — Architecture obligatoire | Java 25, Spring Boot maintenu, monolithe modulaire, React strict et infrastructure souveraine | Partiel | React, TypeScript strict, Vite et Lucide sont intégrés. Domaine frontend typé séparé de la vue. Backend Java/Spring, PostgreSQL, Flyway, Maven Wrapper, JPA, API, outbox, IAM, S3, Docker et observabilité non commencés. Voir écarts technologiques détaillés ci-dessous. |
-| 4 — Identité visuelle et UI/UX | Charte bleu nuit/or, emblème exact, responsive, accessibilité, tableaux et graphiques | Partiel / À valider | Interface claire/sombre, composants communs, modales natives, navigation, filtres, graphiques et dispositions mobiles développés. Emplacement réservé pour l’emblème officiel absent. La conformité WCAG 2.2 AA et la charte institutionnelle ne sont pas certifiées. |
-| 5 — Identité | OIDC, SSO, MFA/WebAuthn, sessions et BFF avec cookies sécurisés | Non commencé | L’agent affiché est fictif. Aucun login de production, jeton, cookie de session, annuaire LDAP ou mécanisme de révocation. Aucun jeton d’authentification n’est stocké dans localStorage. |
+| 4 — Identité visuelle et UI/UX | Charte bleu nuit/or, emblème exact, responsive, accessibilité, tableaux et graphiques | Partiel / À valider | Emblème fourni par le concepteur et intégré fidèlement à l’entrée, au menu et aux icônes. Écran de connexion de démonstration, ligne bleue/jaune/rouge, interface claire/sombre et menu rétractable avec préférence persistante. Composants communs, modales natives, filtres, graphiques et dispositions mobiles développés. La conformité WCAG 2.2 AA et la charte institutionnelle ne sont pas certifiées. |
+| 5 — Identité | OIDC, SSO, MFA/WebAuthn, sessions et BFF avec cookies sécurisés | Non commencé pour l’identité de production | Entrée de démonstration à trois profils fictifs avec session de présentation en sessionStorage, rechargement et fermeture de session. Aucun mot de passe réel demandé. Cette interface n’authentifie aucune identité et ne délivre aucun droit. Aucun backend OIDC, SSO, MFA, BFF, cookie de session sécurisé, LDAP ou révocation fourni. Aucun jeton d’authentification n’est stocké dans localStorage. |
 | 6 — Rôles et habilitations | RBAC/ABAC côté serveur, refus par défaut, besoin d’en connaître et séparation des tâches | Non commencé | Aucun contrôle d’accès serveur. Les noms d’agents et services servent à illustrer les parcours ; ils ne constituent pas des habilitations. Matrice officielle des rôles, classifications et délégations à fournir. |
 
 ## Courriers, référentiels et documents — sections 7 à 15
 
-| Section | Exigence résumée | Statut réel v0.2 | Éléments présents et écarts |
+| Section | Exigence résumée | Statut réel v0.3 | Éléments présents et écarts |
 | --- | --- | --- | --- |
 | 7 — Courriers entrants | Registre complet, enregistrement, affectation, consultation, exports et numérotation fiable | Partiel | Création validée, registre, fiche détaillée, agent/service, échéance, recherche, CSV, historique et archivage locaux réalisés. Références `DEMO/YYYY/00001` exclusivement fictives. Numérotation transactionnelle concurrente, modification contrôlée complète, doublons métier, sélection multiple autorisée, impression et accusés officiels absents. |
 | 8 — Courriers sortants | Brouillon, rédaction, visa, signature, expédition et preuves de livraison | Partiel | Création d’un courrier sortant et circuit local jusqu’à l’expédition simulée puis l’archivage. Aucun éditeur de modèles approuvés, visa officiel, lien de réponse complet, génération PDF ou signature cryptographique. |
@@ -46,32 +46,32 @@ Le statut d’une section agrège plusieurs exigences : « Partiel » ne signifi
 
 ## Sécurité, tests, migration et exploitation — sections 16 à 24
 
-| Section | Exigence résumée | Statut réel v0.2 | Éléments présents et écarts |
+| Section | Exigence résumée | Statut réel v0.3 | Éléments présents et écarts |
 | --- | --- | --- | --- |
 | 16 — Cybersécurité | ASVS, contrôles applicatifs/HTTP, chiffrement, secrets, base et audit protégé | Partiel | Champs affichés via React, validation métier locale, lecture stricte du stockage et protection CSV. Ces mesures ne remplacent pas l’autorisation serveur. Pas de base, gestion des clés, chiffrement institutionnel, audit immuable, BFF, rate limiting ni contrôle HTTP complet. Aucune certification revendiquée. |
 | 17 — Tests et autocorrection | SAST, dépendances, secrets, DAST local, conteneurs et tests d’autorisation | Partiel | Tests unitaires frontend et scénarios Playwright présents. Les résultats effectivement exécutés sont à consulter dans les rapports de livraison. Tests d’autorisation serveur, Semgrep/SpotBugs/FindSecBugs, CodeQL, Gitleaks, ZAP, Trivy/Checkov, Dependency-Check/OSV et SBOM ne sont pas attestés par leur seule présence dans le master prompt. Aucun test sur un système institutionnel réel. |
 | 18 — Performance | Index, tâches asynchrones, charge 100 000/1 000 000 dossiers, latence et concurrence | Non commencé | Pagination locale d’un petit jeu synthétique ; elle ne mesure pas la capacité de l’architecture cible. Aucun benchmark k6/Gatling sur infrastructure représentative, aucune garantie de débit ou disponibilité. |
 | 19 — Migration PHP | Inventaire, mapping, dry-run, import idempotent, réconciliation et retour arrière | Non commencé / À valider | Une orientation technique figure dans `TECHNICAL_PLAN.md`. Aucun adaptateur, mapping source-cible, script de migration ou rapprochement exécuté. Aucun mot de passe historique importé. Découverte et extraction doivent rester en lecture seule sous mandat. |
 | 20 — Notifications | Affectations, validations, échéances, retards et événements de sécurité | Partiel | Messages internes et lecture des priorités du registre local. Aucune notification planifiée ou email externe, aucun contenu classifié transmis. |
-| 21 — Web et PWA | Responsive, installation contrôlée, ressources statiques seules en cache | Partiel / À valider | Interface web responsive ; version installable PWA non commencée. Pas de manifeste/service worker revendiqué. Politique d’installation, de cache et d’accès hors ligne à approuver avant implémentation. |
+| 21 — Web et PWA | Responsive, installation contrôlée, ressources statiques seules en cache | Réalisé local pour le pilote / À valider pour la production | Manifeste et identité propres à /SIGCP/, icônes PNG 192/512 et maskable, service worker de production généré avec version de cache issue des ressources. Installation sur geste explicite si le navigateur la permet, aide manuelle sinon. Repli hors connexion limité à la coque ; aucune mise en cache runtime d’API, identité, courrier saisi, document, export ou jeton. Le bundle comprend les scénarios synthétiques. Mise à jour confirmée par l’utilisateur, bloquée pendant l’édition ; seuls les anciens caches préfixés SIGCP sont supprimés. 8 tests unitaires PWA réussis et scénarios navigateur PWA validés en CI ; ressources PWA de la 0.3 vérifiées sur GitHub Pages. Politique institutionnelle hors ligne à approuver avant usage réel. |
 | 22 — IA optionnelle | Module désactivé, supervision humaine, modèles approuvés et protection contre les instructions malveillantes | Non commencé | Aucune fonction IA, aucun appel à un modèle et aucun envoi de document à un service IA. Les décisions officielles ne sont pas automatisées. |
-| 23 — Infrastructure | Environnements séparés, réseau, TLS, logs, sauvegardes, PRA/PCA et publication autorisée | Partiel | Démonstration statique publiée sur https://propheticpowerfulman.github.io/SIGCP/ : HTTP 200 et bundle corrigé vérifiés. Environnements backend séparés, Docker non-root, segmentation, supervision, sauvegardes, restauration et haute disponibilité non commencés. |
-| 24 — DevSecOps | Compilation, tests, analyses, SBOM, artefacts intègres et publication contrôlée | Partiel | Pipeline npm : installation reproductible, tests unitaires, typage/compilation et artefact Pages. 24 tests métier et 10 parcours Playwright réussis dans le run 45871315126 ; preuves conservées dans docs/VALIDATION_REPORT.md. Couverture SAST/DAST, secrets, conteneurs, SBOM, protection de branche et actions épinglées par SHA vérifié à compléter. |
+| 23 — Infrastructure | Environnements séparés, réseau, TLS, logs, sauvegardes, PRA/PCA et publication autorisée | Partiel | Démonstration 0.3 publiée sur https://propheticpowerfulman.github.io/SIGCP/ ; run 45881652536 réussi, page et ressources exactes vérifiées en HTTP 200 au commit b8688b1d9e53008efb6d453563d289d5a0d0d58e. Environnements backend séparés, Docker non-root, segmentation, supervision, sauvegardes, restauration et haute disponibilité non commencés. |
+| 24 — DevSecOps | Compilation, tests, analyses, SBOM, artefacts intègres et publication contrôlée | Partiel | Pipeline npm : installation reproductible, tests unitaires, typage/compilation, génération du service worker et artefact Pages. Version 0.3 : run 45881470660 réussi, 32 tests Node, 17 parcours Chromium, audit npm sans vulnérabilité et typage/build ; un test de captures conditionnel ignoré. Source f6e2175875ddfc3d921db8e0275f192a48445ffb, PR 2 fusionnée au commit b8688b1d9e53008efb6d453563d289d5a0d0d58e. Déploiement 45881652536 réussi et ressources publiques vérifiées. Les preuves de la 0.2 restent historiques. Couverture SAST/DAST, secrets, conteneurs, SBOM, protection de branche et actions épinglées par SHA vérifié à compléter. |
 
 ## Structure et livraison — sections 25 à 30
 
-| Section | Exigence résumée | Statut réel v0.2 | Éléments présents et écarts |
+| Section | Exigence résumée | Statut réel v0.3 | Éléments présents et écarts |
 | --- | --- | --- | --- |
 | 25 — Repository | Structure maintenable, code, tests, infrastructure et documentation utiles | Partiel | Frontend structuré en composants, deux domaines typés, tests et documentation. Pas de répertoires backend factices présentés comme réalisés. Structure Java, migration et infrastructure à ajouter au moment de leur implémentation. |
-| 26 — Documentation | Guides français, architecture, API, modèle de menaces, licences et six PDF | Partiel | README, plan technique, état de projet et présente matrice. Guides détaillés, API, UML/C4, STRIDE, matrice d’habilitations/ASVS, procédures d’incident/sauvegarde, inventaire complet des licences et six PDF restent à produire. |
-| 27 — Écrans | Trente écrans, formulaires validés, états de chargement/erreur/vide | Partiel | Tableau de bord, registres, création, détail/chronologie/documents, validations, archives, analyses, réseau fictif, activité, paramètres et aide. Login/MFA, messagerie, administration des utilisateurs/rôles/habilitations, modèles, supervision de migration et administration système de production absents. Les erreurs de stockage et résultats vides sont traités ; l’existence de la liste ne prouve pas la couverture de chaque écran. |
+| 26 — Documentation | Guides français, architecture, API, modèle de menaces, licences et six PDF | Partiel | README, plan technique, état de projet, matrice, guides de présentation et d’installation PWA, origine des éléments graphiques et dossier PDF de revue 0.3 de huit pages. API, UML/C4, STRIDE, matrice d’habilitations/ASVS, procédures d’incident/sauvegarde, inventaire complet des licences et six PDF institutionnels restent à produire. Le dossier de revue ne les remplace pas. |
+| 27 — Écrans | Trente écrans, formulaires validés, états de chargement/erreur/vide | Partiel | Écran d’entrée de démonstration avec trois profils, aide à l’installation et information sur la future identité institutionnelle. Tableau de bord, registres, création, détail/chronologie/documents, validations, archives, analyses, réseau fictif, activité, paramètres et aide. Authentification/MFA de production, messagerie, administration des utilisateurs/rôles/habilitations, modèles, supervision de migration et administration système absents. Les erreurs de stockage et résultats vides sont traités ; l’existence de la liste ne prouve pas la couverture de chaque écran. |
 | 28 — Données de démonstration | Isolement, acteurs/dossiers/documents fictifs, sans secrets ni données historiques | Partiel ; registre réalisé local | 42 courriers, trois institutions, quatre services et quatre agents fictifs, historiques et fiches documentaires synthétiques. Échanges fictifs simulés localement. Aucun email fictif intégré à un module de messagerie. L’isolement est celui du pilote statique, pas une frontière d’accès sécurisée entre utilisateurs. |
 | 29 — Méthode autonome | Analyse, backlog, exécution/correction, preuves et PROJECT_STATUS | Partiel | Analyse et implémentation progressive, tests du domaine, plan technique et suivi. Les contrôles backend, résilience, cybersécurité, performance, PDF et homologation doivent conserver des statuts distincts et ne peuvent être déclarés terminés. |
 | 30 — Livraison finale | Code, application, base, identité, habilitations, tests, rapports, PDF et reprise | Partiel | Application frontend exécutable et sources des fonctions effectivement réalisées. Pas de base initialisée, identité réelle, habilitations vérifiées, restauration, migration, rapport de performance serveur ni dossier complet d’homologation. Le master prompt complet n’est pas terminé. |
 
 ## Extension nationale et échanges — sections 31 à 40
 
-| Section | Exigence résumée | Statut réel v0.2 | Éléments présents et écarts |
+| Section | Exigence résumée | Statut réel v0.3 | Éléments présents et écarts |
 | --- | --- | --- | --- |
 | 31 — Vision NSEN | Communication interne, interinstitutionnelle et nationale progressive | Partiel / À valider | Parcours d’institutions fictives pour explorer les usages. Aucun raccordement réel ni autorisation automatique d’une institution. Vision et gouvernance nationale à approuver. |
 | 32 — Architecture multi-institutionnelle | Espaces indépendants, contexte issu de l’identité, isolation logique/physique et fédération | Non commencé | Un registre navigateur peut contenir plusieurs identifiants fictifs. Cela ne constitue pas un système multitenant sécurisé. Identité authentifiée, bases/schémas/instances séparés, politiques par institution et modèle d’isolation restent à concevoir et tester. |
@@ -92,7 +92,7 @@ Le statut d’une section agrège plusieurs exigences : « Partiel » ne signifi
 | Bibliothèque de composants accessibles | Composants locaux et `<dialog>` natif ; audit d’accessibilité complet à effectuer. |
 | Tailwind CSS, TanStack Query, TanStack Table, React Hook Form, Zod | Non intégrés à cette livraison ; CSS et logique de formulaire/tableau locaux. La conformité à ces choix obligatoires du master reste ouverte. TanStack Query devra être évalué au raccordement API. |
 | Recharts ou Apache ECharts | Non intégrés ; graphiques locaux basés sur les statistiques calculées. |
-| Playwright | 10 parcours E2E exécutés avec succès dans GitHub Actions ; rapport de validation disponible. |
+| Playwright | 17 parcours Chromium réussis pour la 0.3 dans le run 45881470660 ; un test de captures conditionnel ignoré. Les 10 succès CI de la 0.2 restent historiques, voir rapport de validation. |
 | Java 25/Spring Boot, Spring Security/JPA, Hibernate, Bean Validation, Flyway, Maven Wrapper, OpenAPI, JUnit/Testcontainers | Aucun backend livré. Versions exactes, maintenance et compatibilité à vérifier au démarrage du chantier serveur. |
 | PostgreSQL, stockage S3, OIDC/Keycloak, antivirus, gestion des clés, Docker, NGINX, observabilité | Non déployés. Redis/Valkey, OpenSearch et Kubernetes restent des choix conditionnels à justifier, conformément au master. |
 
@@ -108,15 +108,19 @@ Les chemins ci-dessous sont relatifs à la racine du dépôt.
 | Tableau de bord et analyses | `src/Insights.tsx` | Indicateurs et graphiques calculés, sans volumes institutionnels réels. |
 | Échanges locaux | `src/exchange.ts`, `src/Network.tsx`, `tests/exchange.test.mjs` | Simulation, contrôles de cohérence et idempotence locale. |
 | Navigation, stockage et éléments communs | `src/main.tsx`, `src/ui.tsx`, `src/style.css` | Composants frontend ; les données locales sont modifiables par l’utilisateur. |
-| Parcours navigateur | `tests/e2e.spec.ts`, `playwright.config.ts` | 10 parcours réussis en CI ; capture desktop réelle incluse dans le dossier PDF. |
-| Construction et publication | `package.json`, `package-lock.json`, `.github/workflows/pages.yml` | Validation et déploiement réussis ; réponse HTTP 200 et ressources exactes vérifiées. |
+| Entrée et session de présentation | `src/Login.tsx`, `src/login.css`, `src/demo-session.ts` | Trois profils fictifs ; aucune authentification ou habilitation serveur. |
+| Identité visuelle | `public/brand/`, `src/style.css`, `src/login.css` | Emblème fourni et icônes dérivées ; aucune homologation implicite. |
+| PWA et cache statique | `public/manifest.webmanifest`, `src/pwa.ts`, `src/InstallPrompt.tsx`, `scripts/build-pwa.mjs`, `tests/pwa.test.mjs` | 8 tests Node et scénarios navigateur PWA réussis ; périmètre et exclusions du cache vérifiés. Cache 89c6d17eea990bedf670 : 27 ressources statiques. Installation propre au navigateur. |
+| Parcours navigateur | `tests/e2e.spec.ts`, `tests/pwa-login.spec.ts`, `playwright.config.ts`, `docs/screenshots/` | 17 parcours Chromium réussis en CI ; un test de captures conditionnel ignoré. Test hors connexion supplémentaire réussi contre le site public, cache HTTP désactivé, avec données synthétiques et ressources chargées. Quatre captures locales finales produites et inspectées. |
+| Dossier de revue du pilote | `docs/IMPERIUM_RDC_Dossier_Revue_Pilote.pdf` | Dossier 0.3 actualisé, huit pages, 1 098 386 octets ; rendu inspecté. Il ne remplace pas les douze PDF institutionnels. |
+| Construction et publication | `package.json`, `package-lock.json`, `.github/workflows/pages.yml` | Typage/build 0.3 réussis dans le run 45881470660 ; publication réussie dans le run 45881652536, ressources exactes vérifiées en HTTP 200. |
 | Suivi | `PROJECT_STATUS.md`, `docs/TECHNICAL_PLAN.md` | État, limitations et décisions ; à mettre à jour avec les résultats réellement obtenus. |
 
 Les tests du domaine local ont été exécutés lors de son implémentation (16 tests réussis). Aucun résultat de test serveur, de scan de cybersécurité, d’audit indépendant ou de performance représentative n’est déduit de ce résultat. Les résultats consolidés les plus récents appartiennent au rapport de livraison.
 
 ## Inventaire des douze PDF demandés
 
-Ces douze documents ne sont pas fournis par la livraison frontend v0.2. Des fichiers Markdown ou l’export CSV ne les remplacent pas. Leur préparation nécessitera l’emblème officiel autorisé, des captures réellement produites et des résultats techniques vérifiables.
+Ces douze documents ne sont pas fournis par la livraison frontend v0.3. Des fichiers Markdown ou l’export CSV ne les remplacent pas. L’emblème fourni est intégré au pilote ; la préparation des PDF nécessite encore une charte validée, des captures propres à la version documentée et des résultats techniques vérifiables.
 
 | Référence | Livrable | Statut |
 | --- | --- | --- |
@@ -140,7 +144,7 @@ Un rapport de sécurité ne pourra revendiquer que des analyses réellement exé
 | Priorité | Travail | Critère de sortie |
 | --- | --- | --- |
 | P0 | Faire valider les parcours, règles de numérotation, classifications, responsabilités et charte | Décisions métier documentées et versions approuvées, sans déduire l’organigramme réel des exemples. |
-| P0 — réalisé | Recette de la démonstration et publication Pages | Tests unitaires, typage, compilation et E2E exécutés ; captures réelles ; URL déployée vérifiée ; limites visibles. |
+| P0 — réalisé pour le pilote 0.3 | Recette de la démonstration et publication Pages | CI réussie : 32 tests Node, 17 parcours Chromium, audit npm et typage/build. Déploiement 0.3 et correspondance de l’URL publiée vérifiés ; quatre captures finales produites et inspectées. Les preuves de la 0.2 ne valent pas recette de la 0.3. |
 | P1 | Initialiser le backend Java 25/Spring Boot et PostgreSQL/Flyway | Démarrage local reproductible, migrations vérifiées et contrats OpenAPI ; tests JUnit/Testcontainers. |
 | P1 | Implémenter BFF OIDC, MFA institutionnelle et RBAC/ABAC | Identité et contexte institutionnel établis côté serveur ; tests négatifs d’accès et révocation réussis. |
 | P1 | Refaire numérotation, workflow et audit dans des transactions serveur | Concurrence, idempotence, outbox et séparation des tâches testées ; journal d’audit protégé. |
@@ -154,7 +158,7 @@ Un rapport de sécurité ne pourra revendiquer que des analyses réellement exé
 
 ## Décisions et validations institutionnelles nécessaires
 
-- Fourniture du fichier d’emblème présidentiel et confirmation du droit d’usage ; validation de la palette et de l’identité graphique.
+- Emblème fourni par le concepteur et intégré au pilote ; validation institutionnelle de la palette, de l’identité graphique et des conditions d’usage avant production.
 - Mandat du pilote, responsables métier, propriétaire opérationnel, cadre de propriété intellectuelle et procédure d’homologation.
 - Organigramme officiel, rôles, délégations, classifications, règles de besoin d’en connaître et séparation des tâches.
 - Formats de références, circuits par catégorie de courrier, autorité de signature, délais de service et modes de traitement des exceptions.
@@ -163,6 +167,6 @@ Un rapport de sécurité ne pourra revendiquer que des analyses réellement exé
 - Choix d’hébergement autorisé et modèle d’isolation par institution ; objectifs de reprise, disponibilité et sauvegarde/restauration.
 - Autorisation de découverte du système historique, périmètre en lecture seule, responsables des mappings et procédure de basculement.
 - Conditions d’admission, de suspension et de révocation des partenaires ; catégories et indicateurs partageables ; gouvernance du réseau national.
-- Politique PWA/hors ligne et éventuel module IA : fonctions permises, ressources pouvant être mises en cache et services institutionnellement approuvés.
+- Politique PWA/hors ligne de production à valider : le pilote limite déjà le cache aux ressources statiques connues. Éventuel module IA : fonctions permises et services institutionnellement approuvés.
 
 Les corrections sont d’abord revues dans la démonstration, conformément à la demande du concepteur. Cette règle ne transforme pas GitHub Pages en infrastructure de production et ne dispense pas des validations avant migration.
