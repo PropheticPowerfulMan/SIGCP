@@ -10,6 +10,8 @@
   .breadcrumbs{min-width:0;flex:1}.breadcrumbs strong{overflow:hidden;text-overflow:ellipsis}
   .top-actions{flex-shrink:0;gap:8px}.top-date{display:none}
   .app .icon-button,.modal .icon-button{min-width:44px;min-height:44px}
+  .app button,.modal button{min-height:44px}.top-actions>button.avatar{width:44px;height:44px;min-width:44px}.segmented button{min-width:44px}
+  .toolbar-install-control .pwa-install-button,.toolbar-install-control .pwa-update-button{min-height:44px}.demo-ribbon{padding-block:0;min-height:44px}
   .app .primary,.app .secondary,.modal .primary,.modal .secondary{min-height:46px}
   .app input,.app select,.app textarea,.modal input,.modal select,.modal textarea{font-size:16px;min-height:48px}
   .app .search-field input{font-size:16px;min-height:48px}
@@ -20,7 +22,7 @@
   .detail-tabs{overflow-x:auto;white-space:nowrap;overscroll-behavior-inline:contain;padding-bottom:2px}
   .detail-tabs button{min-height:46px;flex-shrink:0}
   .modal{max-height:calc(100dvh - 32px)}.modal-head .icon-button{flex-shrink:0}
-  .mail-form .form-actions{position:sticky;bottom:-25px;background:var(--panel);border-top:1px solid var(--line);padding:16px 0;margin-top:24px;z-index:2}
+  .mail-form .form-actions{position:sticky;bottom:0;background:var(--panel);border-top:1px solid var(--line);padding:16px 0;margin-top:24px;z-index:2}
   .kanban{scroll-snap-type:x proximity;scroll-padding-inline:1px}.kanban-column{scroll-snap-align:start}
 }
 @media(min-width:761px) and (max-width:1180px){
@@ -57,7 +59,7 @@
   .top-actions{gap:1px}.top-actions>button.avatar{width:44px;height:44px;min-width:44px;margin-left:3px}
   .toolbar-install-control{gap:2px}.toolbar-install-control .pwa-install-button,.toolbar-install-control .pwa-update-button{width:44px;min-width:44px;min-height:44px;padding:10px}.toolbar-install-control .pwa-install-button>span,.toolbar-install-control .pwa-update-button>span{display:none}.top-actions:has(.pwa-update-button)>button.avatar{display:none}
   .sidebar .brand{gap:9px;padding-inline:0}.sidebar .brand-word{flex:1;overflow:hidden}.sidebar .brand-word strong{font-size:15px}.sidebar .brand-word small{font-size:5.5px;letter-spacing:.25px}.sidebar .close-mobile{flex-shrink:0}
-  .demo-ribbon{padding:10px 18px;min-height:38px}.demo-ribbon>span{font-size:9px;letter-spacing:.7px}.demo-ribbon button{font-size:11px}
+  .demo-ribbon{padding:0 18px;min-height:44px}.demo-ribbon>span{font-size:9px;letter-spacing:.7px}.demo-ribbon button{font-size:11px}
   .workspace main{padding:24px 17px calc(110px + env(safe-area-inset-bottom))}
   .page-heading{display:block;margin-bottom:22px}.page-heading h1{font-size:28px;line-height:1.4}.page-heading p{font-size:14px;line-height:1.8;max-width:none}.eyebrow{font-size:10px}
   .heading-actions{margin-top:17px}.heading-actions .primary{width:100%;height:auto;min-height:48px;padding:12px 16px;gap:9px;font-size:14px;border-radius:10px}
@@ -81,7 +83,7 @@
   .modal{width:calc(100vw - 16px);max-width:calc(100vw - 16px);max-height:calc(100dvh - 16px);border-radius:18px;margin:auto}
   .modal-head{padding:15px 18px}.modal-head h2{font-size:18px;line-height:1.5}.modal-body{padding:20px 18px calc(20px + env(safe-area-inset-bottom))}
   .modal .form-actions{display:flex;flex-direction:column-reverse;align-items:stretch;gap:10px}.modal .form-actions>button{width:100%;font-size:14px;min-height:48px}
-  .mail-form .form-actions{bottom:calc(-20px - env(safe-area-inset-bottom));padding-bottom:calc(15px + env(safe-area-inset-bottom))}
+  .mail-form .form-actions{bottom:0;padding-bottom:calc(15px + env(safe-area-inset-bottom))}
   .mail-form label{font-size:14px;line-height:1.6}.mail-form input,.mail-form select,.mail-form textarea{font-size:16px;min-height:48px}.form-kind button{min-height:70px}.form-kind small{font-size:12px;line-height:1.5}
   .detail-grid{grid-template-columns:1fr;gap:19px}.detail-grid dt{font-size:12px}.detail-grid dd{font-size:15px}.detail-footer>div:last-child,.detail-footer .primary{width:100%}.detail-footer>div:last-child{display:flex;flex-direction:column;gap:10px}.detail-title h2{font-size:23px;line-height:1.5}
   .validation-actions .primary{width:100%}.network-module .exchange-row h3{font-size:16px;line-height:1.6}.network-module .exchange-status{gap:10px}.network-module .exchange-status button{min-height:44px}.network-module .exchange-form button{min-height:48px}
