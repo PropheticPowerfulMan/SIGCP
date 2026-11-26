@@ -1,0 +1,22 @@
+{
+  "id": "/SIGCP/",
+  "name": "IMPERIUM RDC — SIGCP",
+  "short_name": "IMPERIUM RDC",
+  "description": "Pilote de gestion et de suivi des correspondances présidentielles. Démonstration à données exclusivement fictives.",
+  "lang": "fr-CD",
+  "dir": "ltr",
+  "start_url": "/SIGCP/",
+  "scope": "/SIGCP/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#081D35",
+  "theme_color": "#081D35",
+  "categories": ["productivity", "business"],
+  "prefer_related_applications": false,
+  "icons": [
+    { "src": "/SIGCP/brand/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/SIGCP/brand/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/SIGCP/brand/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

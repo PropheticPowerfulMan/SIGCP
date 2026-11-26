@@ -1,0 +1,27 @@
+/* Presidential identity uses the supplied emblem without altering its artwork. */
+.national-strip{position:fixed;inset:0 0 auto;height:4px;z-index:100;background:linear-gradient(90deg,#007fff 0 64%,#f7d618 64% 81%,#ce1021 81% 100%);pointer-events:none}
+.sidebar{width:268px;padding:26px 14px 0;transition:width .18s ease;background:linear-gradient(175deg,#081d35,#0b2541 70%,#081d35)}
+.workspace{margin-left:268px;transition:margin-left .18s ease}
+.brand{gap:11px;padding:0 5px 23px;min-height:72px}
+.brand-emblem{width:48px;height:48px;object-fit:contain;border-radius:50%;background:#f7f7f7;flex-shrink:0;box-shadow:0 0 0 4px #ffffff08,0 0 0 5px #c8ad6e24}
+.brand-word{min-width:0}.brand-word strong{font-size:17px;letter-spacing:.35px}.brand-word small{font-size:6.4px;letter-spacing:.55px}
+.institution-switch{margin:20px 4px 4px}.nav-item{padding:12px 12px}.nav-item.active:before{left:-14px}
+.is-collapsed .sidebar{width:78px;padding-inline:10px}.is-collapsed .workspace{margin-left:78px}
+.is-collapsed .brand{padding:0 0 23px;justify-content:center}.is-collapsed .brand-emblem{width:44px;height:44px}
+.is-collapsed .nav-item{justify-content:center;padding-inline:0}.is-collapsed .guide-link{justify-content:center;padding-inline:0}.is-collapsed .profile{justify-content:center;padding-inline:0}
+.hero{background:radial-gradient(ellipse at 90% 10%,#244c60 0,transparent 60%),linear-gradient(115deg,#0a233d,#102e49);border-color:#28465a}
+.hero:before{content:'';position:absolute;inset:auto 0 0;height:3px;background:linear-gradient(90deg,#007fff 0 64%,#f7d618 64% 81%,#ce1021 81% 100%);opacity:.85}
+.hero-copy{width:66%;padding-block:32px}.hero-presidential-emblem{width:174px;height:174px;object-fit:contain;position:relative;border-radius:50%;background:#f7f7f7;box-shadow:0 0 0 10px #ffffff03,0 0 0 11px #cfb57324,0 18px 50px #03132355}
+.hero-visual{min-width:240px;margin-right:28px}.hero-visual .orbit{width:222px;height:222px}.hero-visual .orbit-two{width:290px;height:290px}.visual-caption{font-size:7px;bottom:24px;letter-spacing:1.4px}
+.emblem-preview{width:64px;height:64px;object-fit:contain;border-radius:50%;background:#f7f7f7;flex-shrink:0}.emblem-setting{display:flex;align-items:center;gap:16px}.emblem-setting p{max-width:350px}
+.offline-badge{display:inline-flex;align-items:center;gap:6px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:5px 9px;font-size:10px;white-space:nowrap}
+.global-install-control{position:fixed;right:max(22px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));z-index:80;filter:drop-shadow(0 3px 10px #081d351c)}
+.global-install-control .pwa-install-button{background:var(--navy);color:#f1dfb6;border-color:#c8ac6a60;padding:10px 15px;border-radius:24px;min-height:42px}
+.global-install-control .pwa-install-button:hover{background:#214563}.hide-login-install>.pwa-install-button,.hide-login-install>.pwa-installed{display:none}.hide-login-install:has(>.pwa-install-button:only-child){display:none}
+.global-install-control .pwa-offline{background:var(--panel);padding:9px 12px;border:1px solid var(--line);border-radius:24px}
+body:has(.mobile-open) .global-install-control:not(:has(dialog[open])){visibility:hidden}
+.workspace main{padding-bottom:38px}.global-install-control:has(dialog[open]){filter:none}
+@media(min-width:761px) and (max-width:1180px){.sidebar{width:245px}.workspace{margin-left:245px}.brand-word strong{font-size:15px}.brand-word small{font-size:5.8px}.brand{gap:9px}.brand-emblem{width:43px;height:43px}.hero-presidential-emblem{width:144px;height:144px}.hero-visual{min-width:195px;margin-right:12px}.hero-copy{width:65%}}
+@media(max-width:760px){.sidebar,.is-collapsed .sidebar{width:276px;padding:25px 16px 0}.workspace,.is-collapsed .workspace{margin-left:0}.brand,.is-collapsed .brand{justify-content:flex-start;padding:0 5px 23px}.brand-emblem,.is-collapsed .brand-emblem{width:48px;height:48px}.brand-word strong{font-size:17px}.brand-word small{font-size:6.4px}.is-collapsed .nav-item{justify-content:flex-start;padding:12px 13px}.is-collapsed .guide-link,.is-collapsed .profile{justify-content:flex-start;padding-inline:12px}.hero-copy{width:100%;padding:25px 23px}.hero-visual{right:-73px;min-width:230px;margin-right:0;opacity:.1}.hero-presidential-emblem{width:185px;height:185px}.hero-visual .visual-caption{display:none}.global-install-control{right:max(15px,env(safe-area-inset-right));bottom:max(14px,env(safe-area-inset-bottom));gap:6px}.global-install-control .pwa-install-button{font-size:12px;min-height:40px;padding:10px 14px}.offline-badge{display:none}.workspace main{padding-bottom:58px}.emblem-setting{align-items:flex-start}}
+@media(prefers-reduced-motion:reduce){.sidebar,.workspace{transition:none}}
+@media print{.national-strip,.global-install-control{display:none!important}}

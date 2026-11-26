@@ -1,11 +1,11 @@
 {
   "name": "imperium-rdc-sigcp",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && node scripts/build-pwa.mjs",
     "test": "node --test tests/*.test.mjs",
     "preview": "vite preview --host 127.0.0.1",
     "test:e2e": "playwright test",

@@ -1,7 +1,7 @@
 import { useId } from 'react';
 import {
-  Archive, ChartNoAxesCombined, Check, CheckCheck,
-  ChevronRight, Clock3, FileCheck2, FileText, Inbox, Layers3,
+  Archive, ChartNoAxesCombined, CheckCheck,
+  ChevronRight, Clock3, FileCheck2, Inbox, Layers3,
   Send, ShieldCheck, TriangleAlert,
 } from 'lucide-react';
 import { filterMail, getStats, type Mail, type MailFilters } from './domain.ts';
@@ -72,12 +72,7 @@ export function Dashboard({ items, onNavigate, onOpen }: DashboardProps) {
       </div>
       <div className="hero-visual" aria-hidden="true">
         <div className="hero-grid" /><div className="orbit orbit-one" /><div className="orbit orbit-two" />
-        <div className="hero-document">
-          <div className="doc-top"><FileText size={27} /><span>IMPERIUM RDC<small>CORRESPONDANCE PILOTE</small></span></div>
-          <div className="doc-lines"><i /><i /><i /><i /></div>
-          <div className="doc-bottom"><span>DOSSIER ENREGISTRÉ</span><Check size={16} /></div>
-        </div>
-        <div className="floating-pill"><FileCheck2 size={17} /><span>Un parcours, une trace</span><span className="pill-check"><Check size={12} /></span></div>
+        <img className="hero-presidential-emblem" src="/SIGCP/brand/emblem-presidence.jpg" alt="" width="709" height="709" />
         <span className="visual-caption"><span />RÉCEPTION · TRAITEMENT · ARCHIVAGE</span>
       </div>
     </section>

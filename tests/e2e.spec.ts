@@ -2,6 +2,9 @@ import { test, expect, type Page } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
 
 async function openDemo(page: Page, hash = '') {
+  await page.addInitScript(() => {
+    sessionStorage.setItem('imperium-demo-session', JSON.stringify({version: 1, role: 'Agent pilote', startedAt: new Date().toISOString()}));
+  });
   page.on('pageerror', error => console.log('[bootstrap pageerror]', error.message));
   page.on('console', message => { if (message.type() === 'error') console.log('[browser console]', message.text()); });
   page.on('response', response => { if (response.status() >= 400) console.log('[resource]', response.status(), response.url()); });
