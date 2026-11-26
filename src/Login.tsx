@@ -113,7 +113,7 @@ export function Login({ onEnter, onInstall }: LoginProps) {
         <section className="login-access" id="login-access" tabIndex={-1} aria-labelledby="login-title">
           <div className="login-access-inner">
             <span className="login-access-label"><span /> ACCÈS AU PILOTE</span>
-            <h1 id="login-title">Bienvenue dans<br />votre espace.</h1>
+            <h1 id="login-title">Bienvenue dans{' '}<br />votre espace.</h1>
             <p className="login-intro">Découvrez une nouvelle manière de suivre et de coordonner les correspondances institutionnelles.</p>
 
             <form className="login-form" onSubmit={enter}>

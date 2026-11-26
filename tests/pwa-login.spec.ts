@@ -16,6 +16,7 @@ async function enterDemo(page: Page) {
 async function capturePresentation(page: Page, name: string) {
   await mkdir('docs/screenshots', { recursive: true });
   await page.evaluate(() => document.fonts.ready);
+  await page.evaluate(() => window.scrollTo(0, 0));
   await page.screenshot({ path: `docs/screenshots/${name}.png`, fullPage: true, animations: 'disabled' });
 }
 async function waitForShellWorker(page: Page) {
@@ -196,7 +197,7 @@ test('le bouton Installer ouvre une aide accessible lorsque le navigateur ne pro
     }, { capture: true });
   });
   await visitLogin(page);
-  const loginInstall = page.getByRole('button', { name: 'Installer l’application', exact: true });
+  const loginInstall = page.getByRole('button', { name: /^Installer l’application/ });
   await loginInstall.click();
   const dialog = page.getByRole('dialog', { name: 'Installer IMPERIUM RDC', exact: true });
   await expect(dialog).toBeVisible();
