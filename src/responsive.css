@@ -64,6 +64,13 @@
   .page-heading{display:block;margin-bottom:22px}.page-heading h1{font-size:28px;line-height:1.4}.page-heading p{font-size:14px;line-height:1.8;max-width:none}.eyebrow{font-size:10px}
   .heading-actions{margin-top:17px}.heading-actions .primary{width:100%;height:auto;min-height:48px;padding:12px 16px;gap:9px;font-size:14px;border-radius:10px}
   .heading-actions .primary span{position:static;width:auto;height:auto;clip:auto;overflow:visible}
+  .app[data-page]:not([data-page=dashboard]) .page-heading{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+  .app[data-page]:not([data-page=dashboard]) .page-heading>div:first-child{min-width:0;flex:1}
+  .app[data-page]:not([data-page=dashboard]) .page-heading h1{font-size:25px;margin-top:0}
+  .app[data-page]:not([data-page=dashboard]) .page-heading p,.app[data-page]:not([data-page=dashboard]) .page-heading .eyebrow{display:none}
+  .app[data-page]:not([data-page=dashboard]) .heading-actions{margin-top:0}
+  .app[data-page]:not([data-page=dashboard]) .heading-actions .primary{width:48px;min-width:48px;height:48px;padding:12px}
+  .app[data-page]:not([data-page=dashboard]) .heading-actions .primary span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
   .hero{display:grid;grid-template-columns:minmax(0,1fr) 72px;gap:0;padding:23px;border-radius:16px;min-height:0}
   .hero-copy{display:contents}.hero-eyebrow{grid-column:1;grid-row:1;align-self:center;max-width:190px;font-size:9px;line-height:1.9;letter-spacing:1px;margin:0 12px 0 0}
   .hero h2{grid-column:1/-1;grid-row:2;font-size:27px;line-height:1.45;margin-top:20px;letter-spacing:-.65px}.hero-title-wide{display:none}.hero-title-mobile{display:inline}
@@ -79,6 +86,13 @@
   .recent-register .panel-heading>.text-button{font-size:12px;line-height:1.7;max-width:90px}
   .filter-panel{padding:14px;border-radius:12px}.filter-main{gap:11px}.search-field{padding-inline:11px}.search-field kbd{display:none}.filter-main .secondary{font-size:14px;min-height:48px}.filter-main>select{font-size:16px}.advanced-filters{grid-template-columns:1fr;gap:16px}.advanced-filters label{font-size:14px}
   .register-summary{font-size:13px}.workspace-toolbar{gap:14px}.toolbar-right{width:100%;justify-content:flex-end}.toolbar-right>.secondary{font-size:13px}
+  .app:is([data-page=entrant],[data-page=sortant],[data-page=validation]) .workspace-toolbar{flex-wrap:nowrap;gap:10px;margin-bottom:15px}
+  .app:is([data-page=entrant],[data-page=sortant],[data-page=validation]) .register-summary{flex:1;gap:8px}
+  .app:is([data-page=entrant],[data-page=sortant],[data-page=validation]) .register-summary>span:last-child{max-width:110px;font-size:12px;line-height:1.5}
+  .app:is([data-page=entrant],[data-page=sortant],[data-page=validation]) .toolbar-right{width:auto;flex-shrink:0;margin-left:auto}
+  .app:is([data-page=entrant],[data-page=sortant],[data-page=validation]) .toolbar-right>.secondary{font-size:12px;padding:8px 10px}
+  .register>.panel-heading{display:none}.recent-register>.panel-heading{display:flex}
+  .mobile-register-tools{padding:8px 17px 0}
   .segmented{max-width:100%;overflow-x:auto}.segmented button{font-size:12px;min-height:44px;white-space:nowrap}
   .modal{width:calc(100vw - 16px);max-width:calc(100vw - 16px);max-height:calc(100dvh - 16px);border-radius:18px;margin:auto}
   .modal-head{padding:15px 18px}.modal-head h2{font-size:18px;line-height:1.5}.modal-body{padding:20px 18px calc(20px + env(safe-area-inset-bottom))}

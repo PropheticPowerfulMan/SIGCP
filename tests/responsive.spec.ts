@@ -54,6 +54,12 @@ test('téléphone 390 : cartes lisibles, fiche, navigation basse et menu utilisa
   await quick.getByRole('button', { name: 'Aller à Courriers', exact: true }).tap();
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Courriers entrants');
   const cards = await visibleRegisterCards(page);
+  await expect(cards.first()).toBeInViewport({ ratio: 1 });
+  const firstCardBounds = await cards.first().boundingBox();
+  const quickBounds = await quick.boundingBox();
+  expect(firstCardBounds).not.toBeNull();
+  expect(quickBounds).not.toBeNull();
+  expect(firstCardBounds!.y + firstCardBounds!.height, 'La première carte doit rester entièrement au-dessus de la navigation basse.').toBeLessThanOrEqual(quickBounds!.y);
   await noHorizontalOverflow(page);
   await viewportCapture(page, 'registre-mobile');
   await cards.first().tap();
