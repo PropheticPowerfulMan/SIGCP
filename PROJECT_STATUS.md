@@ -30,3 +30,13 @@ Backend Java, base PostgreSQL, OIDC/MFA, autorisations serveur, signatures, mess
 ## Risques et validations restantes
 
 Données accessibles et modifiables localement ; aucune authentification de production. Ne pas saisir de données réelles. Fichier d’emblème officiel à fournir. Règles métier et organigramme à faire approuver. Abonnement et activation Pages du dépôt privé à vérifier pendant publication.
+
+## Résultat de livraison
+
+- Compilation de production Vite réussie : 1 579 modules, JavaScript 229,26 kB (70,64 kB gzip).
+- Aperçu local vérifié : HTTP 200 sur http://127.0.0.1:5173/SIGCP/.
+- Code publié dans GitHub : commit bf3bf7559c2da5fa49842f4582d9490e760f6714.
+- Vérification visuelle non réalisée : délais d’expiration des outils navigateur et Windows.
+- Publication Pages non confirmée : l’URL attendue répond HTTP 404 après envoi du code. Le connecteur disponible ne fournit pas le suivi des workflows déclenchés par push ; il ne permet donc pas d’établir la cause.
+- Action restante : consulter Actions et Settings > Pages sur le dépôt ; vérifier que GitHub Actions est la source et que l’offre du compte autorise Pages sur ce dépôt privé. Le dépôt n’a pas été rendu public.
+
