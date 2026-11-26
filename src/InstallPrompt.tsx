@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
-import { CheckCircle2, Download, MonitorSmartphone, RefreshCw, Share2, WifiOff } from 'lucide-react';
+import { CheckCircle2, Download, LoaderCircle, MonitorSmartphone, RefreshCw, Share2, WifiOff } from 'lucide-react';
 import { Modal, Notice } from './ui';
 import { applyPwaUpdate, getPwaServerState, getPwaState, initializePwaEvents, installationGuide, promptNativeInstall, subscribePwa } from './pwa';
 import './pwa.css';
@@ -14,6 +14,8 @@ export function InstallPrompt({ compact = false, className = '', updateBlocked =
   const installing = useRef(false);
   const [message, setMessage] = useState('');
   const guide = installationGuide();
+  const nativeInstalling = busy && installing.current;
+  const updating = busy && !installing.current;
 
   async function install() {
     if (installing.current) return;
@@ -44,8 +46,8 @@ export function InstallPrompt({ compact = false, className = '', updateBlocked =
 
   return <div className={'pwa-control ' + className}>
     {pwa.offline && <span className="pwa-offline" role="status"><WifiOff size={15} /><span>{pwa.shellReady ? 'Hors connexion · pilote local' : 'Connexion indisponible'}</span></span>}
-    {pwa.installed ? <span className="pwa-installed" role="status" aria-label="Application installée sur cet appareil" title="Cette application est installée sur cet appareil"><CheckCircle2 size={16} />{!compact && 'Application installée'}</span> : <button className="pwa-install-button" type="button" data-testid="pwa-install" onClick={() => { void install(); }} disabled={busy} aria-label="Installer IMPERIUM RDC sur cet appareil"><Download size={16} /><span>{busy ? 'Installation…' : compact ? 'Installer' : 'Installer l’application'}</span></button>}
-    {pwa.updateReady && <button className="pwa-update-button" type="button" onClick={() => setUpdateOpen(true)} aria-label="Une nouvelle version est disponible"><RefreshCw size={15} /><span>Nouvelle version</span></button>}
+    {pwa.installed ? <span className="pwa-installed" role="status" aria-label="Application installée sur cet appareil" title="Cette application est installée sur cet appareil"><CheckCircle2 size={16} />{!compact && 'Application installée'}</span> : <button className="pwa-install-button" type="button" data-testid="pwa-install" onClick={() => { void install(); }} disabled={busy} aria-busy={nativeInstalling} aria-label={nativeInstalling ? 'Installation d’IMPERIUM RDC en cours' : 'Installer IMPERIUM RDC sur cet appareil'}>{nativeInstalling ? <LoaderCircle size={16} className="button-spinner" aria-hidden="true" /> : <Download size={16} aria-hidden="true" />}<span>{nativeInstalling ? 'Installation…' : compact ? 'Installer' : 'Installer l’application'}</span></button>}
+    {pwa.updateReady && <button className="pwa-update-button" type="button" onClick={() => setUpdateOpen(true)} disabled={busy} aria-busy={updating} aria-label={updating ? 'Mise à jour en cours' : 'Une nouvelle version est disponible'}>{updating ? <LoaderCircle size={15} className="button-spinner" aria-hidden="true" /> : <RefreshCw size={15} aria-hidden="true" />}<span>{updating ? 'Mise à jour…' : 'Nouvelle version'}</span></button>}
     {message && <span className="pwa-feedback" role="status">{message}</span>}
     {guideOpen && <Modal title="Installer IMPERIUM RDC" onClose={() => setGuideOpen(false)}>
       <div className="pwa-guide-heading"><span><MonitorSmartphone size={28} /></span><div><h3>Votre espace, à portée de main.</h3><p>Une icône dédiée et une fenêtre adaptée à votre appareil.</p></div></div>
@@ -58,7 +60,7 @@ export function InstallPrompt({ compact = false, className = '', updateBlocked =
     {updateOpen && <Modal title="Une nouvelle version est prête" onClose={() => setUpdateOpen(false)}>
       <p>La mise à jour rechargera l’application. Terminez et enregistrez les formulaires en cours avant de continuer. Vos dossiers fictifs enregistrés dans ce navigateur seront conservés.</p>
       {updateBlocked && <Notice danger>Un formulaire est en cours d’édition. Fermez cette fenêtre et terminez votre saisie avant de mettre à jour.</Notice>}
-      <div className="form-actions"><button className="secondary" type="button" onClick={() => setUpdateOpen(false)}>Plus tard</button><button className="primary" type="button" disabled={updateBlocked || busy} onClick={() => { if (updateBlocked) return; setBusy(true); if (!applyPwaUpdate()) { setBusy(false); setUpdateOpen(false); setMessage('La nouvelle version n’est plus en attente. Rouvrez l’application pour vérifier.'); } }}><RefreshCw size={16} />Actualiser l’application</button></div>
+      <div className="form-actions"><button className="secondary" type="button" onClick={() => setUpdateOpen(false)}>Plus tard</button><button className="primary" type="button" disabled={updateBlocked || busy} aria-busy={updating} onClick={() => { if (updateBlocked) return; setBusy(true); if (!applyPwaUpdate()) { setBusy(false); setUpdateOpen(false); setMessage('La nouvelle version n’est plus en attente. Rouvrez l’application pour vérifier.'); } }}>{updating ? <LoaderCircle size={16} className="button-spinner" aria-hidden="true" /> : <RefreshCw size={16} aria-hidden="true" />}{updating ? 'Mise à jour…' : 'Actualiser l’application'}</button></div>
     </Modal>}
   </div>;
 }

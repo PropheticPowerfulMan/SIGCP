@@ -1,5 +1,5 @@
 import React, { useId, useRef, useState } from 'react';
-import { Inbox, Send, Check } from 'lucide-react';
+import { Inbox, Send, Check, LoaderCircle } from 'lucide-react';
 import { assignees, channels, createMail, institutions, isValidDate, priorities, services, shiftDate, today } from './domain.ts';
 import type { Mail, MailInput, MailKind } from './domain.ts';
 import { Modal, Notice } from './ui';
@@ -113,7 +113,7 @@ export function CreateForm({ defaults, existing, onClose, onSave }: CreateFormPr
 
   return <Modal title="Enregistrer un courrier fictif" onClose={onClose} wide>
     <Notice>Utilisez exclusivement des informations fictives. Ce courrier est conservé dans le navigateur ; aucun message ni document réel n’est transmis.</Notice>
-    <form className="mail-form" ref={formRef} onSubmit={submit} noValidate aria-label="Nouveau courrier fictif">
+    <form className="mail-form" ref={formRef} onSubmit={submit} noValidate aria-label="Nouveau courrier fictif" aria-busy={isSaving}>
       {hasErrors && <div className="form-errors" role="alert">
         <strong>{formError || 'Vérifiez les champs signalés.'}</strong>
         {Object.keys(errors).length > 0 && <ul>{Object.entries(errors).map(([name, message]) => <li key={name}><a href={`#${fieldId(name as FieldName)}`}>{message}</a></li>)}</ul>}
@@ -183,7 +183,7 @@ export function CreateForm({ defaults, existing, onClose, onSave }: CreateFormPr
         <textarea id={fieldId('notes')} name="notes" value={values.notes} onChange={event => update('notes', event.target.value)} maxLength={1500} rows={3} placeholder="Contexte et instructions de démonstration…" {...errorProps('notes')} />
         {fieldError('notes')}
       </label>
-      <div className="form-actions"><button type="button" className="secondary" onClick={onClose} disabled={isSaving}>Annuler</button><button type="submit" className="primary" disabled={isSaving}><Check size={17} />{isSaving ? 'Enregistrement…' : 'Enregistrer le courrier'}</button></div>
+      <div className="form-actions"><button type="button" className="secondary" onClick={onClose} disabled={isSaving}>Annuler</button><button type="submit" className="primary" disabled={isSaving} aria-busy={isSaving}>{isSaving ? <LoaderCircle size={17} className="button-spinner" aria-hidden="true" /> : <Check size={17} aria-hidden="true" />}{isSaving ? 'Enregistrement…' : 'Enregistrer le courrier'}</button></div>
     </form>
   </Modal>;
 }

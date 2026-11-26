@@ -1,0 +1,26 @@
+/* Consistent feedback: hover for pointers, press for touch, clear focus for keys. */
+:root{--action-focus:#ad8b42;--action-ring:#bea15d26;--action-shadow:0 6px 18px #102c4820}
+[data-theme=dark]{--action-focus:#e0c47f;--action-ring:#d7ba6b24;--action-shadow:0 6px 20px #00000030}
+button,.nav-item{transition:background-color .18s ease,border-color .18s ease,color .18s ease,box-shadow .2s ease,transform .16s ease;touch-action:manipulation}
+button:focus-visible,.nav-item:focus-visible{outline:3px solid var(--action-focus);outline-offset:3px;box-shadow:0 0 0 6px var(--action-ring)}
+.primary,.login-enter,.hero-button,.pwa-install-button{position:relative;isolation:isolate;overflow:hidden}
+.primary{background:linear-gradient(135deg,#0d2945,#204865);border-color:#1b3d59;box-shadow:0 3px 8px #102c481a}
+.primary::after,.login-enter::after,.hero-button::after,.pwa-install-button::after{content:'';position:absolute;inset:-50% -30%;background:linear-gradient(105deg,transparent 30%,#ffffff15 47%,#ffffff05 55%,transparent 70%);transform:translateX(-130%);pointer-events:none;transition:transform .65s ease;z-index:-1}
+button:enabled:active{transform:translateY(1px) scale(.985)}
+.primary:enabled:active,.login-enter:enabled:active{box-shadow:inset 0 2px 5px #06172b25}
+button:disabled{transform:none;box-shadow:none}
+button[aria-busy=true]{cursor:progress;opacity:.8}
+.button-spinner{animation:imperium-button-spin .85s linear infinite;flex-shrink:0;transform-origin:center}
+@keyframes imperium-button-spin{to{transform:rotate(360deg)}}
+@media(hover:hover) and (pointer:fine){
+  .primary:enabled:hover,.login-enter:enabled:hover{background:linear-gradient(135deg,#173b5d,#2c5875);border-color:#6d8291;box-shadow:var(--action-shadow);transform:translateY(-2px)}
+  .primary:enabled:hover::after,.login-enter:enabled:hover::after,.hero-button:enabled:hover::after,.pwa-install-button:enabled:hover::after{transform:translateX(130%)}
+  .secondary:enabled:hover,.pwa-install-button:enabled:hover,.hero-button:enabled:hover{box-shadow:var(--action-shadow);transform:translateY(-1px)}
+  .icon-button:enabled:hover{background:var(--soft);box-shadow:0 2px 7px #102c480c}
+  .text-button:enabled:hover,.guide-link:enabled:hover{color:#aa853a}
+  .mail-card:enabled:hover{box-shadow:var(--action-shadow);transform:translateY(-2px)}
+  .nav-item:hover{box-shadow:inset 0 0 0 1px #ffffff08}
+  button:enabled:active,.primary:enabled:active,.login-enter:enabled:active,.secondary:enabled:active,.mail-card:enabled:active,.pwa-install-button:enabled:active,.hero-button:enabled:active{transform:translateY(1px) scale(.985)}
+}
+@media(prefers-reduced-motion:reduce){button,.nav-item,button::after{transition:none!important}button:enabled:active,.primary:enabled:hover,.login-enter:enabled:hover,.secondary:enabled:hover,.mail-card:enabled:hover{transform:none!important}.button-spinner{animation:none}}
+@media(forced-colors:active){.primary,.login-enter,.hero-button,.pwa-install-button{background:ButtonFace;color:ButtonText;border:1px solid ButtonText}.primary::after,.login-enter::after,.hero-button::after,.pwa-install-button::after{display:none}button:focus-visible,.nav-item:focus-visible{outline-color:Highlight;box-shadow:none}}
