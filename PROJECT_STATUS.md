@@ -1,58 +1,58 @@
-# État de livraison · IMPERIUM RDC 0.3.1
+# État de livraison · IMPERIUM RDC 0.4.0
 
-Date : 26 novembre 2026. Pilote à données exclusivement fictives, non homologué. Version 0.3.1 validée en CI et publiée sur GitHub Pages. Dix captures et le PDF final inspectés ; contrôle hors connexion public réussi. Les résultats de la 0.3 ci-dessous restent historiques.
+Date : 27 novembre 2026. Pilote à données exclusivement fictives, non homologué. Version 0.4.0 validée en CI et publiée sur GitHub Pages ; contrôles visuels, six captures, hors connexion public et PDF final confirmés. Les résultats 0.3.1 et antérieurs sont historiques.
 
-## Évolutions de la version 0.3.1
+## Évolutions de la version 0.4.0
 
-- Les tableaux de courriers deviennent des cartes jusqu’à 1000 px, y compris les dernières correspondances du tableau de bord. Référence, objet, sens, correspondant, service, priorité, statut et date proviennent des mêmes dossiers ; les outils de tri restent disponibles.
-- La tablette utilise par défaut un rail de navigation de 78 px lorsqu’aucune préférence explicite n’est enregistrée. Le choix de menu réduit ou développé reste conservé. Le téléphone dispose d’une navigation basse.
-- Les champs tactiles utilisent une police de 16 px et une hauteur minimale de 48 px. Sur petit écran, l’accès au pilote précède le contenu éditorial de la connexion ; le titre et l’emblème du tableau de bord ont une disposition adaptée.
-- Les barres de défilement verticales et horizontales partagent la palette navy/or. Les propriétés CSS standard sont privilégiées avec un repli WebKit ; le mode de couleurs forcées conserve le rendu système.
-- Les boutons ont des retours de survol, de focus et de pression. Les mouvements sont réduits selon la préférence système.
-- Les indicateurs de sauvegarde, d’installation et de mise à jour suivent les opérations réellement en cours ; aucun chargement artificiel n’est ajouté aux parcours immédiats.
-- Dans l’espace de travail, le contrôle d’installation est intégré à la barre supérieure au moyen d’un portail React, pour libérer le contenu. L’écran d’entrée conserve son accès à l’installation et à l’aide par appareil.
+- Thème perle bleutée, surfaces et champs adoucis, avec reprise des contrastes des badges, du focus et des erreurs. Les modes clair/sombre et les adaptations tactiles sont conservés.
+- Recherche globale locale depuis chaque rubrique, accessible par Ctrl K, sur les métadonnées fictives ; jusqu’à douze résultats présentés.
+- Émetteur/propriétaire et destinataire distingués ; valeurs saisies dans les champs libres conservées.
+- Avertissement de doublons potentiels, suivi d’une confirmation explicite pour poursuivre l’enregistrement. Ce contrôle local ne constitue pas une garantie de dédoublonnage concurrent côté serveur.
+- Profils Agent pilote (AP), Responsable du courrier (RC) et Autorité de validation (AV) cohérents avec les avatars et les acteurs des événements fictifs.
+- Résumé des erreurs avec déplacement du focus vers la saisie à corriger, sans modification du hash de navigation.
 
-Ces changements concernent l’interface du pilote. La validation CI, la correspondance des ressources publiées et les contrôles de présentation de la 0.3.1 sont confirmés ci-dessous.
+Ces changements sont validés par les parcours du pilote ci-dessous. Aucun backend ni droit serveur n’est ajouté, aucune nouvelle dépendance n’est introduite et le schéma `Mail` reste inchangé. Les profils servent à la présentation et ne constituent pas une identité authentifiée ou des habilitations.
 
 ## Fonctions conservées
 
-Entrée par trois profils fictifs, emblème fourni et ligne tricolore, session de démonstration, registres entrants/sortants, création validée, recherche/filtres/tri/pagination, workflow local, retour pour correction, fiches documentaires fictives, statistiques, échanges simulés, mode sombre et récupération du stockage local.
+Emblème fourni et ligne tricolore, session de démonstration, registres entrants/sortants, cartes tactiles et tableaux ordinateur, création validée, filtres/tri/pagination, workflow local, retours pour correction, fiches fictives, statistiques et échanges simulés. Le rail tablette, la navigation basse téléphone, les champs tactiles et les mouvements réduits sont conservés.
 
-La PWA conserve son identité `/SIGCP/`, ses icônes et sa stratégie de cache de coque statique. Aucune réponse d’API, donnée saisie, pièce, export ou jeton n’est ajouté au cache. Les scénarios synthétiques initiaux font partie du bundle ; les dossiers créés restent dans le stockage local du navigateur. Les mises à jour demandent une confirmation et sont bloquées pendant l’édition.
+La PWA garde l’identité `/SIGCP/` et le cache de coque statique : aucune réponse d’API, donnée saisie, pièce, export ou jeton n’est ajouté au cache. Les scénarios synthétiques initiaux font partie du bundle ; les dossiers créés restent dans le stockage local. La mise à jour est explicite et bloquée pendant l’édition.
 
-## Preuves confirmées pour la 0.3.1
+## État des preuves de la 0.4.0
 
-| Élément | État |
+| Élément | État confirmé |
 | --- | --- |
-| Révision de `main` | `1bee9bf2f77728652758725e404b1aaa1ca68475` |
-| Tests Node | 32 sur 32 réussis |
-| Parcours Chromium | 19 réussis ; 1 test de captures conditionnel ignoré |
-| Audit npm, typage strict et build | 0 vulnérabilité ; typage et build réussis |
-| Exécution GitHub Actions | [45886138008](https://github.com/PropheticPowerfulMan/SIGCP/actions/runs/45886138008), succès |
-| Publication Pages | Build `140137188118`, deploy `140137540180` réussis ; artefact `15149296772` |
-| Bundles | `index-CA1h1BLN.js` : 330,44 kB / 97,65 kB gzip ; `index-BctLyuSp.css` : 99,43 kB / 20,60 kB gzip |
-| Cache de coque | `imperium-sigcp-shell-9f7f654df48ed8f6037f`, 27 ressources statiques |
-| Ressources publiques | Page, manifeste, SW, JS, CSS, PNG 512 et emblème : HTTP 200, types MIME attendus |
-| Contrôles tactiles locaux | 2 parcours réussis : carte visible à 390 px, sauvegarde accessible à 820 px, rail/préférence/rechargement/rotation à 1024 px sans débordement |
-| Captures | 9 captures claires et `formulaire-tablette-sombre.png` inspectés ; sauvegarde entièrement visible et notice lisible en sombre |
-| Hors connexion public | 1 test réussi en 36 s, cache HTTP désactivé ; 42 dossiers, SW, CSS, DM Sans et images chargés |
-| PDF 0.3.1 | 10 pages, 1 419 426 octets ; rendu Poppler, inspection des 10 pages et des 4 légendes réussis |
+| Tests Node | 47 réussis en CI |
+| Parcours Chromium | 23 réussis ; 1 test de captures conditionnel ignoré |
+| Typage/build et audit npm | Réussis ; 0 vulnérabilité signalée |
+| Révision applicative publiée / PR | `be9463cd13cc596ac63e0e4a190b02272a14c223`, PR 4 fusionnée |
+| Validation PR | [45985797807](https://github.com/PropheticPowerfulMan/SIGCP/actions/runs/45985797807), source `ea5eccfa` |
+| Publication Pages | [45986496672](https://github.com/PropheticPowerfulMan/SIGCP/actions/runs/45986496672), succès ; build `140463373730`, deploy `140463879230`, artefact `15191024538` |
+| Bundles | `index-DRwZDCfA.js` : 339,74 kB / 100,72 kB gzip ; `index-CF7AcEUd.css` : 112,82 kB / 23,20 kB gzip |
+| Cache de coque | `imperium-sigcp-shell-cc9b9de510c6dda81353`, 27 ressources statiques |
+| Ressources publiques | Page, manifeste, SW, JS, CSS, trois icônes et emblème : HTTP 200 avec types MIME attendus |
+| Parcours locaux | 6 réussis |
+| Revue visuelle | 1440/390/820 px en clair et sombre ; 53 états, 1 407 échantillons calculables sans échec ; minimum texte 5,038:1 |
+| Captures | 6 PNG `v04-*` figés |
+| Hors connexion public | 1 test réussi, scénario 25,0 s / exécution 1,0 min, code de sortie 0 ; réseau/cache HTTP désactivés, 42 dossiers/SW/CSS/DM Sans/images disponibles |
+| PDF 0.4.0 | 10 pages, 1 251 108 octets ; rendu et inspection des dix pages sans défaut constaté |
 
-Le [rapport de validation](docs/VALIDATION_REPORT.md) conserve les références exactes et sépare les résultats CI, tactiles locaux, publics et documentaires.
+Le [rapport de validation](docs/VALIDATION_REPORT.md) distingue CI, contrôles locaux, mesures de contraste, publication et contrôle documentaire. Les fonds dégradés sont examinés manuellement ; aucune certification générale d’accessibilité n’est déduite des échantillons calculables.
 
-Publication : https://propheticpowerfulman.github.io/SIGCP/. Le manifeste publié a id/scope/start_url `/SIGCP/`, le mode `standalone` et trois icônes.
+Publication 0.4.0 : https://propheticpowerfulman.github.io/SIGCP/. Le manifeste a id/scope/start_url `/SIGCP/`, le mode `standalone` et trois icônes (192 any, 512 any, 512 maskable).
 
-## Historique de la publication 0.3
+## Historique de la publication 0.3.1
 
-Démonstration : https://propheticpowerfulman.github.io/SIGCP/
+Les références ci-dessous concernent la publication antérieure et ne valident pas la 0.4.0.
 
-La 0.3 avait réussi 32 tests Node, 17 parcours Chromium, le typage/build et un audit npm sans vulnérabilité ; un test de captures conditionnel était ignoré. [Validation 45881470660](https://github.com/PropheticPowerfulMan/SIGCP/actions/runs/45881470660), source `f6e2175875ddfc3d921db8e0275f192a48445ffb`, fusion `b8688b1d9e53008efb6d453563d289d5a0d0d58e`.
+Le [run 45886138008](https://github.com/PropheticPowerfulMan/SIGCP/actions/runs/45886138008) avait publié la révision `1bee9bf2f77728652758725e404b1aaa1ca68475` : 32 tests Node, 19 parcours Chromium, typage/build et audit npm sans vulnérabilité ; un test de captures conditionnel était ignoré. Build `140137188118`, deploy `140137540180`, artefact `15149296772`.
 
-Le [déploiement 45881652536](https://github.com/PropheticPowerfulMan/SIGCP/actions/runs/45881652536) avait été contrôlé avec les bundles `index-DCWiXY7w.js` / `index-6kHQ4sAP.css` et le cache `89c6d17eea990bedf670` de 27 ressources. Un test hors connexion sur l’adresse publique avait réussi. Quatre captures et le dossier PDF 0.3 de huit pages avaient été inspectés. Ces preuves ne valident pas les changements 0.3.1.
+Les bundles contrôlés étaient `index-CA1h1BLN.js` et `index-BctLyuSp.css`, avec le cache `9f7f654df48ed8f6037f` de 27 ressources. Le test public hors connexion avait réussi en 36 secondes ; dix captures et le PDF 0.3.1 de dix pages/1 419 426 octets avaient été inspectés. Ces preuves ne valident pas les nouveaux changements 0.4.0.
 
 ## Limites de production
 
-Aucun backend Java, PostgreSQL, OIDC/MFA, RBAC/ABAC serveur, stockage documentaire privé, antivirus, signature vérifiable, messagerie réelle, journal inviolable, sauvegarde serveur ou migration historique n’est livré. Les trois profils de l’entrée ne constituent pas des habilitations. Aucune certification ni homologation revendiquée.
+Aucun backend Java, PostgreSQL, OIDC/MFA, RBAC/ABAC serveur, stockage documentaire privé, antivirus, signature vérifiable, messagerie réelle, journal inviolable, sauvegarde serveur ou migration historique n’est livré. Les profils AP/RC/AV et les événements locaux n’accordent aucun droit institutionnel. Aucune certification ni homologation revendiquée.
 
 L’emblème a été fourni par le concepteur ; sa présence ne vaut pas approbation institutionnelle. Les douze PDF institutionnels prescrits restent à produire avec leurs preuves ; le dossier de revue du pilote ne les remplace pas.
 

@@ -1,14 +1,16 @@
-# Installer et utiliser IMPERIUM RDC — pilote PWA v0.3.1
+# Installer et utiliser IMPERIUM RDC — pilote PWA v0.4.0
 
-Guide préparé le 26 novembre 2026 pour la présentation du 27 novembre 2026. Édition mobile/tablette **0.3.1 validée et publiée** ; les preuves de cette version sont distinctes de l’historique v0.3.
+Guide actualisé le 27 novembre 2026. Édition **0.4.0 validée et publiée**. Les preuves de publication 0.3.1 et 0.3 conservées plus bas restent historiques.
 
 Adresse : [IMPERIUM RDC / SIGCP](https://propheticpowerfulman.github.io/SIGCP/).
 
 La PWA fournit un accès web et, lorsque le navigateur le permet, une icône et une fenêtre d’application. Le pilote ne collecte pas de mot de passe institutionnel. L’entrée par profil est une démonstration locale ; elle n’est ni une authentification OIDC/MFA, ni une habilitation serveur.
 
-La [CI main 0.3.1](https://github.com/PropheticPowerfulMan/SIGCP/actions/runs/45886138008), source `1bee9bf2f77728652758725e404b1aaa1ca68475`, a réussi : 32 tests Node, 19 parcours Chromium, un scénario de captures ignoré, audit npm à zéro et construction stricte réussie. La publication de cette révision a été vérifiée en HTTP 200 pour la page, les bundles attendus, le manifeste, le service worker, l’icône 512 et l’emblème. Ces preuves concernent le pilote web/PWA ; elles ne constituent pas une installation native exécutée sur toutes les plateformes.
+La [CI main 0.4.0](https://github.com/PropheticPowerfulMan/SIGCP/actions/runs/45986496672), révision `be9463cd13cc596ac63e0e4a190b02272a14c223`, a réussi : 47 tests Node, 23 parcours Chromium, un scénario de captures conditionnel ignoré, audit npm à zéro, typage et construction stricte réussis. La publication a été vérifiée en HTTP 200 pour la page, les deux bundles exacts, le manifeste, le service worker, les icônes et l’emblème. Ces contrôles confirment la version publiée ; ils ne constituent pas une installation native effectuée sur chaque appareil ou navigateur.
 
-Historique distinct : la version publiée v0.3 a été contrôlée le 26 novembre 2026 : accès HTTPS, manifeste, service worker et icônes attendus accessibles. La [CI de publication](https://github.com/PropheticPowerfulMan/SIGCP/actions/runs/45881652536) est réussie. Cette vérification historique ne constitue pas la recette de la v0.3.1 et ne garantit pas une installation native sur chaque appareil ; utilisez la procédure adaptée ci-dessous.
+Historique 0.3.1 : la [CI main 0.3.1](https://github.com/PropheticPowerfulMan/SIGCP/actions/runs/45886138008), source `1bee9bf2f77728652758725e404b1aaa1ca68475`, a réussi : 32 tests Node, 19 parcours Chromium, un scénario de captures ignoré, audit npm à zéro et construction stricte réussie. La publication de cette révision a été vérifiée en HTTP 200 pour la page, les bundles attendus, le manifeste, le service worker, l’icône 512 et l’emblème. Ces preuves concernent le pilote web/PWA ; elles ne constituent pas une installation native exécutée sur toutes les plateformes.
+
+Historique distinct : la version publiée v0.3 a été contrôlée le 26 novembre 2026 : accès HTTPS, manifeste, service worker et icônes attendus accessibles. La [CI de publication](https://github.com/PropheticPowerfulMan/SIGCP/actions/runs/45881652536) est réussie. Cette vérification historique ne constitue pas la recette de la v0.4.0 et ne garantit pas une installation native sur chaque appareil ; utilisez la procédure adaptée ci-dessous.
 
 ## Depuis le bouton de l’application
 
@@ -41,6 +43,14 @@ Sur tablette, le rail latéral compact est prévu par défaut ; le développer p
 Dans une fenêtre longue, faire défiler le contenu jusqu’aux actions. Les barres assorties bleu nuit/or dépendent des possibilités du navigateur et du système ; elles conservent leur fonction habituelle. Si le clavier masque une commande, continuer le défilement du formulaire et vérifier les valeurs avant de valider.
 
 Ces améliorations concernent la présentation et la navigation ; elles ne modifient ni la portée du profil fictif, ni les garanties d’accès, ni le stockage local du pilote.
+
+## Repères de saisie et de recherche en 0.4.0
+
+La commande de recherche globale de l’en-tête est accessible au toucher. Sur un appareil avec clavier, `Ctrl K` ou `Cmd K` ouvre la même fenêtre depuis les rubriques ; fermer d’abord une autre fenêtre ou un formulaire en cours. La recherche concerne les métadonnées des courriers fictifs de ce navigateur, sans indexer de pièce jointe réelle.
+
+Lors de la préparation d’un courrier sortant, distinguer **Institution propriétaire du dossier** et **Choisir une institution destinataire**. Choisir un destinataire ne change pas l’émetteur. Un texte libre saisi reste conservé tant qu’un remplacement explicite n’a pas été demandé.
+
+Un avertissement de doublon possible ne doit pas être confondu avec un échec de stockage. Comparer les dossiers signalés, puis cocher la confirmation et utiliser **Confirmer et enregistrer** seulement si un nouveau courrier distinct doit être conservé. Le profil utilisé reste un acteur fictif local ; aucun mot de passe institutionnel ni droit serveur n’est ajouté.
 
 ## Préparer le mode hors connexion
 

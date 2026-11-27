@@ -2,7 +2,11 @@
 
 ## Livraison actuelle
 
-Démonstration statique React/TypeScript 0.3.1, données synthétiques locales, publiée via GitHub Actions et Pages. Base URL /SIGCP/. Entrée par trois profils fictifs, emblème fourni intégré, navigation adaptative et PWA avec cache de coque statique disponibles. Ces profils n’authentifient aucune identité et ne constituent pas des habilitations. Le domaine et les fonctions de recherche/export sont séparés de la vue pour préparer l’intégration d’une API.
+Édition statique React/TypeScript 0.4.0 validée en CI et publiée via GitHub Actions et Pages, données synthétiques locales. Base URL /SIGCP/. Entrée par trois profils AP/RC/AV fictifs, emblème fourni, navigation adaptative et PWA avec cache de coque statique conservés. Ces profils n’authentifient aucune identité et ne constituent pas des habilitations. Le domaine et les fonctions de recherche/export sont séparés de la vue pour préparer l’intégration d’une API.
+
+La 0.4.0 ajoute la recherche globale locale par métadonnées depuis chaque rubrique (Ctrl K, douze résultats maximum), la distinction émetteur/propriétaire et destinataire, la conservation des champs libres, l’avertissement de doublons avec confirmation, la cohérence des acteurs fictifs et le résumé d’erreurs avec focus sans changement du hash. Le thème perle bleutée et les contrastes sont repris. Aucun backend, droit serveur, nouvelle dépendance ou changement du schéma `Mail` n’est ajouté.
+
+Le run de publication 45986496672 a réussi au commit `be9463cd13cc596ac63e0e4a190b02272a14c223` : 47 tests Node, 23 parcours Chromium, audit sans vulnérabilité et typage/build ; un test de captures conditionnel ignoré. Six parcours locaux, la revue visuelle clair/sombre et un test hors connexion sur l’URL publique sont confirmés. Le PDF final de dix pages/1 251 108 octets a été rendu et inspecté ; les succès antérieurs sont historiques.
 
 ## Architecture cible
 
@@ -10,7 +14,7 @@ Monolithe modulaire Java 25 / Spring Boot, couches domain, application, infrastr
 
 ## Backlog priorisé
 
-1. Faire valider institutionnellement les parcours et la charte du pilote ; l’emblème fourni est déjà intégré et la recette technique 0.3.1 sur Pages est réalisée, sans homologation implicite.
+1. Faire valider institutionnellement les parcours et la charte ; CI, publication, hors connexion public et support de revue 0.4.0 sont vérifiés. L’emblème est intégré et les profils restent fictifs, sans homologation implicite.
 2. Formaliser organigramme, numérotation, classifications, rôles et circuits approuvés.
 3. Initialiser backend, migrations, environnement Docker et identité OIDC.
 4. Implémenter autorisations serveur, transitions concurrentes et registre transactionnel.

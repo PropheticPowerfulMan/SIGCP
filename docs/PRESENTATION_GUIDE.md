@@ -1,8 +1,8 @@
-# Guide de présentation — IMPERIUM RDC / SIGCP v0.3.1
+# Guide de présentation — IMPERIUM RDC / SIGCP v0.4.0
 
-Présentation prévue le **vendredi 27 novembre 2026**, heure de Lagos (UTC+1).
+Présentation du **vendredi 27 novembre 2026**, heure de Lagos (UTC+1).
 
-Édition **0.3.1 validée et publiée**. Les améliorations mobile/tablette et les contrôles de cette édition sont consignés ci-dessous. Le bilan v0.3 conservé ensuite reste un historique distinct.
+Édition **0.4.0 validée et publiée**. Les contrôles de cette édition sont détaillés ci-dessous : 47 tests Node, 23 parcours Chromium et publication vérifiée. Les bilans v0.3.1 et v0.3 conservés ensuite restent historiques.
 
 Initiateur et concepteur : **LOKALA LOMBOTO Jonathan**.
 
@@ -31,8 +31,8 @@ L’emblème présenté est le fichier fourni et autorisé par le concepteur. So
 | Temps | Action à montrer | Message à faire passer |
 | --- | --- | --- |
 | 00:00–00:25 | Page d’entrée, emblème, profil **Agent pilote**, puis **Ouvrir la démonstration** | « L’identité visuelle est institutionnelle. L’entrée actuelle est une session de démonstration, sans mot de passe réel. » |
-| 00:25–01:00 | Tableau de bord : volume, dossiers actifs, échéances ; rétracter puis rouvrir le menu | « Les indicateurs sont calculés depuis les dossiers fictifs. Sur tablette, le rail libère l’espace ; sur téléphone, la navigation rapide accompagne le parcours. » |
-| 01:00–01:45 | **Nouveau courrier** : créer l’exemple ci-dessous | « Les données sont structurées : objet, destinataire, service responsable, priorité et échéance. La saisie est validée. » |
+| 00:25–01:00 | Tableau de bord : volume, dossiers actifs et échéances ; ouvrir la recherche globale avec Ctrl K ou la commande de recherche | « Les indicateurs et la recherche portent sur les dossiers fictifs de ce navigateur. Le mode clair adouci et la navigation restent adaptés à l’écran. » |
+| 01:00–01:45 | **Nouveau courrier** : créer l’exemple ci-dessous | « Le propriétaire du dossier reste distinct du destinataire. La saisie est validée et un doublon possible demande une confirmation explicite. » |
 | 01:45–02:30 | Dans la fiche : affecter, passer en traitement, soumettre en validation ; ouvrir l’évolution | « Le circuit rend visibles les étapes franchies et l’historique. Il refuse les sauts d’étapes dans le pilote. » |
 | 02:30–02:55 | Valider puis archiver le courrier entrant | « La clôture du parcours se retrouve dans le registre et les indicateurs. Il s’agit d’une validation fictive locale, sans signature officielle. » |
 | 02:55–03:45 | **Réseau institutionnel** : courrier sortant éligible, partenaire fictif, préparation puis progression | « Une transmission technique, une réception administrative et un accusé de réception sont trois états différents. Ici, ils sont simulés. » |
@@ -41,6 +41,17 @@ L’emblème présenté est le fichier fourni et autorisé par le concepteur. So
 | 04:45–05:00 | Conclusion et prochaine étape | « Après validation des usages : backend Java/Spring, base PostgreSQL, identité OIDC/MFA, habilitations serveur et GED privée. L’extension nationale se fera par phases autorisées. » |
 
 Si l’installation ou la confirmation système prend trop de temps, montrer le guide et garder le parcours métier comme priorité de la présentation.
+
+## Nouveautés de la revue 0.4.0
+
+- **Recherche globale.** Depuis les rubriques de l’espace de démonstration, utiliser la commande **Ouvrir la recherche globale**, `Ctrl K` ou `Cmd K` sur Mac. Saisir une référence ou plusieurs mots des métadonnées, puis ouvrir une fiche. `Tab` parcourt les résultats, `Entrée` ouvre le résultat choisi et `Échap` ferme la fenêtre. Fermer d’abord une autre fenêtre ou un formulaire : la recherche ne superpose pas une seconde fenêtre à la saisie en cours.
+- **Institutions explicites.** Le champ **Institution propriétaire du dossier** représente l’émetteur d’un échange sortant. **Choisir une institution destinataire** est une aide distincte qui ne change pas ce propriétaire. Le nom libre déjà saisi est conservé ; **Utiliser ce destinataire** permet son remplacement volontaire si un autre choix est proposé.
+- **Doublons possibles.** Les courriers partageant l’objet, l’expéditeur, la date et le type après normalisation déclenchent un avertissement avec leurs références. Comparer les dossiers avant de cocher **Je confirme qu’il s’agit d’un courrier distinct.**, puis choisir **Confirmer et enregistrer**. Aucune création ne doit précéder cette confirmation. Des objets identiques ne sont pas interdits arbitrairement ; l’avertissement aide à décider.
+- **Erreurs de formulaire.** Les liens du résumé d’erreurs focalisent le champ à corriger et le ramènent dans la zone visible, sans changer de rubrique ni perdre le formulaire.
+- **Profils cohérents.** Le profil fictif choisi se retrouve dans l’acteur des créations, transitions et événements présentés. Cette cohérence de démonstration n’ajoute aucune authentification ou habilitation serveur.
+- **Lecture plus douce.** Le thème clair utilise des surfaces moins éclatantes. Vérifier le confort de lecture sur l’écran de présentation ; aucune certification d’accessibilité n’est déduite de ce changement visuel.
+
+Pour illustrer l’avertissement de doublon pendant les questions, reprendre volontairement un exemple déjà enregistré. Montrer d’abord l’absence de nouvelle création, puis la comparaison des références. Ne confirmer que si l’on souhaite réellement conserver un second exemple fictif distinct. Une modification des champs ou des dossiers correspondants demande une nouvelle confirmation.
 
 ## Astuces pour téléphone et tablette
 
@@ -82,9 +93,19 @@ Conserver la référence `DEMO/...` affichée après enregistrement pour retrouv
 | Documents | « Fiches documentaires synthétiques ; aucune pièce institutionnelle réelle hébergée. » |
 | Hors connexion | « Coque statique préparée en ligne ; données fictives conservées dans ce navigateur. » |
 | Sécurité | « Contrôles frontend vérifiés dans le périmètre exécuté ; authentification, autorisation et audit serveur restent à développer. » |
-| Résultats des tests | Citer uniquement les résultats de l’édition présentée, avec leur révision. Les 32 tests Node et 17 parcours Chromium ci-dessous sont des preuves historiques v0.3, pas une recette de la v0.3.1. |
+| Résultats des tests | Citer uniquement les résultats de l’édition présentée, avec leur révision : 47 tests Node et 23 parcours Chromium réussis pour la 0.4.0, avec un scénario de captures conditionnel ignoré. Les bilans 0.3.1/0.3 restent historiques. |
 
-## Contrôles vérifiés et publication de la v0.3.1
+## Contrôles vérifiés et publication de la v0.4.0
+
+Le [workflow push main 45986496672](https://github.com/PropheticPowerfulMan/SIGCP/actions/runs/45986496672), révision `be9463cd13cc596ac63e0e4a190b02272a14c223`, a réussi : **47 tests Node et 23 parcours Chromium réussis**, un scénario de captures conditionnel ignoré, audit npm à zéro vulnérabilité signalée, typage et compilation de production réussis. Six parcours locaux ciblés supplémentaires ont réussi.
+
+Les tâches build et deploy du run main sont toutes deux réussies. La version publique a été vérifiée en HTTP 200 avec `index-DRwZDCfA.js`, `index-CF7AcEUd.css`, son manifeste, son service worker, ses icônes et l’emblème attendu. Le cache statique de la version est identifié par `cc9b9de510c6dda81353`, avec 27 ressources et aucune donnée métier ajoutée au cache.
+
+La revue couvre **53 états sur 6 formats/thèmes**. Sur les 1 407 textes dont le fond est calculable automatiquement, aucun échec mesuré n’a été relevé et le minimum ordinaire observé est **5,038:1**. Les gradients ont fait l’objet d’une revue visuelle manuelle ; ce bilan ciblé ne constitue ni une certification WCAG ni une validation de tous les appareils physiques.
+
+Les quatre captures documentaires v0.4 sont réelles et figées : entrée, tableau de bord sur ordinateur et au format tablette, registre au format téléphone. Les résultats n’établissent pas l’existence de l’identité OIDC/MFA, des habilitations serveur ou de la messagerie institutionnelle, qui restent hors du pilote.
+
+## Historique vérifié de la v0.3.1 — distinct de la recette v0.4.0
 
 Le [workflow main 45886138008](https://github.com/PropheticPowerfulMan/SIGCP/actions/runs/45886138008), révision `1bee9bf2f77728652758725e404b1aaa1ca68475`, a réussi : **32 tests Node et 19 parcours Chromium réussis**, un scénario de captures conditionnel ignoré, audit npm à zéro vulnérabilité signalée, typage et compilation de production réussis.
 
@@ -92,7 +113,7 @@ Les tâches build et deploy sont toutes deux réussies. La version publique a é
 
 Les captures finales illustrent l’entrée, le tableau de bord sur ordinateur et tablette, ainsi que les cartes du registre sur téléphone. La recette inclut les parcours tactiles ; elle ne vaut pas démonstration d’une installation native sur chaque appareil réel ni validation de services institutionnels encore absents.
 
-## Historique vérifié de la v0.3 — distinct de la recette v0.3.1
+## Historique vérifié de la v0.3 — distinct de la recette v0.4.0
 
 La [CI v0.3, exécution 45881470660](https://github.com/PropheticPowerfulMan/SIGCP/actions/runs/45881470660) a réussi sur la révision `f6e2175875ddfc3d921db8e0275f192a48445ffb` : **32 tests Node et 17 parcours Chromium réussis**, un scénario de capture conditionnel ignoré, typage strict et compilation réussis, audit npm à zéro vulnérabilité signalée.
 
