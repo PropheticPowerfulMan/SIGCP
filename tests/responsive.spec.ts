@@ -46,7 +46,7 @@ test('téléphone 390 : cartes lisibles, fiche, navigation basse et menu utilisa
   for (const name of ['Aller à Accueil', 'Aller à Courriers', 'Aller à Validation', 'Afficher toutes les rubriques']) {
     await comfortableTouch(quick.getByRole('button', { name, exact: true }));
   }
-  for (const name of ['Nouveau courrier', 'Ouvrir le menu', 'Ouvrir les notifications', 'Ouvrir le profil pilote']) {
+  for (const name of ['Nouveau courrier', 'Ouvrir le menu', 'Ouvrir les notifications']) {
     const target = page.getByRole('button', { name, exact: true });
     await comfortableTouch(target);
     await expect(target).toBeInViewport({ ratio: 1 });
@@ -74,6 +74,15 @@ test('téléphone 390 : cartes lisibles, fiche, navigation basse et menu utilisa
   const sidebar = page.getByRole('complementary', { name: 'Navigation principale', exact: true });
   await expect(sidebar).toBeVisible();
   await expect(sidebar.getByRole('link', { name: 'Courriers sortants', exact: true })).toBeVisible();
+  const mobileProfile = sidebar.getByRole('button', { name: 'Ouvrir le profil de démonstration', exact: true });
+  await comfortableTouch(mobileProfile);
+  await mobileProfile.tap();
+  const profileDialog = page.getByRole('dialog', { name: 'Profil de démonstration', exact: true });
+  await expect(profileDialog).toBeVisible();
+  await profileDialog.getByRole('button', { name: 'Fermer la fenêtre', exact: true }).tap();
+  await expect(profileDialog).toHaveCount(0);
+  await expect(sidebar).toBeVisible();
+  await expect(mobileProfile).toBeFocused();
   await comfortableTouch(sidebar.getByRole('button', { name: 'Fermer le menu', exact: true }));
   await sidebar.getByRole('button', { name: 'Fermer le menu', exact: true }).tap();
   await expect(sidebar).toBeHidden();

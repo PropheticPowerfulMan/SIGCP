@@ -19,6 +19,7 @@ export interface Mail {
   id: string; ref: string; subject: string; sender: string; recipient: string;
   service: string; kind: MailKind; priority: Priority; status: MailStatus;
   date: string; dueDate: string; classification: 'Démonstration'; notes: string;
+  /** Institutional owner; the emitting institution for outgoing exchanges, never the recipient. */
   channel: Channel; assignee: string; institutionId: string;
   documents: DemoDocument[]; history: HistoryEntry[];
 }
@@ -68,7 +69,7 @@ export function validateInput(input: Partial<MailInput>, anchor: Date | string =
   if (Object.keys(errors).length) return { ok: false, error: 'Vérifiez les champs du formulaire.', errors };
   return { ok: true, value: { subject, sender, recipient: recipient || 'Espace pilote IMPERIUM RDC', notes, service: input.service!, kind: input.kind!, priority: input.priority!, date: input.date!, dueDate: input.dueDate!, channel: input.channel || channels[0], assignee: input.assignee || assignees[0], institutionId: input.institutionId || institutions[0].id } };
 }
-export function createMail(input: Partial<MailInput>, existing: readonly Mail[], anchor: Date | string = new Date()): Result<Mail> {
+export function createMail(input: Partial<MailInput>, existing: readonly Mail[], anchor: Date | string = new Date(), actor?: string): Result<Mail> {
   const validated = validateInput(input, anchor);
   if (!validated.ok) return validated;
   const now = anchor instanceof Date ? anchor : new Date(anchor);
@@ -80,7 +81,14 @@ export function createMail(input: Partial<MailInput>, existing: readonly Mail[],
   }, 0) + 1;
   let ref = `DEMO/${year}/${String(sequence).padStart(5, '0')}`;
   while (existing.some(mail => mail.ref === ref)) ref = `DEMO/${year}/${String(++sequence).padStart(5, '0')}`;
-  return { ok: true, value: { ...validated.value, recipient: validated.value.recipient!, notes: validated.value.notes!, channel: validated.value.channel!, assignee: validated.value.assignee!, institutionId: validated.value.institutionId!, id: crypto.randomUUID(), ref, status: 'Enregistré', classification: 'Démonstration', documents: [], history: [{ date: now.toISOString(), label: 'Enregistrement du courrier fictif', actor: validated.value.assignee!, status: 'Enregistré' }] } };
+  return { ok: true, value: { ...validated.value, recipient: validated.value.recipient!, notes: validated.value.notes!, channel: validated.value.channel!, assignee: validated.value.assignee!, institutionId: validated.value.institutionId!, id: crypto.randomUUID(), ref, status: 'Enregistré', classification: 'Démonstration', documents: [], history: [{ date: now.toISOString(), label: 'Enregistrement du courrier fictif', actor: clean(actor).slice(0, 120) || validated.value.assignee!, status: 'Enregistré' }] } };
+}
+/** Advisory only: a matching administrative description is not proof of a duplicate. */
+export function findMailDuplicates(input: Partial<Pick<MailInput, 'subject' | 'sender' | 'date' | 'kind'>>, existing: readonly Mail[]): Mail[] {
+  const normalized = (value: unknown) => clean(value).normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('fr').replace(/[\u2018\u2019]/g, "'").replace(/\s+/gu, ' ');
+  const subject = normalized(input.subject), sender = normalized(input.sender);
+  if (!subject || !sender || !isValidDate(input.date) || (input.kind !== 'entrant' && input.kind !== 'sortant')) return [];
+  return existing.filter(mail => mail.kind === input.kind && mail.date === input.date && normalized(mail.subject) === subject && normalized(mail.sender) === sender);
 }
 export function nextStatuses(mail: Pick<Mail, 'status' | 'kind'>): MailStatus[] {
   switch (mail.status) {

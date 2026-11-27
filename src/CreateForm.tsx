@@ -1,6 +1,6 @@
 import React, { useId, useRef, useState } from 'react';
 import { Inbox, Send, Check, LoaderCircle } from 'lucide-react';
-import { assignees, channels, createMail, institutions, isValidDate, priorities, services, shiftDate, today } from './domain.ts';
+import { assignees, channels, createMail, findMailDuplicates, institutions, isValidDate, priorities, services, shiftDate, today, validateInput } from './domain.ts';
 import type { Mail, MailInput, MailKind } from './domain.ts';
 import { Modal, Notice } from './ui';
 
@@ -9,22 +9,27 @@ type CreateFormProps = {
   existing: Mail[];
   onClose: () => void;
   onSave: (mail: Mail) => void;
+  actor?: string;
 };
 type FieldName = keyof MailInput;
+type DuplicateWarning = { fingerprint: string; matches: Mail[]; confirmed: boolean };
 
-export function CreateForm({ defaults, existing, onClose, onSave }: CreateFormProps) {
+export function CreateForm({ defaults, existing, onClose, onSave, actor }: CreateFormProps) {
   const prefix = useId();
   const formRef = useRef<HTMLFormElement>(null);
   const deadlineEdited = useRef(Boolean(defaults.dueDate));
   const saving = useRef(false);
+  const senderEdited = useRef(defaults.sender !== undefined);
+  const recipientEdited = useRef(defaults.recipient !== undefined);
+  const duplicateWarningRef = useRef<HTMLDivElement>(null);
   const [values, setValues] = useState<MailInput>(() => {
     const kind = defaults.kind || 'entrant';
     const date = defaults.date || today();
     const institution = institutions.find(item => item.id === defaults.institutionId) || institutions[0];
     return {
       subject: defaults.subject || '',
-      sender: defaults.sender || (kind === 'sortant' ? institutions[0].name : ''),
-      recipient: defaults.recipient || (kind === 'sortant' ? institution.name : 'Espace pilote IMPERIUM RDC'),
+      sender: defaults.sender ?? (kind === 'sortant' ? institution.name : ''),
+      recipient: defaults.recipient ?? (kind === 'sortant' ? '' : 'Espace pilote IMPERIUM RDC'),
       service: defaults.service || services[0],
       kind,
       priority: defaults.priority || 'Normale',
@@ -39,6 +44,8 @@ export function CreateForm({ defaults, existing, onClose, onSave }: CreateFormPr
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [formError, setFormError] = useState('');
   const [isSaving, setIsSaving] = useState(false);
+  const [destinationChoice, setDestinationChoice] = useState<string>(() => institutions.find(item => item.name === defaults.recipient)?.id || '');
+  const [duplicateWarning, setDuplicateWarning] = useState<DuplicateWarning | null>(null);
   const fieldId = (name: FieldName) => `${prefix}-${name}`;
   const errorId = (name: FieldName) => `${fieldId(name)}-error`;
   const errorProps = (name: FieldName) => ({
@@ -56,23 +63,28 @@ export function CreateForm({ defaults, existing, onClose, onSave }: CreateFormPr
       return next;
     });
     setFormError('');
+    setDuplicateWarning(null);
   };
+  function focusField(name: string) {
+    const element = formRef.current?.elements.namedItem(name);
+    if (element instanceof HTMLElement) {
+      element.focus({ preventScroll: true });
+      element.scrollIntoView({ block: 'center', behavior: 'auto' });
+    }
+  }
   function changeKind(kind: MailKind) {
     if (values.kind === kind) return;
+    const owner = institutions.find(item => item.id === values.institutionId) || institutions[0];
+    const destination = institutions.find(item => item.id === destinationChoice);
     setValues(current => ({
       ...current,
       kind,
-      sender: !current.sender || current.sender === institutions[0].name
-        ? kind === 'sortant' ? institutions[0].name : ''
-        : current.sender,
-      recipient: !current.recipient || current.recipient === 'Espace pilote IMPERIUM RDC' || institutions.some(item => item.name === current.recipient)
-        ? kind === 'sortant'
-          ? (institutions.find(item => item.id === current.institutionId) || institutions[0]).name
-          : 'Espace pilote IMPERIUM RDC'
-        : current.recipient,
+      sender: senderEdited.current ? current.sender : kind === 'sortant' ? owner.name : '',
+      recipient: recipientEdited.current ? current.recipient : kind === 'sortant' ? destination?.name || '' : 'Espace pilote IMPERIUM RDC',
     }));
     setErrors({});
     setFormError('');
+    setDuplicateWarning(null);
   }
   function changeDate(value: string) {
     update('date', value);
@@ -81,23 +93,46 @@ export function CreateForm({ defaults, existing, onClose, onSave }: CreateFormPr
   function changeInstitution(value: string) {
     update('institutionId', value);
     const institution = institutions.find(item => item.id === value);
-    if (!institution) return;
-    if (values.kind === 'sortant' && (!values.recipient || institutions.some(item => item.name === values.recipient))) update('recipient', institution.name);
+    // Changing the institutional owner never changes the addressee.
+    if (institution && values.kind === 'sortant' && !senderEdited.current) update('sender', institution.name);
   }
+  function changeDestination(value: string) {
+    setDestinationChoice(value);
+    const institution = institutions.find(item => item.id === value);
+    if (!recipientEdited.current || !values.recipient?.trim()) {
+      update('recipient', institution?.name || '');
+      recipientEdited.current = false;
+    }
+  }
+  const suggestedDestination = institutions.find(item => item.id === destinationChoice);
+  const recipientDiffers = Boolean(suggestedDestination && values.recipient !== suggestedDestination.name);
   function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (saving.current) return;
-    const result = createMail(values, existing);
-    if (!result.ok) {
-      setErrors(result.errors || {});
-      setFormError(result.error);
-      const first = Object.keys(result.errors || {})[0];
+    const anchor = new Date();
+    const validated = validateInput(values, anchor);
+    if (!validated.ok) {
+      setErrors(validated.errors || {});
+      setFormError(validated.error);
+      setDuplicateWarning(null);
+      const first = Object.keys(validated.errors || {})[0];
+      if (first) requestAnimationFrame(() => focusField(first));
+      return;
+    }
+    const matches = findMailDuplicates(validated.value, existing);
+    const fingerprint = JSON.stringify([validated.value.subject, validated.value.sender, validated.value.date, validated.value.kind, matches.map(mail => [mail.id, mail.ref]).sort(([a], [b]) => a.localeCompare(b))]);
+    if (matches.length && (!duplicateWarning?.confirmed || duplicateWarning.fingerprint !== fingerprint)) {
+      setErrors({});
+      setFormError('');
+      setDuplicateWarning({ fingerprint, matches, confirmed: false });
       requestAnimationFrame(() => {
-        const target = first ? formRef.current?.elements.namedItem(first) : null;
-        if (target instanceof HTMLElement) target.focus();
+        duplicateWarningRef.current?.focus({ preventScroll: true });
+        duplicateWarningRef.current?.scrollIntoView({ block: 'center', behavior: 'auto' });
       });
       return;
     }
+    const result = createMail(validated.value, existing, anchor, actor);
+    if (!result.ok) { setErrors(result.errors || {}); setFormError(result.error); return; }
     saving.current = true;
     setIsSaving(true);
     try {
@@ -116,7 +151,7 @@ export function CreateForm({ defaults, existing, onClose, onSave }: CreateFormPr
     <form className="mail-form" ref={formRef} onSubmit={submit} noValidate aria-label="Nouveau courrier fictif" aria-busy={isSaving}>
       {hasErrors && <div className="form-errors" role="alert">
         <strong>{formError || 'Vérifiez les champs signalés.'}</strong>
-        {Object.keys(errors).length > 0 && <ul>{Object.entries(errors).map(([name, message]) => <li key={name}><a href={`#${fieldId(name as FieldName)}`}>{message}</a></li>)}</ul>}
+        {Object.keys(errors).length > 0 && <ul>{Object.entries(errors).map(([name, message]) => <li key={name}><a href={`#${fieldId(name as FieldName)}`} onClick={event => { event.preventDefault(); focusField(name); }}>{message}</a></li>)}</ul>}
       </div>}
       <div className="form-section-heading"><span>Type de correspondance</span><small>Tous les champs marqués * sont obligatoires.</small></div>
       <div className="form-kind" role="group" aria-label="Type de correspondance">
@@ -131,17 +166,18 @@ export function CreateForm({ defaults, existing, onClose, onSave }: CreateFormPr
       </label>
       <div className="form-grid">
         <label htmlFor={fieldId('sender')}>Expéditeur fictif *
-          <input id={fieldId('sender')} name="sender" value={values.sender} onChange={event => update('sender', event.target.value)} required minLength={3} maxLength={120} placeholder="Ex. Institution partenaire B" {...errorProps('sender')} />
+          <input id={fieldId('sender')} name="sender" value={values.sender} onChange={event => { senderEdited.current = true; update('sender', event.target.value); }} required minLength={3} maxLength={120} placeholder="Ex. Institution partenaire B" {...errorProps('sender')} />
           {fieldError('sender')}
         </label>
         <label htmlFor={fieldId('recipient')}>Destinataire fictif
-          <input id={fieldId('recipient')} name="recipient" value={values.recipient} onChange={event => update('recipient', event.target.value)} maxLength={120} placeholder="Espace pilote destinataire" {...errorProps('recipient')} />
+          <input id={fieldId('recipient')} name="recipient" value={values.recipient} onChange={event => { recipientEdited.current = true; update('recipient', event.target.value); setDestinationChoice(institutions.find(item => item.name === event.target.value)?.id || ''); }} maxLength={120} placeholder="Espace pilote destinataire" {...errorProps('recipient')} />
           {fieldError('recipient')}
         </label>
       </div>
       <div className="form-grid">
-        <label htmlFor={fieldId('institutionId')}>Institution du dossier *
-          <select id={fieldId('institutionId')} name="institutionId" value={values.institutionId} onChange={event => changeInstitution(event.target.value)} required {...errorProps('institutionId')}>{institutions.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}</select>
+        <label htmlFor={fieldId('institutionId')}>Institution propriétaire du dossier *
+          <select id={fieldId('institutionId')} name="institutionId" value={values.institutionId} onChange={event => changeInstitution(event.target.value)} required {...errorProps('institutionId')} aria-describedby={[errors.institutionId ? errorId('institutionId') : '', `${prefix}-owner-help`].filter(Boolean).join(' ')}>{institutions.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}</select>
+          <small id={`${prefix}-owner-help`}>{values.kind === 'sortant' ? 'Cette institution est l’émettrice de l’échange simulé ; elle est distincte du destinataire.' : 'Institution à laquelle appartient ce dossier de démonstration.'}</small>
           {fieldError('institutionId')}
         </label>
         <label htmlFor={fieldId('channel')}>Canal de réception *
@@ -149,6 +185,16 @@ export function CreateForm({ defaults, existing, onClose, onSave }: CreateFormPr
           {fieldError('channel')}
         </label>
       </div>
+      {values.kind === 'sortant' && <div className="destination-helper">
+        <label htmlFor={`${prefix}-destination`}>Choisir une institution destinataire
+          <select id={`${prefix}-destination`} value={destinationChoice} onChange={event => changeDestination(event.target.value)} aria-describedby={`${prefix}-destination-help`}>
+            <option value="">Conserver le destinataire libre</option>
+            {institutions.map(item => <option key={item.id} value={item.id}>{item.name}{!item.connected ? ' · échange indisponible' : ''}</option>)}
+          </select>
+          <small id={`${prefix}-destination-help`}>Cette aide ne change jamais l’institution propriétaire. Le destinataire reste libre ; la disponibilité du partenaire sera vérifiée lors de la préparation d’un échange.</small>
+        </label>
+        {recipientDiffers && <div className="notice"><div><p>Le destinataire que vous avez saisi est conservé. Choix proposé : <strong>{suggestedDestination?.name}</strong>.</p><button type="button" className="secondary" onClick={() => { if (suggestedDestination) { recipientEdited.current = false; update('recipient', suggestedDestination.name); } }}>Utiliser ce destinataire</button></div></div>}
+      </div>}
       <div className="form-section-heading"><span>Affectation et suivi</span></div>
       <div className="form-grid">
         <label htmlFor={fieldId('service')}>Service destinataire *
@@ -183,7 +229,14 @@ export function CreateForm({ defaults, existing, onClose, onSave }: CreateFormPr
         <textarea id={fieldId('notes')} name="notes" value={values.notes} onChange={event => update('notes', event.target.value)} maxLength={1500} rows={3} placeholder="Contexte et instructions de démonstration…" {...errorProps('notes')} />
         {fieldError('notes')}
       </label>
-      <div className="form-actions"><button type="button" className="secondary" onClick={onClose} disabled={isSaving}>Annuler</button><button type="submit" className="primary" disabled={isSaving} aria-busy={isSaving}>{isSaving ? <LoaderCircle size={17} className="button-spinner" aria-hidden="true" /> : <Check size={17} aria-hidden="true" />}{isSaving ? 'Enregistrement…' : 'Enregistrer le courrier'}</button></div>
+      {duplicateWarning && <div ref={duplicateWarningRef} className="duplicate-warning" role="alert" tabIndex={-1} aria-labelledby={`${prefix}-duplicate-title`}>
+        <Notice><h3 id={`${prefix}-duplicate-title`}>Doublon potentiel à vérifier</h3><p>{duplicateWarning.matches.length} courrier(s) présentent le même objet, expéditeur, date et type. Comparez les dossiers ci-dessous ; des objets identiques peuvent correspondre à des courriers distincts.</p>
+          <ul>{duplicateWarning.matches.slice(0, 5).map(mail => <li key={mail.id}><strong>{mail.ref}</strong> · {mail.subject}<br /><small>{mail.sender} · {mail.date} · courrier {mail.kind}</small></li>)}</ul>
+          {duplicateWarning.matches.length > 5 && <p>{duplicateWarning.matches.length - 5} autre(s) correspondance(s) proche(s) dans le registre ; les cinq premières sont affichées.</p>}
+          <label className="check-label" htmlFor={`${prefix}-duplicate-confirmation`} style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: '0.65rem' }}><input id={`${prefix}-duplicate-confirmation`} type="checkbox" checked={duplicateWarning.confirmed} onChange={event => setDuplicateWarning(current => current ? { ...current, confirmed: event.target.checked } : null)} style={{ width: 'auto', flexShrink: 0, marginTop: '0.2rem' }} />Je confirme qu’il s’agit d’un courrier distinct.</label>
+        </Notice>
+      </div>}
+      <div className="form-actions"><button type="button" className="secondary" onClick={onClose} disabled={isSaving}>Annuler</button><button type="submit" className="primary" disabled={isSaving} aria-busy={isSaving}>{isSaving ? <LoaderCircle size={17} className="button-spinner" aria-hidden="true" /> : <Check size={17} aria-hidden="true" />}{isSaving ? 'Enregistrement…' : duplicateWarning ? 'Confirmer et enregistrer' : 'Enregistrer le courrier'}</button></div>
     </form>
   </Modal>;
 }

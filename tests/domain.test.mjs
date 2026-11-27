@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {makeSeed, stages, services, priorities, institutions, channels, assignees, validateInput, createMail, nextStatuses, transitionMail, filterMail, paginate, getStats, csvCell, exportCsv, parseStoredMail, isValidDate, isOverdue, today, shiftDate} from '../src/domain.ts';
+import {makeSeed, stages, services, priorities, institutions, channels, assignees, validateInput, createMail, findMailDuplicates, nextStatuses, transitionMail, filterMail, paginate, getStats, csvCell, exportCsv, parseStoredMail, isValidDate, isOverdue, today, shiftDate} from '../src/domain.ts';
 const anchor = '2026-11-26T15:00:00.000Z';
 const validInput = {subject:'Essai de courrier fictif', sender:'Institution de démonstration', recipient:'Destinataire pilote', service:services[0],kind:'entrant',priority:'Normale',date:'2026-11-25',dueDate:'2026-11-30',notes:'Données fictives uniquement'};
 const seed = () => makeSeed(anchor);
@@ -94,4 +94,46 @@ test('valid stored registry round trips while corrupt rows are rejected as a who
 test('stored chronology must be ordered and agree with current status',()=>{
   const mail=seed().find(m=>m.history.length>=3);const reversed={...mail,history:[...mail.history].reverse()};assert.ok(parseStoredMail(JSON.stringify([reversed])).error);
   assert.ok(parseStoredMail(JSON.stringify([{...mail,status:'Archivé'}])).error);
+});
+
+
+test('duplicate advisory matches accents, case, apostrophes and repeated whitespace',()=>{
+  const mail={...seed()[0],kind:'entrant',subject:'Réunion   d’orientation',sender:'Institution  École A',date:'2026-11-25'};
+  const found=findMailDuplicates({subject:"  REUNION d'orientation  ",sender:'institution ecole a',date:'2026-11-25',kind:'entrant'},[mail]);
+  assert.deepEqual(found.map(item=>item.id),[mail.id]);
+});
+test('duplicate advisory requires the complete subject sender date and type identity',()=>{
+  const mail={...seed()[0],...validInput};
+  for(const change of [{subject:'Autre objet fictif'},{sender:'Autre institution fictive'},{date:'2026-11-24'},{kind:'sortant'}])assert.equal(findMailDuplicates({...validInput,...change},[mail]).length,0,JSON.stringify(change));
+  for(const change of [{subject:'  '},{sender:undefined},{date:'2026-02-30'},{kind:undefined}])assert.equal(findMailDuplicates({...validInput,...change},[mail]).length,0,JSON.stringify(change));
+});
+test('duplicate advisory keeps candidates despite changes outside its four comparison fields',()=>{
+  const mail={...seed()[0],...validInput};
+  const changed={...validInput,recipient:'Autre destinataire fictif',priority:'Urgente',service:services[1],notes:'Note distincte',institutionId:'partenaire-b'};
+  assert.deepEqual(findMailDuplicates(changed,[mail]).map(item=>item.id),[mail.id]);
+});
+test('duplicate detection is pure and retains all matching candidates without mutating the register',()=>{
+  const first={...seed()[0],...validInput},second={...first,id:'other-local-id',ref:'DEMO/2026/00999'};
+  const records=Object.freeze([Object.freeze(first),Object.freeze(second)]),snapshot=structuredClone(records),input=Object.freeze({...validInput});
+  const result=findMailDuplicates(input,records);
+  assert.equal(result.length,2);assert.notEqual(result,records);assert.deepEqual(records,snapshot);assert.deepEqual(input,validInput);
+});
+test('a potential duplicate remains creatable after the UI obtains explicit confirmation',()=>{
+  const first=createMail(validInput,[],anchor);assert.equal(first.ok,true);
+  assert.equal(findMailDuplicates(validInput,[first.value]).length,1);
+  const second=createMail(validInput,[first.value],anchor);assert.equal(second.ok,true);
+  assert.notEqual(second.value.id,first.value.id);assert.notEqual(second.value.ref,first.value.ref);
+});
+test('creating a letter preserves its institutional owner independently of free addressee fields',()=>{
+  const input={...validInput,kind:'sortant',institutionId:'pilote-a',sender:'Émetteur libre du bureau pilote',recipient:'Institution partenaire B'};
+  const snapshot=structuredClone(input),result=createMail(input,[],anchor);assert.equal(result.ok,true);
+  assert.equal(result.value.institutionId,'pilote-a');assert.equal(result.value.sender,input.sender);assert.equal(result.value.recipient,input.recipient);assert.deepEqual(input,snapshot);
+});
+test('creation records the supplied demonstration actor while preserving the assigned responsible agent',()=>{
+  const input={...validInput,assignee:assignees[1]};
+  const supplied=createMail(input,[],anchor,'  Autorité de validation  ');assert.equal(supplied.ok,true);
+  assert.equal(supplied.value.history[0].actor,'Autorité de validation');assert.equal(supplied.value.assignee,assignees[1]);
+  const legacy=createMail(input,[],anchor);assert.equal(legacy.ok,true);assert.equal(legacy.value.history[0].actor,assignees[1]);
+  const blank=createMail(input,[],anchor,'  ');assert.equal(blank.ok,true);assert.equal(blank.value.history[0].actor,assignees[1]);
+  const long=createMail(input,[],anchor,'A'.repeat(140));assert.equal(long.ok,true);assert.equal(long.value.history[0].actor.length,120);
 });
