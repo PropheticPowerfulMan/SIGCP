@@ -1,6 +1,6 @@
 # Publication de la démonstration GitHub Pages
 
-État vérifié le 26 novembre 2026 : démonstration publiée sur https://propheticpowerfulman.github.io/SIGCP/, HTTP 200 et bundle corrigé vérifiés. Le dépôt est public avec l’accord du propriétaire et la source Pages est GitHub Actions.
+État vérifié le 26 novembre 2026 : démonstration 0.3.1 publiée sur https://propheticpowerfulman.github.io/SIGCP/, page et ressources exactes vérifiées en HTTP 200. Le dépôt est public avec l’accord du propriétaire et la source Pages est GitHub Actions.
 
 ## Activation initiale
 
@@ -34,10 +34,12 @@ Source : https://docs.github.com/en/pages/getting-started-with-github-pages/gith
 
 Les données de démonstration sont exclusivement fictives. La publication Pages n’installe pas le backend, l’identité OIDC, le stockage documentaire ou les contrôles d’accès institutionnels.
 
-## Contrôle de la version installable 0.3
+## Contrôle de la version installable 0.3.1
 
-Publication vérifiée : [run 45881652536](https://github.com/PropheticPowerfulMan/SIGCP/actions/runs/45881652536), révision de fusion `b8688b1d9e53008efb6d453563d289d5a0d0d58e`. Les tâches build et deploy ont réussi ; 32 tests Node et 17 parcours Chromium sont passés.
+Publication vérifiée : [run 45886138008](https://github.com/PropheticPowerfulMan/SIGCP/actions/runs/45886138008), révision applicative de `main` `1bee9bf2f77728652758725e404b1aaa1ca68475`. Build `140137188118` et deploy `140137540180` réussis ; artefact Pages `15149296772`. Les 32 tests Node et 19 parcours Chromium ont réussi, avec un test de captures conditionnel ignoré ; typage/build et audit npm sans vulnérabilité confirmés.
 
-Le HTML public sert `index-DCWiXY7w.js` et `index-6kHQ4sAP.css`. Le manifeste, le service worker et les icônes répondent HTTP 200 avec leurs types MIME attendus. L’identité, le démarrage et le périmètre du manifeste sont `/SIGCP/`, avec affichage `standalone`. Le cache de coque `89c6d17eea990bedf670` contient 27 ressources statiques autorisées.
+Le HTML public sert `index-CA1h1BLN.js` (330,44 kB ; 97,65 kB gzip) et `index-BctLyuSp.css` (99,43 kB ; 20,60 kB gzip). La page, le manifeste, le service worker, ces bundles, l’icône PNG 512 et l’emblème répondent en HTTP 200 avec leurs types MIME attendus. L’identité, le démarrage et le périmètre du manifeste sont `/SIGCP/`, avec affichage `standalone` et trois icônes. Le cache de coque `9f7f654df48ed8f6037f` contient 27 ressources statiques autorisées.
+
+Le test final hors connexion sur l’adresse publique a réussi en 36 secondes avec le cache HTTP désactivé : service worker actif, tableau de bord de 42 dossiers, CSS, police DM Sans et images chargés. Ce contrôle ne remplace pas la vérification de l’installation propre au navigateur de chaque appareil.
 
 Après une correction, vérifier ces ressources et le parcours d’entrée avant d’utiliser le mode hors connexion. Les changements d’interface restent publiés par la chaîne de validation ; les mises à jour de documentation seules ne relancent pas le déploiement. Consulter [le guide d’installation](PWA_INSTALLATION.md) et [le guide de présentation](PRESENTATION_GUIDE.md).

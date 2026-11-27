@@ -1,6 +1,6 @@
 # IMPERIUM RDC · SIGCP
 
-**Système Intégré de Gestion des Courriers Présidentiels — démonstration 0.3**
+**Système Intégré de Gestion des Courriers Présidentiels — démonstration 0.3.1**
 
 Une information maîtrisée. Une action mieux coordonnée.
 
@@ -10,9 +10,20 @@ Proposition technique non homologuée. Institutions, services, agents, référen
 
 ## Accéder à la démonstration
 
-[Ouvrir IMPERIUM RDC 0.3](https://propheticpowerfulman.github.io/SIGCP/). La démonstration est publiée sur GitHub Pages et ses ressources ont été vérifiées. Les preuves de la version précédente ne sont pas attribuées à cette nouvelle version.
+[Ouvrir IMPERIUM RDC 0.3.1](https://propheticpowerfulman.github.io/SIGCP/). La démonstration est publiée sur GitHub Pages ; la page et les ressources exactes de cette édition ont été vérifiées.
 
 L’écran d’entrée propose trois profils : **Agent pilote**, **Responsable du courrier** et **Autorité de validation**. Choisir un profil puis « Ouvrir la démonstration ». Aucun mot de passe réel n’est demandé. Le profil présente un usage et n’attribue aucun droit de sécurité. La session locale résiste au rechargement et se ferme depuis le profil.
+
+## Évolutions de la 0.3.1
+
+- Courriers présentés en cartes jusqu’à 1000 px, avec les mêmes données, actions et outils de tri ; tableaux conservés sur ordinateur.
+- Rail de navigation de 78 px par défaut sur tablette sans préférence explicite, et navigation basse sur téléphone.
+- Sur petit écran, accès au pilote placé avant le contenu éditorial de la connexion ; champs tactiles de 16 px et hauteur minimale de 48 px.
+- Barres de défilement horizontales et verticales navy/or, propriétés CSS standard et repli WebKit, avec rendu système en couleurs forcées.
+- Retours de focus, de pression et de survol sur les boutons, respect de la réduction des mouvements, indicateurs liés aux vrais états de sauvegarde, d’installation et de mise à jour.
+- Contrôle d’installation intégré à la barre supérieure de l’espace de travail, sans recouvrir les dossiers ; l’accès de l’écran d’entrée est conservé.
+
+Les résultats de recette, SHA, exécutions Actions et ressources servies figurent dans [le rapport de validation](docs/VALIDATION_REPORT.md). Dix captures ont été inspectées, dont le formulaire tablette sombre ; le contrôle hors connexion public et le dossier PDF final ont également été vérifiés.
 
 ## Démarrer le pilote
 
@@ -59,7 +70,7 @@ L’emblème fourni par le concepteur est intégré à l’entrée, à la naviga
 
 ## Installer l’application
 
-Utiliser « Installer l’application » sur l’écran d’entrée ou « Installer » dans l’espace de travail. Quand le navigateur fournit une installation native, le bouton ouvre sa confirmation. Sinon, une aide explique la procédure adaptée à l’appareil : partage et écran d’accueil sur iPhone/iPad, menu du navigateur sur Android, installation Chrome/Edge sur ordinateur, ajout au Dock sur les versions compatibles de Safari pour Mac.
+Utiliser « Installer l’application » sur l’écran d’entrée ou « Installer » dans la barre supérieure de l’espace de travail. Quand le navigateur fournit une installation native, le bouton ouvre sa confirmation. Sinon, une aide explique la procédure adaptée à l’appareil : partage et écran d’accueil sur iPhone/iPad, menu du navigateur sur Android, installation Chrome/Edge sur ordinateur, ajout au Dock sur les versions compatibles de Safari pour Mac.
 
 L’identité PWA est propre au projet : identifiant, point d’entrée et périmètre `/SIGCP/`, avec manifeste et icônes PNG 192 et 512 pixels, dont une version maskable. La disponibilité et la forme de l’installation dépendent du navigateur et du système ; [voir les capacités décrites par MDN](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Making_PWAs_installable).
 
@@ -77,13 +88,13 @@ Les statuts d’échange désignent des **simulations locales**, pas de véritab
 
 Le workflow [pages.yml](.github/workflows/pages.yml) contrôle les dépendances, exécute les tests de domaine, de PWA et de navigateur, compile, puis publie sur GitHub Pages. La source Pages doit être **GitHub Actions**. Voir [la procédure de déploiement](docs/DEPLOYMENT.md).
 
-La [validation CI de la version 0.3](https://github.com/PropheticPowerfulMan/SIGCP/actions/runs/45881470660) a réussi : 32 tests Node, 17 parcours Chromium, un test de captures conditionnel ignoré, typage/build et audit npm sans vulnérabilité. La source validée est `f6e2175875ddfc3d921db8e0275f192a48445ffb`, intégrée par la PR 2 au commit `b8688b1d9e53008efb6d453563d289d5a0d0d58e`.
+Le [run 45886138008](https://github.com/PropheticPowerfulMan/SIGCP/actions/runs/45886138008) a réussi pour le commit `1bee9bf2f77728652758725e404b1aaa1ca68475` de `main` : 32 tests Node sur 32, 19 parcours Chromium réussis, un test de captures conditionnel ignoré, typage/build et audit npm sans vulnérabilité. Le build `140137188118`, le déploiement `140137540180` et l’artefact Pages `15149296772` correspondent à cette édition.
 
-Le [déploiement 45881652536](https://github.com/PropheticPowerfulMan/SIGCP/actions/runs/45881652536) a réussi pour le commit fusionné. La page, les bundles `index-DCWiXY7w.js` / `index-6kHQ4sAP.css`, le service worker, le manifeste et les icônes ont été vérifiés en HTTP 200. Les références exactes figurent dans [le rapport de validation](docs/VALIDATION_REPORT.md).
+La page publique et les ressources `index-CA1h1BLN.js`, `index-BctLyuSp.css`, le service worker, le manifeste, l’icône PNG 512 et l’emblème répondent en HTTP 200 avec les types attendus. Le cache de coque `9f7f654df48ed8f6037f` contient 27 ressources statiques.
 
-Quatre captures finales ont été produites et inspectées : [connexion sur ordinateur](docs/screenshots/login.png), [connexion sur mobile](docs/screenshots/login-mobile.png), [tableau de bord sur ordinateur](docs/screenshots/dashboard.png) et [tableau de bord sur mobile](docs/screenshots/dashboard-mobile.png).
+À titre historique, la [validation CI de la 0.3](https://github.com/PropheticPowerfulMan/SIGCP/actions/runs/45881470660) avait réussi avec 32 tests Node et 17 parcours Chromium. Le [déploiement 45881652536](https://github.com/PropheticPowerfulMan/SIGCP/actions/runs/45881652536) avait servi le commit `b8688b1d9e53008efb6d453563d289d5a0d0d58e`. Ces preuves ne valident pas les changements 0.3.1 ; les détails restent dans [le rapport](docs/VALIDATION_REPORT.md).
 
-Un contrôle supplémentaire sur l’adresse publique a réussi : service worker actif au bon périmètre, rechargement hors connexion avec le cache HTTP désactivé, 42 dossiers affichés, CSS, polices et images chargés.
+Les deux parcours tactiles ont aussi réussi localement : première carte entièrement visible sur un téléphone de 390 px, sauvegarde accessible à 820 px, rail tablette de 78 px, respect de la préférence, rechargement et rotation à 1024 px sans débordement. Le test hors connexion sur le site public a réussi en 36 secondes avec le cache HTTP désactivé : 42 dossiers, CSS, police DM Sans et images chargés par la coque contrôlée par le service worker.
 
 Les corrections sont testées et publiées sur cette démonstration avant revue et migration à l’infrastructure institutionnelle. La visibilité du dépôt n’est pas modifiée automatiquement.
 
@@ -114,7 +125,7 @@ Les polices et les ressources visuelles, dont l’emblème fourni, sont servies 
 
 Les deux prompts initiaux sont suivis dans [la matrice des exigences](docs/REQUIREMENTS_MATRIX.md). Le backend Java 25 / Spring Boot, PostgreSQL, OIDC/MFA, RBAC/ABAC serveur, GED privée, antivirus, messagerie de test puis institutionnelle, signatures et passerelle nationale restent à réaliser et à vérifier. Les douze PDF, les tests de sécurité de l’infrastructure cible et la migration historique ne sont pas revendiqués comme livrés.
 
-Le [dossier PDF de revue du pilote 0.3](docs/IMPERIUM_RDC_Dossier_Revue_Pilote.pdf) contient huit pages ; son rendu a été inspecté. Il présente la démonstration et ses limites et ne remplace pas les douze livrables institutionnels prescrits. L’[inventaire des dépendances](docs/DEPENDENCIES.md) est extrait des manifests installés.
+Le [dossier PDF de revue du pilote 0.3.1](docs/IMPERIUM_RDC_Dossier_Revue_Pilote.pdf) comporte dix pages et 1 419 426 octets ; les dix pages rendues et les quatre légendes ont été inspectées. Il ne remplace pas les douze livrables institutionnels prescrits. L’[inventaire des dépendances](docs/DEPENDENCIES.md) est extrait des manifests installés.
 
 Pour préparer la présentation : [guide de démonstration](docs/PRESENTATION_GUIDE.md), [installation PWA](docs/PWA_INSTALLATION.md) et [origine des éléments graphiques](docs/BRAND_ASSETS.md).
 

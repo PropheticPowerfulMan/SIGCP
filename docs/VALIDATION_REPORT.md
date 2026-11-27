@@ -1,72 +1,76 @@
-# Rapport des contrôles · démonstration 0.3
+# Rapport des contrôles · démonstration 0.3.1
 
-Date : 26 novembre 2026. Portée : frontend statique à données fictives, validé localement et dans GitHub Actions. Version 0.3 publiée sur GitHub Pages ; quatre captures finales produites et inspectées.
+Date : 26 novembre 2026. Portée : frontend statique à données fictives. Version 0.3.1 validée en CI et publiée sur GitHub Pages. Dix captures et le PDF final inspectés ; contrôle hors connexion public réussi. Les preuves 0.3 et 0.2 sont conservées uniquement dans l’historique.
 
-Le [run de validation 45881470660](https://github.com/PropheticPowerfulMan/SIGCP/actions/runs/45881470660) est terminé avec succès pour la source `f6e2175875ddfc3d921db8e0275f192a48445ffb`. La PR 2 est fusionnée au commit `b8688b1d9e53008efb6d453563d289d5a0d0d58e`. Les résultats ci-dessous appartiennent à cette version 0.3 ; aucun ancien run n’est utilisé comme preuve de ses nouvelles fonctions.
+## Bilan confirmé pour la 0.3.1
 
-## Contrôles CI confirmés pour la 0.3
-
-| Contrôle | Résultat confirmé |
+| Contrôle ou référence | État |
 | --- | --- |
-| Tests Node métier et échanges | 24 réussis |
-| Tests Node PWA | 8 réussis |
-| Total des tests Node | 32 réussis |
-| Parcours navigateur Chromium | 17 réussis ; 1 test de captures conditionnel ignoré |
+| Révision finale de `main` | `1bee9bf2f77728652758725e404b1aaa1ca68475` |
+| Tests Node métier, échanges et PWA | 32 sur 32 réussis |
+| Parcours navigateur Chromium | 19 réussis ; 1 test de captures conditionnel ignoré |
 | Audit npm | 0 vulnérabilité signalée |
-| Typage TypeScript strict | Réussi |
-| Compilation de production Vite et génération PWA | Réussies |
-| Bundle JavaScript | `index-DCWiXY7w.js` : 325,75 kB, 96,43 kB gzip |
-| Bundle CSS | `index-6kHQ4sAP.css` : 79,43 kB, 16,61 kB gzip |
-| Cache de coque statique | `imperium-sigcp-shell-89c6d17eea990bedf670`, 27 ressources |
+| Typage TypeScript strict et build | Réussis |
+| GitHub Actions | [Run 45886138008](https://github.com/PropheticPowerfulMan/SIGCP/actions/runs/45886138008), succès |
+| Jobs Pages | Build `140137188118` et deploy `140137540180`, succès |
+| Artefact Pages | `15149296772` |
+| JavaScript | `index-CA1h1BLN.js` : 330,44 kB, 97,65 kB gzip |
+| CSS | `index-BctLyuSp.css` : 99,43 kB, 20,60 kB gzip |
+| Cache de coque | `imperium-sigcp-shell-9f7f654df48ed8f6037f`, 27 ressources statiques |
+| Page, manifeste, SW, JS, CSS, PNG 512, emblème publics | HTTP 200 avec les types MIME attendus et les ressources exactes de la révision |
+| Manifeste publié | id/scope/start_url `/SIGCP/`, `standalone`, trois icônes |
+| Contrôles tactiles locaux supplémentaires | 2 parcours réussis ; détails ci-dessous |
+| Captures | 9 claires et 1 sombre produites et inspectées |
+| Contrôle final du mode sombre | Réussi : dialogue sans débordement, sauvegarde entièrement visible et notice corrigée |
+| Rechargement hors connexion sur le site public | 1 test réussi en 36 s, code de sortie 0, cache HTTP désactivé |
+| Dossier PDF de revue 0.3.1 | 10 pages, 1 419 426 octets ; rendu et inspection réussis |
 
-Les tests PWA couvrent l’identité stable du manifeste, les icônes déclarées, le périmètre du précache, l’exclusion des API et identités, le repli hors connexion, la conservation de la coque correspondant à la version, le respect des réponses d’autorisation serveur, la conservation des caches des autres projets, le message explicite d’activation et le hachage des ressources compilées. Le favicon PNG utilisé par l’index est explicitement inclus dans les ressources autorisées.
+Le run ci-dessus valide et publie cette édition sur https://propheticpowerfulman.github.io/SIGCP/. Aucun résultat de la 0.3 ou de la 0.2 n’est présenté comme preuve de ses nouveaux changements. Le test de captures conditionnel ignoré n’est pas compté parmi les succès.
 
-Ces tests n’installent pas une application native sur chaque système. Les tailles PNG et l’allowlist sont contrôlées par le builder ; l’installation effective dépend du navigateur et de l’appareil.
+## Parcours de recette de la 0.3.1
 
-## Recette navigateur de la 0.3
+Les parcours couvrent les cartes des mêmes courriers jusqu’à 1000 px, les tableaux sur ordinateur, les dates/échéances, le tri, la recherche, la pagination et l’ouverture des dossiers. Les états vides ont une présentation adaptée sans duplication visible.
 
-17 parcours Chromium réussis dans le run de validation de la 0.3. Un test de captures, conditionné par une variable d’environnement, est ignoré dans cette CI et n’est pas compté comme réussi.
+Les deux parcours tactiles ont aussi été exécutés localement avec succès : sur 390 px, la première carte est entièrement visible avant la navigation basse (bas de carte vers 730 px, navigation vers 778 px) ; sur 820 px, l’action de sauvegarde est entièrement accessible. Le rail de 78 px, la préférence explicite, le rechargement et la rotation à 1024 px sont contrôlés sans débordement horizontal. Ces mesures décrivent les configurations de recette, pas tous les appareils possibles.
 
-La recette couvre les parcours existants et les nouveaux contrôles : entrée sans mot de passe réel, session fictive et fermeture, menu réduit et persistance, manifeste et icône PNG 512, rechargement hors connexion avec le cache HTTP désactivé, exclusion des sondes API/identité du CacheStorage et aide d’installation accessible avec Échap/retour du focus.
+La recette couvre également la navigation basse sur téléphone, la connexion donnant priorité à l’accès et les champs tactiles de 16 px avec hauteur minimale de 48 px.
 
-Les captures finales de la nouvelle connexion et du tableau de bord ont été produites lors d’une exécution locale distincte, puis inspectées visuellement.
+Les contrôles d’interaction portent sur le focus clavier, la pression et le survol, les mouvements réduits, les barres de défilement horizontales/verticales et le retour aux couleurs système en mode forcé. Les spinners doivent correspondre aux opérations réelles de sauvegarde, d’installation ou d’activation d’une mise à jour ; le bouton d’installation de l’espace de travail doit rester dans la barre supérieure et ne pas recouvrir les cartes.
 
-| Capture de la version 0.3 | Dimensions PNG |
+La stratégie PWA reste celle de la coque statique connue : aucune réponse d’API, identité, pièce, donnée saisie, export ou jeton ajouté au cache ; périmètre `/SIGCP/`, mise à jour explicite et conservation des caches des autres projets.
+
+Un test final a été exécuté contre https://propheticpowerfulman.github.io/SIGCP/ : un succès en 36 secondes, code de sortie 0. Avec le cache HTTP désactivé puis la connexion coupée, le rechargement confirme le service worker, le tableau de bord de 42 dossiers, le CSS, la police DM Sans et les images. Cette vérification publique est distincte de la CI et ne prétend pas installer nativement l’application sur tous les systèmes.
+
+## Captures et dossier de revue 0.3.1
+
+Neuf captures claires et la capture [formulaire tablette sombre](screenshots/formulaire-tablette-sombre.png) sont figées dans `docs/screenshots/` et ont été inspectées. Après défilement, le dialogue sombre n’a pas de débordement et la sauvegarde est entièrement visible. La notice utilise le texte `#a6b6c8` sur le fond `#1b2e43`.
+
+Le [dossier PDF de revue](IMPERIUM_RDC_Dossier_Revue_Pilote.pdf) documente la 0.3.1 avec la source et le run actuels : dix pages, 1 419 426 octets. Le rendu Poppler, l’inspection des dix pages et la vérification des quatre légendes ont réussi. Ce document ne remplace pas les douze livrables institutionnels demandés.
+
+## Historique vérifié de la version 0.3
+
+Le [run de validation 45881470660](https://github.com/PropheticPowerfulMan/SIGCP/actions/runs/45881470660) avait réussi pour la source `f6e2175875ddfc3d921db8e0275f192a48445ffb`. La PR 2 a été fusionnée au commit `b8688b1d9e53008efb6d453563d289d5a0d0d58e`.
+
+| Contrôle historique 0.3 | Résultat |
 | --- | --- |
-| [Connexion, ordinateur](screenshots/login.png) | 1440 × 1142 |
-| [Connexion, mobile](screenshots/login-mobile.png) | 390 × 1489 |
-| [Tableau de bord, ordinateur](screenshots/dashboard.png) | 1440 × 1917 |
-| [Tableau de bord, mobile](screenshots/dashboard-mobile.png) | 390 × 2562 |
+| Tests Node | 24 métier/échanges et 8 PWA, soit 32 réussis |
+| Parcours Chromium | 17 réussis ; 1 test de captures conditionnel ignoré |
+| Audit npm | 0 vulnérabilité signalée |
+| Typage et build | Réussis |
+| JavaScript | `index-DCWiXY7w.js` : 325,75 kB, 96,43 kB gzip |
+| CSS | `index-6kHQ4sAP.css` : 79,43 kB, 16,61 kB gzip |
+| Cache | `imperium-sigcp-shell-89c6d17eea990bedf670`, 27 ressources |
 
-## Publication de la 0.3
+Le [run de publication 45881652536](https://github.com/PropheticPowerfulMan/SIGCP/actions/runs/45881652536) avait réussi au commit fusionné : build `140122197195`, deploy `140122737703`. La page https://propheticpowerfulman.github.io/SIGCP/ et les bundles exacts avaient été vérifiés en HTTP 200, ainsi que le service worker, le manifeste `application/manifest+json`, l’emblème et les icônes PNG 512, Apple 180 et favicon 64 avec les types attendus. Le manifeste avait id/scope/start_url `/SIGCP/`, standalone et trois icônes.
 
-Adresse publiée : https://propheticpowerfulman.github.io/SIGCP/
+Un test public hors connexion avait réussi en 30 secondes avec code de sortie 0 : service worker actif au bon périmètre, cache HTTP désactivé par CDP, tableau de bord de 42 dossiers, CSS, polices et images chargés. Ce contrôle est distinct des parcours CI.
 
-Le [run de publication 45881652536](https://github.com/PropheticPowerfulMan/SIGCP/actions/runs/45881652536) est terminé avec succès pour le commit fusionné `b8688b1d9e53008efb6d453563d289d5a0d0d58e`. Job build : `140122197195` ; job deploy : `140122737703`. Cette preuve de publication est distincte du run de validation de la PR.
-
-| Ressource publique contrôlée | Résultat |
-| --- | --- |
-| Page `/SIGCP/` | HTTP 200 ; références exactes aux bundles de la 0.3 |
-| JavaScript `index-DCWiXY7w.js` et CSS `index-6kHQ4sAP.css` | HTTP 200 ; correspondance avec le build validé |
-| `/SIGCP/sw.js` | HTTP 200 ; cache `89c6d17eea990bedf670` |
-| Manifeste PWA | HTTP 200 ; `application/manifest+json` ; id/scope/start_url `/SIGCP/`, standalone et trois icônes |
-| Icône PNG 512, icône Apple 180, favicon PNG 64 | HTTP 200 ; `image/png` |
-| Emblème fourni | HTTP 200 ; type d’image attendu |
-
-Les contrôles établissent que les ressources de la version 0.3 sont servies sur GitHub Pages. Ils ne prouvent pas une installation native sur chaque modèle d’appareil ; celle-ci dépend des capacités du navigateur et du système.
-
-Un test Playwright supplémentaire a été exécuté contre l’adresse publique https://propheticpowerfulman.github.io/SIGCP/ : un test réussi en 30 secondes, code de sortie 0. Il confirme le service worker actif au périmètre attendu puis le rechargement hors connexion avec le cache HTTP désactivé par CDP : tableau de bord et 42 dossiers affichés, CSS, polices et images chargés. Ce test public est distinct des 17 parcours CI.
-
-## Dossier documentaire de la 0.3
-
-Le [dossier PDF de revue du pilote](IMPERIUM_RDC_Dossier_Revue_Pilote.pdf) a été actualisé pour la version 0.3 : huit pages, 1 098 386 octets. Le rendu a été produit, inspecté et validé. Ce dossier de présentation ne remplace pas les douze PDF institutionnels demandés par les prompts initiaux.
+Les captures 0.3 avaient été produites et inspectées : connexion ordinateur 1440 × 1142, connexion mobile 390 × 1489, tableau de bord ordinateur 1440 × 1917 et mobile 390 × 2562. Le dossier PDF de revue 0.3 comportait huit pages et 1 098 386 octets ; son rendu avait été inspecté. Ces artefacts historiques ont été remplacés par les supports 0.3.1 vérifiés séparément ci-dessus.
 
 ## Historique de la version 0.2
 
-Le [run 45871315126](https://github.com/PropheticPowerfulMan/SIGCP/actions/runs/45871315126) avait validé la révision `5528c99621b8bbc0f43cc063e0db855e94f65cbc` : 24 tests métier, typage/compilation, 10 parcours Playwright et audit npm sans alerte. L’artefact Pages était `15141849152`, le job build `140087156007` et le job deploy `140107074425`.
-
-La publication de cette version avait été contrôlée en HTTP 200 avec `index-8ktd3b7o.js` et `index-DAab89lC.css`. Ces références sont conservées pour l’historique ; elles ne valident ni l’écran d’entrée, ni le nouveau design, ni la PWA de la 0.3.
+Le [run 45871315126](https://github.com/PropheticPowerfulMan/SIGCP/actions/runs/45871315126) avait validé la révision `5528c99621b8bbc0f43cc063e0db855e94f65cbc` : 24 tests métier, typage/build, 10 parcours Playwright et audit sans alerte. Artefact `15141849152`, build `140087156007`, deploy `140107074425`. Les ressources publiques contrôlées étaient `index-8ktd3b7o.js` et `index-DAab89lC.css`. Ces références ne valident pas les éditions suivantes.
 
 ## Portée
 
-Ces contrôles concernent le pilote statique à données fictives. Ils ne démontrent ni authentification réelle, ni autorisation serveur, ni signature officielle, ni conformité ASVS, ni capacité d’une infrastructure institutionnelle. Aucun accès au système historique ni test sur une institution réelle n’a été effectué.
+Ces contrôles concernent le pilote statique à données fictives. Ils ne démontrent ni authentification réelle, ni autorisation serveur, ni signature officielle, ni conformité ASVS, ni capacité d’une infrastructure institutionnelle. Le dossier de revue ne remplace pas les douze PDF institutionnels prescrits. Aucun accès au système historique ni test sur une institution réelle n’a été effectué.

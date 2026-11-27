@@ -1,12 +1,14 @@
-# Installer et utiliser IMPERIUM RDC — pilote PWA v0.3
+# Installer et utiliser IMPERIUM RDC — pilote PWA v0.3.1
 
-Guide préparé le 26 novembre 2026 pour la présentation du 27 novembre 2026.
+Guide préparé le 26 novembre 2026 pour la présentation du 27 novembre 2026. Édition mobile/tablette **0.3.1 validée et publiée** ; les preuves de cette version sont distinctes de l’historique v0.3.
 
 Adresse : [IMPERIUM RDC / SIGCP](https://propheticpowerfulman.github.io/SIGCP/).
 
 La PWA fournit un accès web et, lorsque le navigateur le permet, une icône et une fenêtre d’application. Le pilote ne collecte pas de mot de passe institutionnel. L’entrée par profil est une démonstration locale ; elle n’est ni une authentification OIDC/MFA, ni une habilitation serveur.
 
-La version publiée v0.3 a été contrôlée le 26 novembre 2026 : accès HTTPS, manifeste, service worker et icônes attendus accessibles. La [CI de publication](https://github.com/PropheticPowerfulMan/SIGCP/actions/runs/45881652536) est réussie. Cette vérification ne garantit pas une installation native sur chaque appareil ; utilisez la procédure adaptée ci-dessous.
+La [CI main 0.3.1](https://github.com/PropheticPowerfulMan/SIGCP/actions/runs/45886138008), source `1bee9bf2f77728652758725e404b1aaa1ca68475`, a réussi : 32 tests Node, 19 parcours Chromium, un scénario de captures ignoré, audit npm à zéro et construction stricte réussie. La publication de cette révision a été vérifiée en HTTP 200 pour la page, les bundles attendus, le manifeste, le service worker, l’icône 512 et l’emblème. Ces preuves concernent le pilote web/PWA ; elles ne constituent pas une installation native exécutée sur toutes les plateformes.
+
+Historique distinct : la version publiée v0.3 a été contrôlée le 26 novembre 2026 : accès HTTPS, manifeste, service worker et icônes attendus accessibles. La [CI de publication](https://github.com/PropheticPowerfulMan/SIGCP/actions/runs/45881652536) est réussie. Cette vérification historique ne constitue pas la recette de la v0.3.1 et ne garantit pas une installation native sur chaque appareil ; utilisez la procédure adaptée ci-dessous.
 
 ## Depuis le bouton de l’application
 
@@ -29,6 +31,16 @@ Le mécanisme de proposition programmatique dépend de l’événement du naviga
 | Navigateur sans installation proposée | Conserver l’accès web et éventuellement un favori ; essayer Chrome ou Edge si l’installation est souhaitée. | Ne pas confondre un favori avec une installation native. [MDN : installation et raccourcis](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Installing). |
 
 L’installation n’a pas été démontrée sur chaque combinaison de système et de navigateur. Les étapes ci-dessus décrivent les voies usuelles ; les résultats réellement exécutés sur le pilote doivent figurer dans le rapport de validation.
+
+## Prendre en main le pilote sur petit écran
+
+Sur téléphone, l’accès par profil passe au premier plan. Dans l’espace du pilote, utiliser la navigation rapide inférieure pour les destinations présentes, et le menu complet pour le reste. Les cartes de courrier facilitent la lecture et l’ouverture d’un dossier sans dépendre d’un grand tableau horizontal.
+
+Sur tablette, le rail latéral compact est prévu par défaut ; le développer pour lire les libellés puis le rétracter afin de donner plus de place aux dossiers. Les commandes principales et l’espacement des formulaires sont adaptés au toucher. La recette couvre les tailles et parcours tactiles documentés ; répéter néanmoins la présentation sur l’appareil effectivement utilisé.
+
+Dans une fenêtre longue, faire défiler le contenu jusqu’aux actions. Les barres assorties bleu nuit/or dépendent des possibilités du navigateur et du système ; elles conservent leur fonction habituelle. Si le clavier masque une commande, continuer le défilement du formulaire et vérifier les valeurs avant de valider.
+
+Ces améliorations concernent la présentation et la navigation ; elles ne modifient ni la portée du profil fictif, ni les garanties d’accès, ni le stockage local du pilote.
 
 ## Préparer le mode hors connexion
 
