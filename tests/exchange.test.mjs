@@ -1,3 +1,4 @@
+import * as mailDomain from '../src/domain.ts';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { makeSeed, institutions } from '../src/domain.ts';
@@ -58,4 +59,16 @@ test('parsing rejects duplicate ids or deliveries and noncanonical/backdated tim
 test('absent and empty local stores are valid, excessive payload is refused', () => {
   assert.deepEqual(parseExchanges(null), { items: null, error: null }); assert.deepEqual(parseExchanges('[]'), { items: [], error: null });
   assert.ok(parseExchanges(' '.repeat(2_000_001)).error); assert.deepEqual(seedExchanges([]), []);
+});
+
+
+test('new outgoing A to B keeps its owner through validation and is exchange-eligible while same or inactive destinations are refused',()=>{
+  const at='2026-11-26T15:00:00.000Z';
+  const made=mailDomain.createMail({subject:'Courrier sortant fictif pour partenaire B',sender:'Institution pilote A',recipient:'Institution partenaire B',service:mailDomain.services[0],kind:'sortant',priority:'Normale',date:'2026-11-26',dueDate:'2026-12-03',institutionId:'pilote-a'},[],at,'Autorité de validation');
+  assert.equal(made.ok,true);let mail=made.value;
+  for(const status of ['Affecté','En traitement','En validation','Validé']){const changed=mailDomain.transitionMail(mail,status,'Autorité de validation',at);assert.equal(changed.ok,true);mail=changed.value;}
+  const result=prepareExchange(mail,'partenaire-b',[]);assert.equal(result.ok,true);
+  assert.equal(mail.institutionId,'pilote-a');assert.equal(mail.recipient,'Institution partenaire B');assert.equal(result.value.sourceId,'pilote-a');assert.equal(result.value.destinationId,'partenaire-b');
+  const same=prepareExchange(mail,'pilote-a',[]);assert.equal(same.ok,false);assert.match(same.error,/différente/);
+  const inactive=prepareExchange(mail,'partenaire-c',[]);assert.equal(inactive.ok,false);assert.match(inactive.error,/connectée|suspendue/);
 });
